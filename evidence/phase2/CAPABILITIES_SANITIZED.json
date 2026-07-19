@@ -1,0 +1,9 @@
+{
+  "anonymousProviderSpendEnabled": false,
+  "customUploadCanComplete": false,
+  "generationMode": "demo",
+  "liveProofReplayAvailable": true,
+  "projectTtlHours": 72,
+  "schemaVersion": 1,
+  "storage": "BACKBLAZE B2"
+}

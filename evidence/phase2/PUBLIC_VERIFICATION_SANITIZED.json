@@ -1,0 +1,73 @@
+{
+  "browser": {
+    "consoleRuntimeErrors": 0,
+    "impossibleUploadPathPresent": false,
+    "screenshotsCaptured": true,
+    "status": "PASS",
+    "viewports": [
+      "desktop",
+      "tablet",
+      "mobile"
+    ]
+  },
+  "cachedDemo": {
+    "candidateCount": 6,
+    "download": "ZIP VERIFIED",
+    "eventCount": 3,
+    "evidenceLabel": "CACHED DEMO",
+    "finalState": "complete",
+    "sse": {
+      "cacheControl": "no-cache",
+      "firstEventSeconds": 0.326,
+      "firstFrameKind": "COMMENT",
+      "originXAccelBuffering": "STRIPPED_BY_CLOUDFLARE",
+      "publicBufferingContract": "disabled"
+    },
+    "status": "PASS",
+    "storage": "BACKBLAZE B2"
+  },
+  "capabilities": {
+    "anonymousProviderSpendEnabled": false,
+    "customUploadCanComplete": false,
+    "generationMode": "demo",
+    "liveProofReplayAvailable": true,
+    "projectTtlHours": 72,
+    "schemaVersion": 1,
+    "storage": "BACKBLAZE B2"
+  },
+  "cors": {
+    "allowedOrigin": "https://framefoley-culaliya.onrender.com",
+    "status": "PASS",
+    "wildcard": false
+  },
+  "evidenceLabel": "OWNER-VERIFIED",
+  "liveProofReplay": {
+    "candidateCount": 2,
+    "download": "ZIP VERIFIED",
+    "eventCount": 1,
+    "evidenceLabel": "LIVE EVIDENCE REPLAY",
+    "finalState": "complete",
+    "manifestVerifyTrueCount": 2,
+    "providerCallsDuringReplay": 0,
+    "recordedProviderCallCount": 2,
+    "sourceLabel": "LIVE",
+    "status": "PASS",
+    "storage": "BACKBLAZE B2"
+  },
+  "persistedProjectTokens": 0,
+  "persistedSignedUrls": 0,
+  "publicApi": {
+    "deployedCommit": "8f5a8efc0f4b3f60395f97bcc415be3d109f9966",
+    "health": "PASS",
+    "readiness": "PASS",
+    "storage": "BACKBLAZE B2",
+    "url": "https://framefoley-api-culaliya.onrender.com"
+  },
+  "publicWeb": {
+    "loginRequired": false,
+    "status": "PASS",
+    "url": "https://framefoley-culaliya.onrender.com"
+  },
+  "schemaVersion": 1,
+  "verifiedAt": "2026-07-19T12:57:13.584040+00:00"
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "marks": [
+    {
+      "name": "comparison",
+      "seconds": 0
+    },
+    {
+      "name": "problem",
+      "seconds": 8.948
+    },
+    {
+      "name": "cues",
+      "seconds": 17.967
+    },
+    {
+      "name": "cached_pipeline",
+      "seconds": 39.137
+    },
+    {
+      "name": "audition",
+      "seconds": 105.361
+    },
+    {
+      "name": "mix",
+      "seconds": 129.705
+    },
+    {
+      "name": "live_proof",
+      "seconds": 143.644
+    },
+    {
+      "name": "export_provenance",
+      "seconds": 176.41
+    },
+    {
+      "name": "close",
+      "seconds": 201.31
+    },
+    {
+      "name": "end",
+      "seconds": 207.328
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+FRAMEFOLEY Phase 2 competition demo transcript
+Duration: 2:56
+
+00:00:00.000 - 00:00:03.800  [JELLY RELAY plays as a silent source]
+00:00:04.000 - 00:00:08.000  [The same motion plays with three approved Foley cues]
+00:00:08.200 - 00:00:21.500  Game prototypes often move before they sound. Creators need precise Foley at the frame—not a generic music generator, automatic scene guess, or chat box. FRAMEFOLEY keeps that decision small and audible.
+00:00:22.200 - 00:00:46.300  This original silent clip lasts twelve seconds. I mark three moments that matter: glass landing, bubble pop, and route confirmation. Each cue has a bounded timestamp, duration, intensity, and material note. One style stays locked across the kit, so comparison remains coherent.
+00:00:47.200 - 00:01:12.300  The public three-cue workflow uses six original CACHED DEMO candidates. That lets judges test the complete product while anonymous traffic spends no provider credit. Deterministic code decodes every sound, checks duration, peak, RMS, silence, channels, and sample rate, then records any repair. Private Backblaze B2 stores the project, media, QC, render, export, and provenance.
+00:01:13.200 - 00:01:19.800  Technical validity does not choose the creative winner. I hear A and B at the exact gameplay frame, solo or in context.
+00:01:20.000 - 00:01:22.400  [CACHED DEMO candidate A plays]
+00:01:23.200 - 00:01:25.800  [CACHED DEMO candidate B plays in context]
+00:01:27.000 - 00:01:38.500  One may feel cleaner; the other may have more character. Human approval remains authoritative. Only my explicit choice advances the project.
+00:01:39.200 - 00:01:46.300  FRAMEFOLEY delays each approved WAV to its cue, applies bounded gain, and renders through fixed FFmpeg argument arrays.
+00:01:47.000 - 00:01:51.000  [The approved mix plays at its exact cue]
+00:01:52.000 - 00:01:56.700  The before-and-after preview and mix map receive stable hashes and return to private B2.
+00:01:57.200 - 00:02:05.600  Now this is LIVE EVIDENCE REPLAY: two real provider outputs generated during an authorized Genblaze run with the ElevenLabs sound-effects model.
+00:02:06.000 - 00:02:08.600  [Recorded LIVE candidate A plays]
+00:02:09.600 - 00:02:12.200  [Recorded LIVE candidate B plays]
+00:02:13.000 - 00:02:25.800  They were stored in Backblaze B2, downloaded again, re-hashed, and both canonical manifests verify true. Opening this replay makes zero new provider calls. I can still hear both and make a fresh human approval.
+00:02:26.200 - 00:02:46.500  The deterministic ZIP carries the approved sound, preview, manifest, QC, project state, and provenance. The inspector keeps generation lineage, storage, technical processing, and this replay-session approval separate and visible.
+00:02:47.200 - 00:02:55.700  The sound may be synthetic. The history is not. This is FRAMEFOLEY.

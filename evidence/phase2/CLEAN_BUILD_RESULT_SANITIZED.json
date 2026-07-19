@@ -1,0 +1,18 @@
+{
+  "command": "git clone --no-hardlinks <repo> <temporary>/FRAMEFOLEY && make install",
+  "durationSeconds": 24.53,
+  "evidenceLabel": "OWNER-VERIFIED",
+  "exitCode": 0,
+  "lockedPythonDependencies": "requirements.lock --require-hashes",
+  "lockedWebDependencies": "pnpm install --frozen-lockfile",
+  "recordedAt": "2026-07-19T13:01:06.931210+00:00",
+  "safeOutput": [
+    "      Successfully uninstalled pip-25.0.1",
+    "Successfully built framefoley",
+    "Successfully installed framefoley-1.0.0",
+    "Lockfile is up to date, resolution step is skipped"
+  ],
+  "schemaVersion": 1,
+  "sourceCommit": "8f5a8efc0f4b3f60395f97bcc415be3d109f9966",
+  "status": "PASS"
+}
