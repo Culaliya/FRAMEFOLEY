@@ -165,8 +165,22 @@ See `docs/SECURITY_AND_COST.md` and `docs/OWNER_CHECKLIST.md` before publishing.
 
 ## Current publication status
 
-Local implementation and reproducible evidence are distinct from external
-publication. A public app URL, public/judge-accessible repository URL, provider
-spend cap, B2 lifecycle rule, and judge access remain **UNVERIFIED** until the
-owner performs or authorizes those external actions. No document in this repo
-claims otherwise.
+The bounded public competition deployment was verified on 2026-07-19:
+
+- **Live app:** <https://framefoley-culaliya.onrender.com>
+- **API readiness:** <https://framefoley-api-culaliya.onrender.com/readyz>
+- **Public source:** <https://github.com/Culaliya/FRAMEFOLEY>
+- **Public demo video:**
+  <https://raw.githubusercontent.com/Culaliya/FRAMEFOLEY/main/evidence/final/video/framefoley-demo.mp4>
+- **Deployed source commit:**
+  `4a4d994eeaa07507d4da8189b92ac2f14c4ba586`
+
+The public app runs the explicitly labeled **CACHED DEMO** path, persists its
+project objects to private Backblaze B2, and keeps live ElevenLabs generation
+disabled so anonymous traffic cannot consume provider credit. The separate
+sanitized evidence pack records the explicitly authorized final-version LIVE
+gate.
+
+Publication is verified; the B2 lifecycle rule, ElevenLabs account plan/terms,
+and provider spend/usage cap remain owner-controlled **UNVERIFIED** settings.
+See `docs/OWNER_CHECKLIST.md` before submission.

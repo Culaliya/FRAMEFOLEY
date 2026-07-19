@@ -1,21 +1,25 @@
 FRAMEFOLEY FINAL TEST RESULTS
-Evidence label: LOCAL BUILD / MOCKED INTEGRATIONS / CACHED DEMO
+Evidence labels: LOCAL BUILD / MOCKED INTEGRATIONS / CACHED DEMO / LIVE PUBLIC DEPLOYMENT
 Aggregate status: PASS
 
 Clean clone of implementation commit 7acd9e687626824ae62865b66d1fa6ef848132fd:
 - make install: PASS
+- make check: PASS
+- make browser-test: PASS
+
+Final deployed code commit 4a4d994eeaa07507d4da8189b92ac2f14c4ba586:
 - JSON Schema generated types: PASS
-- Ruff formatting: PASS (40 files)
+- Ruff formatting: PASS (41 files)
 - Ruff lint: PASS
 - mypy strict: PASS (30 source files)
-- Python unit/integration: PASS (38 passed)
+- Python unit/integration: PASS (40 passed)
 - TypeScript: PASS
 - ESLint: PASS
 - Web unit: PASS (5 files, 10 tests)
 - Python production compile: PASS
 - Next.js 16.2.10 production build: PASS
 - Secret scan: PASS
-- Playwright browser: PASS (5 passed, 0 failed, 19 intentional project/evidence skips)
+- Playwright browser: PASS (5 passed, 0 failed, 19 intentional evidence/project skips)
 
 Browser coverage:
 - desktop full cached-demo spine through provenance
@@ -33,8 +37,26 @@ Evidence capture:
 - sidecar WebVTT and transcript: present
 - 25-second social clip: present
 
-External boundaries:
-- Docker container build: UNVERIFIED (Docker CLI unavailable)
-- Phase 1 final-version live Genblaze/B2 gate: PASS (2 ready candidates, 24 B2
-  objects, 2/2 manifests verified true; see the three LIVE JSON records)
-- public deployed URL/repository/video URL: UNVERIFIED until owner publication
+External deployment verification on 2026-07-19:
+- public GitHub repository: PASS
+- public demo video raw URL: HTTP 200
+- production API Docker build on Render Free: PASS
+- production web Docker build on Render Free: PASS
+- web root probes: 5/5 HTTP 200
+- API /healthz: HTTP 200, status=ok
+- API /readyz: HTTP 200, status=ready, generationMode=demo,
+  storage=BACKBLAZE B2
+- public cached-demo creation: HTTP 201
+- public B2-backed browser flow: PASS
+- cached candidates: 6/6 ready
+- human approvals: 3/3
+- authoritative mix: B2 STORED
+- deterministic ZIP: B2 OBJECT READY, 23 files, 473.3 KB
+- provenance: 6 records, storage=BACKBLAZE B2
+- browser page/console errors observed: 0
+- public ElevenLabs calls: 0 by design; live generation disabled
+
+Phase 1 final-version live Genblaze/B2 gate:
+- PASS (2 ready candidates, 24 B2 objects, 2/2 manifests verified true)
+- provider-reported cost: USD 0.00 for the recorded calls; this is not proof of
+  an account spend cap

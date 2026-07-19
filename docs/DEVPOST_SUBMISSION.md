@@ -133,10 +133,17 @@ Next.js, React, TypeScript, Tailwind CSS, Web Audio API, FastAPI, Pydantic,
 Genblaze, ElevenLabs Sound Effects, Backblaze B2, FFmpeg/ffprobe, JSON Schema,
 pytest, Vitest, Playwright, and Docker.
 
-## URLs to replace after owner verification
+## Verified public URLs
 
 ```text
-LIVE APP: [UNVERIFIED - ADD URL]
-SOURCE REPOSITORY: [UNVERIFIED - ADD URL]
-DEMO VIDEO: [UNVERIFIED - ADD URL]
+LIVE APP: https://framefoley-culaliya.onrender.com
+SOURCE REPOSITORY: https://github.com/Culaliya/FRAMEFOLEY
+DEMO VIDEO: https://raw.githubusercontent.com/Culaliya/FRAMEFOLEY/main/evidence/final/video/framefoley-demo.mp4
 ```
+
+Deployed source commit:
+`4a4d994eeaa07507d4da8189b92ac2f14c4ba586`.
+
+The Render Free deployment may cold-start after inactivity. The public build
+uses the clearly labeled cached demo with B2 persistence; the separate LIVE
+evidence records the bounded ElevenLabs/Genblaze verification run.

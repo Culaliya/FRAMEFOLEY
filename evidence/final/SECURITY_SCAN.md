@@ -19,5 +19,10 @@ The evidence pack contains no API key, HMAC secret, authorization header,
 cookie, signed query string, account email, or home path. Screenshots and videos
 were visually inspected and show only anonymous project IDs/hashes/object keys.
 
-The post-LIVE scan passed. Run it again only if public URL metadata is added,
-then regenerate `checksums.sha256` last.
+The public repository and raw demo-video URL return HTTP 200. Public API
+responses expose health/readiness labels but no credential. The public host
+runs `GENERATION_MODE=demo` with live generation disabled and without the
+ElevenLabs key; B2 credentials remain masked API-host variables.
+
+The post-LIVE and post-publication scans passed. Public URL metadata was added
+without a secret finding, and `checksums.sha256` was regenerated last.

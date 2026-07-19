@@ -26,8 +26,15 @@ Verified inside the clean copy:
 - 5 browser checks across desktop/tablet/phone, with 0 failures and no console
   errors.
 
-This proves the committed source itself is locally reproducible. Public clean
-clone remains **UNVERIFIED** until owner-authorized repository publication.
-Docker CLI is absent on this machine, so the two Dockerfiles and Compose file
-are source-reviewed but container builds remain **UNVERIFIED** pending a
-Docker-capable host.
+This proves the implementation commit itself is locally reproducible. The
+repository is now public at <https://github.com/Culaliya/FRAMEFOLEY>.
+
+The final deployed code commit
+`4a4d994eeaa07507d4da8189b92ac2f14c4ba586` adds the container-root repair and
+B2 display-label regression test. The working tree passed `make check` (40
+Python tests and 10 web tests) and `make browser-test` (5 passed) after those
+changes. A second fresh-clone run at that exact commit was not performed.
+
+Local Docker CLI remains unavailable, but both production Dockerfiles built and
+started successfully on Render Free at the deployed commit. Public health,
+readiness, B2-backed demo, render, export, and provenance checks then passed.
