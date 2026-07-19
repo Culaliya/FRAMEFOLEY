@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 from datetime import UTC, datetime
 
 from genblaze_core.exceptions import StorageError
@@ -14,6 +15,8 @@ from framefoley_api.contracts import validate_project_document
 from framefoley_api.errors import PublicError
 from framefoley_api.models import FrameFoleyProject
 from framefoley_api.storage import ObjectStore, validate_object_key
+
+logger = logging.getLogger("framefoley.repository")
 
 
 def project_prefix(project_id: str) -> str:
@@ -46,7 +49,14 @@ class ProjectRepository:
                 status_code=404,
             ) from exc
         except StorageError as exc:
-            if exc.error_code is StorageErrorCode.NOT_FOUND:
+            logger.warning(
+                "project storage read failed code=%s status=%s retriable=%s operation=%s",
+                exc.error_code,
+                exc.status_code,
+                exc.is_retriable,
+                exc.operation,
+            )
+            if exc.error_code == StorageErrorCode.NOT_FOUND:
                 raise PublicError(
                     "PROJECT_NOT_FOUND",
                     "Project was not found or has expired.",
