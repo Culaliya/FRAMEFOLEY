@@ -36,7 +36,7 @@ export default defineConfig({
   webServer: publicBaseUrl ? undefined : [
     {
       command:
-        "cd ../.. && .venv/bin/python scripts/build_test_live_proof_fixture.py --output .data/e2e/objects && GENERATION_MODE=demo FRAMEFOLEY_DATA_DIR=.data/e2e FRONTEND_ORIGIN=http://127.0.0.1:3000 .venv/bin/uvicorn framefoley_api.main:app --host 127.0.0.1 --port 8000 --no-access-log",
+        "cd ../.. && e2e_data_dir=$(mktemp -d /tmp/framefoley-e2e.XXXXXX) && trap 'rm -rf \"$e2e_data_dir\"' EXIT && .venv/bin/python scripts/build_test_live_proof_fixture.py --output \"$e2e_data_dir/objects\" && GENERATION_MODE=demo FRAMEFOLEY_DATA_DIR=\"$e2e_data_dir\" FRONTEND_ORIGIN=http://127.0.0.1:3000 .venv/bin/uvicorn framefoley_api.main:app --host 127.0.0.1 --port 8000 --no-access-log",
       url: "http://127.0.0.1:8000/readyz",
       reuseExistingServer: true,
       timeout: 120_000,
