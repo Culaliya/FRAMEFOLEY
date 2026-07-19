@@ -119,13 +119,10 @@ def render_mix(
                     "-map",
                     "[aout]",
                     "-c:v",
-                    "libx264",
-                    "-preset",
-                    "fast",
-                    "-crf",
-                    "20",
-                    "-pix_fmt",
-                    "yuv420p",
+                    # Source previews are already normalized H.264/yuv420p. Copying
+                    # that track keeps the visual timeline byte-stable and avoids
+                    # an unnecessary encoder memory spike on the public Free tier.
+                    "copy",
                     "-c:a",
                     "aac",
                     "-b:a",
