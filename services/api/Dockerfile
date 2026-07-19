@@ -2,7 +2,8 @@ FROM python:3.12.11-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PIP_DISABLE_PIP_VERSION_CHECK=1
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    FRAMEFOLEY_REPO_ROOT=/app
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y ffmpeg ca-certificates \
@@ -14,6 +15,7 @@ RUN python -m pip install --require-hashes -r requirements.lock
 
 COPY src ./src
 COPY services/api ./services/api
+COPY packages/contracts ./packages/contracts
 COPY demo ./demo
 RUN python -m pip install --no-deps --no-build-isolation . \
     && addgroup --system framefoley \

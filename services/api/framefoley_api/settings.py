@@ -48,7 +48,9 @@ class Settings:
 
     @classmethod
     def from_env(cls) -> Settings:
-        repo_root = Path(__file__).resolve().parents[3]
+        repo_root = Path(
+            os.getenv("FRAMEFOLEY_REPO_ROOT") or Path(__file__).resolve().parents[3]
+        ).resolve()
         data_setting = Path(os.getenv("FRAMEFOLEY_DATA_DIR", ".data"))
         data_dir = data_setting if data_setting.is_absolute() else repo_root / data_setting
         generation_mode = os.getenv("GENERATION_MODE", "demo").strip().lower()

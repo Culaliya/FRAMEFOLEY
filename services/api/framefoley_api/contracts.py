@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -15,7 +16,9 @@ from framefoley_api.errors import PublicError
 
 @lru_cache(maxsize=1)
 def _project_validator() -> Draft202012Validator:
-    repo_root = Path(__file__).resolve().parents[3]
+    repo_root = Path(
+        os.getenv("FRAMEFOLEY_REPO_ROOT") or Path(__file__).resolve().parents[3]
+    ).resolve()
     schema_path = repo_root / "packages" / "contracts" / "schemas" / "framefoley.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(schema)
