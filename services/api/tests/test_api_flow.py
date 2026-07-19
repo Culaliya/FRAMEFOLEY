@@ -62,6 +62,19 @@ def _queue_demo_events(client: TestClient, project_id: str, token: str) -> dict[
     return queued.json()["project"]
 
 
+def test_project_response_reports_b2_storage_label(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    store = LocalObjectStore(tmp_path / "objects")
+    store.label = "BACKBLAZE B2"
+    with TestClient(create_app(settings, store=store)) as client:
+        project_id, token = _create_demo(client)
+
+        response = client.get(f"/v1/projects/{project_id}", headers=_auth(token))
+
+    assert response.status_code == 200, response.text
+    assert response.json()["storageLabel"] == "BACKBLAZE B2"
+
+
 def test_demo_project_completes_end_to_end(tmp_path: Path) -> None:
     settings = _settings(tmp_path)
     store = LocalObjectStore(tmp_path / "objects")

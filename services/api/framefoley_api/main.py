@@ -304,7 +304,7 @@ def create_app(
             project=project,
             asset_urls=urls,
             storage_label=(
-                "BACKBLAZE B2" if object_store.label == "backblaze-b2" else "MOCKED LOCAL STORAGE"
+                "BACKBLAZE B2" if object_store.label == "BACKBLAZE B2" else "MOCKED LOCAL STORAGE"
             ),
         )
 
