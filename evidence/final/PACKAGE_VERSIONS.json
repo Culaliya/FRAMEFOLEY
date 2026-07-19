@@ -1,0 +1,53 @@
+{
+  "evidenceLabel": "LOCAL BUILD",
+  "ffmpeg": "ffmpeg version 8.1.1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "node": "v25.2.1",
+  "pnpm": "11.9.0",
+  "pnpmLockSha256": "86dd30baf61988f697d3768526a91dd228b6d8f768b080eae73bdb79a864ca17",
+  "python": "3.12.13",
+  "pythonPackages": {
+    "fastapi": "0.139.2",
+    "genblaze-core": "0.3.4",
+    "genblaze-elevenlabs": "0.3.1",
+    "genblaze-s3": "0.3.4",
+    "httpx": "0.28.1",
+    "jsonschema": "4.26.0",
+    "mypy": "1.17.1",
+    "pillow": "12.3.0",
+    "pytest": "8.4.1",
+    "ruff": "0.15.10",
+    "uvicorn": "0.51.0"
+  },
+  "requirementsLockSha256": "e51fe8a1977464265f3a2e84bad9ff63b90e4dc786d3efaa7fc00eed1ec04161",
+  "schemaVersion": 1,
+  "screenshotCount": 15,
+  "sourceCommit": "UNVERIFIED - source directory is not a git repository",
+  "sourceTreeFileCount": 471,
+  "sourceTreeSha256": "ab39a2843ac48634491fa8d42e23f8f1501617c2ec12367521234304e2ca66bf",
+  "video": {
+    "durationSeconds": 176.16,
+    "filename": "framefoley-demo-raw.webm",
+    "sha256": "faf5a6b30211b4b8f687fa79f35eb939f9c604318876aed56f975c9764fc0f19",
+    "sizeBytes": 9303620,
+    "status": "CACHED DEMO"
+  },
+  "webDependencies": {
+    "@framefoley/contracts": "workspace:*",
+    "@playwright/test": "1.61.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.3",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.10",
+    "jsdom": "29.1.1",
+    "lucide-react": "1.25.0",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "vitest": "4.1.10"
+  }
+}

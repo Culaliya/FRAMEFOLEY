@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://framefoley.local/schemas/framefoley.schema.json",
+  "title": "FrameFoleyProject",
+  "$ref": "#/definitions/FrameFoleyProject",
+  "definitions": {
+    "Sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ObjectKey": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^framefoley/v1/projects/prj_[a-z0-9]+/"
+    },
+    "FrameFoleyProject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "id",
+        "slug",
+        "title",
+        "state",
+        "phase",
+        "createdAt",
+        "updatedAt",
+        "expiresAt",
+        "style",
+        "events",
+        "generationMode",
+        "liveCallCount",
+        "retryBudgetRemaining",
+        "generationRequestKeys"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "id": { "type": "string", "pattern": "^prj_[a-z0-9]{12,32}$" },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "state": {
+          "enum": [
+            "created",
+            "source_uploading",
+            "source_ready",
+            "cueing",
+            "generation_queued",
+            "generating",
+            "audition_ready",
+            "approvals_complete",
+            "rendering",
+            "render_ready",
+            "exporting",
+            "complete",
+            "source_failed",
+            "generation_partial",
+            "generation_failed",
+            "render_failed",
+            "export_failed"
+          ]
+        },
+        "phase": {
+          "enum": ["source", "cue", "generate", "audition", "render", "export", "complete"]
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" },
+        "source": {
+          "anyOf": [{ "$ref": "#/definitions/SourceClip" }, { "type": "null" }],
+          "default": null
+        },
+        "style": { "$ref": "#/definitions/StyleProfile" },
+        "events": {
+          "type": "array",
+          "maxItems": 3,
+          "items": { "$ref": "#/definitions/SoundEvent" }
+        },
+        "render": {
+          "anyOf": [{ "$ref": "#/definitions/MixRender" }, { "type": "null" }],
+          "default": null
+        },
+        "export": {
+          "anyOf": [{ "$ref": "#/definitions/ExportBundle" }, { "type": "null" }],
+          "default": null
+        },
+        "generationMode": { "enum": ["live", "demo", "disabled"] },
+        "liveCallCount": { "type": "integer", "minimum": 0, "maximum": 12 },
+        "retryBudgetRemaining": { "type": "integer", "minimum": 0, "maximum": 6 },
+        "generationRequestKeys": {
+          "type": "array",
+          "maxItems": 16,
+          "items": { "$ref": "#/definitions/Sha256" },
+          "uniqueItems": true
+        },
+        "error": {
+          "anyOf": [{ "$ref": "#/definitions/ApiError" }, { "type": "null" }],
+          "default": null
+        }
+      }
+    },
+    "SourceClip": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "b2Key",
+        "previewKey",
+        "mimeType",
+        "durationSeconds",
+        "width",
+        "height",
+        "fps",
+        "sha256",
+        "thumbnailKey",
+        "sourceAudioStripped",
+        "origin"
+      ],
+      "properties": {
+        "b2Key": { "$ref": "#/definitions/ObjectKey" },
+        "previewKey": { "$ref": "#/definitions/ObjectKey" },
+        "mimeType": { "enum": ["video/mp4", "video/webm"] },
+        "durationSeconds": { "type": "number", "minimum": 8, "maximum": 15 },
+        "width": { "type": "integer", "minimum": 480, "maximum": 1920 },
+        "height": { "type": "integer", "minimum": 270, "maximum": 1080 },
+        "fps": { "type": "number", "exclusiveMinimum": 0, "maximum": 120 },
+        "sha256": { "$ref": "#/definitions/Sha256" },
+        "thumbnailKey": { "$ref": "#/definitions/ObjectKey" },
+        "sourceAudioStripped": { "const": true },
+        "origin": { "enum": ["demo", "upload"] }
+      }
+    },
+    "StyleProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "promptPrefix"],
+      "properties": {
+        "id": {
+          "enum": ["lunar_arcade", "rubber_dungeon", "rust_bloom", "paper_signal", "custom"]
+        },
+        "title": { "type": "string", "minLength": 1, "maxLength": 48 },
+        "promptPrefix": { "type": "string", "minLength": 1, "maxLength": 360 },
+        "customText": { "type": "string", "maxLength": 180 }
+      }
+    },
+    "SoundEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "title",
+        "type",
+        "timestampSeconds",
+        "targetDurationSeconds",
+        "intensity",
+        "candidates"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^evt_[a-z0-9]{8,24}$" },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "title": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "type": { "enum": ["impact", "creature", "ui", "ambience"] },
+        "timestampSeconds": { "type": "number", "minimum": 0, "maximum": 15 },
+        "targetDurationSeconds": { "type": "number", "minimum": 0.08, "maximum": 8 },
+        "intensity": { "enum": ["soft", "medium", "hard"] },
+        "materialNote": { "type": "string", "maxLength": 180 },
+        "candidates": {
+          "type": "array",
+          "maxItems": 2,
+          "items": { "$ref": "#/definitions/GenerationCandidate" }
+        },
+        "approvedCandidateId": {
+          "type": "string",
+          "pattern": "^cand_[a-z0-9]{8,24}$"
+        }
+      }
+    },
+    "GenerationCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "variant",
+        "status",
+        "prompt",
+        "provider",
+        "model",
+        "sourceLabel",
+        "manifestVerified",
+        "retryCount",
+        "repairs"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^cand_[a-z0-9]{8,24}$" },
+        "variant": { "enum": ["clean", "character"] },
+        "status": {
+          "enum": [
+            "queued",
+            "generating",
+            "stored",
+            "checking",
+            "repaired",
+            "retrying",
+            "ready",
+            "failed"
+          ]
+        },
+        "prompt": { "type": "string", "minLength": 1, "maxLength": 1200 },
+        "provider": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "model": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "sourceLabel": { "enum": ["LIVE", "CACHED DEMO", "MOCKED"] },
+        "parameters": {
+          "type": "object",
+          "maxProperties": 12,
+          "additionalProperties": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" }
+            ]
+          }
+        },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "endedAt": { "type": "string", "format": "date-time" },
+        "latencySeconds": { "type": "number", "minimum": 0 },
+        "costUsd": { "type": "number", "minimum": 0 },
+        "genblazeRunId": { "type": "string", "format": "uuid" },
+        "parentRunId": { "type": "string", "format": "uuid" },
+        "manifestUri": { "type": "string", "maxLength": 1024 },
+        "manifestHash": { "$ref": "#/definitions/Sha256" },
+        "manifestVerified": { "type": "boolean" },
+        "rawAssetKey": { "$ref": "#/definitions/ObjectKey" },
+        "approvedWavKey": { "$ref": "#/definitions/ObjectKey" },
+        "approvedOggKey": { "$ref": "#/definitions/ObjectKey" },
+        "waveformKey": { "$ref": "#/definitions/ObjectKey" },
+        "assetSha256": { "$ref": "#/definitions/Sha256" },
+        "qcBefore": { "$ref": "#/definitions/QcReport" },
+        "qcAfter": { "$ref": "#/definitions/QcReport" },
+        "repairs": { "type": "array", "items": { "type": "string", "maxLength": 80 } },
+        "retryCount": { "type": "integer", "minimum": 0, "maximum": 1 },
+        "retryOfCandidateId": { "type": "string", "pattern": "^cand_[a-z0-9]{8,24}$" },
+        "error": {
+          "anyOf": [{ "$ref": "#/definitions/ApiError" }, { "type": "null" }],
+          "default": null
+        }
+      }
+    },
+    "QcReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "verdict",
+        "durationSeconds",
+        "sampleRateHz",
+        "channels",
+        "peakDbfs",
+        "rmsDbfs",
+        "leadingSilenceMs",
+        "trailingSilenceMs",
+        "reasons",
+        "repairs",
+        "sha256"
+      ],
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "verdict": { "enum": ["pass", "repairable", "regenerate", "failed"] },
+        "durationSeconds": { "type": "number", "minimum": 0 },
+        "sampleRateHz": { "type": "integer", "minimum": 1 },
+        "channels": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "peakDbfs": { "type": "number", "maximum": 0 },
+        "rmsDbfs": { "type": "number", "maximum": 0 },
+        "leadingSilenceMs": { "type": "number", "minimum": 0 },
+        "trailingSilenceMs": { "type": "number", "minimum": 0 },
+        "reasons": { "type": "array", "items": { "type": "string", "maxLength": 120 } },
+        "repairs": { "type": "array", "items": { "type": "string", "maxLength": 120 } },
+        "sha256": { "$ref": "#/definitions/Sha256" }
+      }
+    },
+    "MixRender": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "gainsDb"],
+      "properties": {
+        "status": { "enum": ["queued", "rendering", "ready", "failed"] },
+        "previewKey": { "$ref": "#/definitions/ObjectKey" },
+        "mixMapKey": { "$ref": "#/definitions/ObjectKey" },
+        "durationSeconds": { "type": "number", "minimum": 0 },
+        "sha256": { "$ref": "#/definitions/Sha256" },
+        "gainsDb": {
+          "type": "object",
+          "maxProperties": 3,
+          "additionalProperties": { "type": "number", "minimum": -12, "maximum": 6 }
+        },
+        "error": {
+          "anyOf": [{ "$ref": "#/definitions/ApiError" }, { "type": "null" }],
+          "default": null
+        }
+      }
+    },
+    "ExportBundle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "inventory"],
+      "properties": {
+        "status": { "enum": ["queued", "packing", "ready", "failed"] },
+        "zipKey": { "$ref": "#/definitions/ObjectKey" },
+        "sha256": { "$ref": "#/definitions/Sha256" },
+        "sizeBytes": { "type": "integer", "minimum": 0 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "provenanceIndexKey": { "$ref": "#/definitions/ObjectKey" },
+        "inventory": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1, "maxLength": 512 },
+          "uniqueItems": true
+        },
+        "error": {
+          "anyOf": [{ "$ref": "#/definitions/ApiError" }, { "type": "null" }],
+          "default": null
+        }
+      }
+    },
+    "SseEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "projectId", "at", "payload"],
+      "properties": {
+        "type": {
+          "enum": [
+            "project.state",
+            "candidate.status",
+            "candidate.qc",
+            "render.status",
+            "export.status",
+            "heartbeat"
+          ]
+        },
+        "projectId": { "type": "string", "pattern": "^prj_[a-z0-9]{12,32}$" },
+        "eventId": { "type": "string", "pattern": "^evt_[a-z0-9]{8,24}$" },
+        "candidateId": { "type": "string", "pattern": "^cand_[a-z0-9]{8,24}$" },
+        "at": { "type": "string", "format": "date-time" },
+        "payload": { "type": "object" }
+      }
+    },
+    "ApiError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "retryable", "requestId"],
+      "properties": {
+        "code": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,63}$" },
+        "message": { "type": "string", "minLength": 1, "maxLength": 240 },
+        "retryable": { "type": "boolean" },
+        "requestId": { "type": "string", "pattern": "^req_[a-z0-9]{10,32}$" }
+      }
+    }
+  }
+}

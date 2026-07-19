@@ -1,0 +1,23 @@
+{
+  "allReadyLiveCandidatesVerified": true,
+  "evidenceLabel": "LIVE",
+  "projectId": "prj_a01e6b7292cb83bb",
+  "recordedAt": "2026-07-19T06:13:40.540113+00:00",
+  "records": [
+    {
+      "candidateId": "cand_d318d507ff32",
+      "manifestCanonicalHash": "cab2a9534339400c470f2a052f9453a231d06f67ad3a15bf25bb990c3f614415",
+      "manifestObjectKey": "framefoley/v1/projects/prj_a01e6b7292cb83bb/genblaze/runs/2026-07-19/9433ec16-44b4-40ce-849f-ac0dd02a062f/manifest.json",
+      "manifestVerifyReturned": true,
+      "runId": "9433ec16-44b4-40ce-849f-ac0dd02a062f"
+    },
+    {
+      "candidateId": "cand_cdffd8b2498e",
+      "manifestCanonicalHash": "c9d957fa4d72f078eda854d633ee4af9721ad0d6a599930a8621595eeaeb2c9e",
+      "manifestObjectKey": "framefoley/v1/projects/prj_a01e6b7292cb83bb/genblaze/runs/2026-07-19/46081af2-03e7-42d8-b961-6c52cf89d254/manifest.json",
+      "manifestVerifyReturned": true,
+      "runId": "46081af2-03e7-42d8-b961-6c52cf89d254"
+    }
+  ],
+  "schemaVersion": 1
+}

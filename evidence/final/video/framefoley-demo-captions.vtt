@@ -1,0 +1,69 @@
+WEBVTT
+
+00:00.000 --> 00:09.000
+A game can already move beautifully and still feel unfinished in silence.
+FRAMEFOLEY turns one short clip into a tested, inspectable sound kit.
+
+00:09.000 --> 00:18.000
+It is not a chat box and does not pretend to understand the whole game.
+It helps a creator make three precise sound decisions.
+
+00:18.000 --> 00:28.000
+JELLY RELAY is an original twelve-second demo generated from code,
+with no third-party footage and no embedded audio.
+
+00:28.000 --> 00:40.000
+Mark the glass landing, bubble pop, and route confirmation,
+then lock one of four bounded sonic styles.
+
+00:40.000 --> 00:52.000
+Each event receives exactly two independent candidates.
+This run is explicitly CACHED DEMO and MOCKED LOCAL STORAGE.
+
+00:52.000 --> 01:02.000
+It never calls cached files live or claims they reached B2.
+Final-version LIVE evidence is captured separately.
+
+01:02.000 --> 01:15.000
+Genblaze orchestrates each generated candidate and records its provenance.
+Backblaze B2 stores source, assets, manifests, QC, derivatives, preview, and export.
+
+01:15.000 --> 01:24.000
+Deterministic code performs the technical audio checks.
+The developer still makes the creative decision by ear.
+
+01:24.000 --> 01:35.000
+FRAMEFOLEY measures duration, peak, RMS, silence, channels,
+sample rate, and SHA-256 using fixed deterministic thresholds.
+
+01:35.000 --> 01:47.000
+Repair may trim, control gain, limit, downmix, resample, and convert.
+Original lineage stays intact; canonical manifests are never edited.
+
+01:47.000 --> 01:58.000
+Play A alone, switch to B in exact video context, compare metrics,
+and approve by ear. Nothing autoplays.
+
+01:58.000 --> 02:11.000
+The authoritative server render delays approved WAVs to exact timestamps,
+applies bounded gain, mixes, limits, and encodes H.264/AAC.
+
+02:11.000 --> 02:22.000
+The mix map records event, candidate, timestamp, gain,
+source hash, and render hash. This recording remains LOCAL / MOCKED.
+
+02:22.000 --> 02:34.000
+The deterministic ZIP contains preview, WAV, OGG, waveforms,
+QC, manifests, project state, and provenance.
+
+02:34.000 --> 02:44.000
+The ZIP receives a size, timestamp, inventory, and SHA-256.
+Production B2 uses the same private project object path.
+
+02:44.000 --> 02:53.000
+The provenance inspector exposes source label, prompt, parameters,
+provider/model, lineage, timestamps, object key, hashes, QC, and approval.
+
+02:53.000 --> 02:56.000
+The sound may be synthetic. The history is not.
+That is FRAMEFOLEY.

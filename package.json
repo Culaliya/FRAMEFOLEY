@@ -1,0 +1,16 @@
+{
+  "name": "framefoley",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "build": "pnpm --filter @framefoley/contracts generate && pnpm --filter @framefoley/web build",
+    "dev:web": "pnpm --filter @framefoley/web dev",
+    "lint": "pnpm --filter @framefoley/web lint",
+    "typecheck": "pnpm --filter @framefoley/web typecheck",
+    "test": "pnpm --filter @framefoley/web test",
+    "test:e2e": "pnpm --filter @framefoley/web test:e2e",
+    "contracts:generate": "pnpm --filter @framefoley/contracts generate",
+    "contracts:check": "pnpm --filter @framefoley/contracts check"
+  }
+}

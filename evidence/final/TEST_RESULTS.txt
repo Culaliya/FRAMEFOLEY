@@ -1,0 +1,40 @@
+FRAMEFOLEY FINAL TEST RESULTS
+Evidence label: LOCAL BUILD / MOCKED INTEGRATIONS / CACHED DEMO
+Aggregate status: PASS
+
+Clean source-only copy:
+- make install: PASS
+- JSON Schema generated types: PASS
+- Ruff formatting: PASS (40 files)
+- Ruff lint: PASS
+- mypy strict: PASS (30 source files)
+- Python unit/integration: PASS (38 passed)
+- TypeScript: PASS
+- ESLint: PASS
+- Web unit: PASS (5 files, 10 tests)
+- Python production compile: PASS
+- Next.js 16.2.10 production build: PASS
+- Secret scan: PASS
+- Playwright browser: PASS (5 passed, 0 failed, 19 intentional project/evidence skips)
+
+Browser coverage:
+- desktop full cached-demo spine through provenance
+- desktop custom MP4 upload
+- phone cue keyboard adjustment and 44px action target
+- tablet editorial layout
+- prefers-reduced-motion
+- no page/console errors
+
+Evidence capture:
+- desktop actual-operation recording: PASS
+- tablet screenshot capture: PASS
+- phone screenshot capture: PASS
+- final MP4: 176 seconds, H.264 video, AAC narration, English mov_text subtitle
+- sidecar WebVTT and transcript: present
+- 25-second social clip: present
+
+External boundaries:
+- Docker container build: UNVERIFIED (Docker CLI unavailable)
+- Phase 1 final-version live Genblaze/B2 gate: PASS (2 ready candidates, 24 B2
+  objects, 2/2 manifests verified true; see the three LIVE JSON records)
+- public deployed URL/repository/video URL: UNVERIFIED until owner publication

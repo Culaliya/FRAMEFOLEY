@@ -1,0 +1,70 @@
+{
+  "actualCostUsd": 0.0,
+  "candidateCount": 2,
+  "candidates": [
+    {
+      "assetSha256": "7c8e4f40ae3b1dc4e56531b211185d3c2ebd80646078d275483b88f91a9007ae",
+      "candidateId": "cand_d318d507ff32",
+      "costUsd": null,
+      "endedAt": "2026-07-19T06:13:14.997763Z",
+      "error": null,
+      "latencySeconds": 4.195,
+      "manifestHash": "cab2a9534339400c470f2a052f9453a231d06f67ad3a15bf25bb990c3f614415",
+      "manifestVerified": true,
+      "parentRunId": null,
+      "qcAfter": "pass",
+      "qcBefore": "repairable",
+      "repairs": [
+        "raise_low_gain",
+        "resample_48000_hz",
+        "downmix_mono",
+        "format_pcm_s16le_wav"
+      ],
+      "retryCount": 0,
+      "runId": "9433ec16-44b4-40ce-849f-ac0dd02a062f",
+      "sourceLabel": "LIVE",
+      "startedAt": "2026-07-19T06:13:10.802280Z",
+      "status": "ready"
+    },
+    {
+      "assetSha256": "738f231a719ae5183b4908b259128faff2abc628949d3ba4e2b98d37c91a6be9",
+      "candidateId": "cand_cdffd8b2498e",
+      "costUsd": null,
+      "endedAt": "2026-07-19T06:13:28.947469Z",
+      "error": null,
+      "latencySeconds": 4.961,
+      "manifestHash": "c9d957fa4d72f078eda854d633ee4af9721ad0d6a599930a8621595eeaeb2c9e",
+      "manifestVerified": true,
+      "parentRunId": null,
+      "qcAfter": "pass",
+      "qcBefore": "repairable",
+      "repairs": [
+        "resample_48000_hz",
+        "downmix_mono",
+        "format_pcm_s16le_wav"
+      ],
+      "retryCount": 0,
+      "runId": "46081af2-03e7-42d8-b961-6c52cf89d254",
+      "sourceLabel": "LIVE",
+      "startedAt": "2026-07-19T06:13:23.986559Z",
+      "status": "ready"
+    }
+  ],
+  "costReporting": "provider-reported when available; zero is not a spend-cap claim",
+  "evidenceLabel": "LIVE",
+  "model": "eleven_text_to_sound_v2",
+  "packages": {
+    "elevenlabs": "2.58.0",
+    "fastapi": "0.139.2",
+    "genblaze-core": "0.3.4",
+    "genblaze-elevenlabs": "0.3.1",
+    "genblaze-s3": "0.3.4"
+  },
+  "projectId": "prj_a01e6b7292cb83bb",
+  "provider": "elevenlabs-sfx",
+  "providerCallCount": 2,
+  "readyVerifiedCandidateCount": 2,
+  "recordedAt": "2026-07-19T06:13:40.540113+00:00",
+  "requestedEventCount": 1,
+  "schemaVersion": 1
+}

@@ -1,0 +1,70 @@
+{
+  "audio": [
+    {
+      "eventId": "evt_landing01",
+      "eventSlug": "glass-landing",
+      "path": "cache/raw/glass-landing-clean.wav",
+      "sha256": "f14444efdaeaa61ad5c0edb1a039f4e5f77940d3814c88d71c3c0449984be78e",
+      "sourceLabel": "CACHED DEMO",
+      "variant": "clean"
+    },
+    {
+      "eventId": "evt_landing01",
+      "eventSlug": "glass-landing",
+      "path": "cache/raw/glass-landing-character.wav",
+      "sha256": "ebe417eedaddf3a969ccc8e22e49a5ee97bddb173bfed8bcba7a4c3f1c56feea",
+      "sourceLabel": "CACHED DEMO",
+      "variant": "character"
+    },
+    {
+      "eventId": "evt_bubble02",
+      "eventSlug": "bubble-pop",
+      "path": "cache/raw/bubble-pop-clean.wav",
+      "sha256": "fbc2d762433eef8da8364616c0bd3da632b88fa7664dad7491f226f3719da6d5",
+      "sourceLabel": "CACHED DEMO",
+      "variant": "clean"
+    },
+    {
+      "eventId": "evt_bubble02",
+      "eventSlug": "bubble-pop",
+      "path": "cache/raw/bubble-pop-character.wav",
+      "sha256": "3d2634c29659f289eceeaea7a27955571e41f94566462b65c0804cfe99569272",
+      "sourceLabel": "CACHED DEMO",
+      "variant": "character"
+    },
+    {
+      "eventId": "evt_crystal03",
+      "eventSlug": "route-confirm",
+      "path": "cache/raw/route-confirm-clean.wav",
+      "sha256": "da7fc88da760624c8c6ee9814fbc072eeab4fb7547a64f748d27d5c20aabaa76",
+      "sourceLabel": "CACHED DEMO",
+      "variant": "clean"
+    },
+    {
+      "eventId": "evt_crystal03",
+      "eventSlug": "route-confirm",
+      "path": "cache/raw/route-confirm-character.wav",
+      "sha256": "b52b6ceb96371881f3942ee17fd2a43fb91b23de6b51df2dc83958a476f0bec9",
+      "sourceLabel": "CACHED DEMO",
+      "variant": "character"
+    }
+  ],
+  "deterministic": true,
+  "generator": "scripts/generate_demo_clip.py",
+  "schemaVersion": 1,
+  "thirdPartyAssets": [],
+  "thumbnail": {
+    "path": "jelly-relay-thumbnail.webp",
+    "sha256": "c62edccbaf8f84551b20a73b79b887875a9095fe6755844aaf0777a7771d8f92"
+  },
+  "title": "JELLY RELAY",
+  "video": {
+    "audioStreams": 0,
+    "durationSeconds": 12,
+    "fps": 30,
+    "height": 720,
+    "path": "jelly-relay.mp4",
+    "sha256": "11600dff6e61888aa9cad67205f24a7ebba52fedb579d40bc7e050edde2ab86f",
+    "width": 1280
+  }
+}

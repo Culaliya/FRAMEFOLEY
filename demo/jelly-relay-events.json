@@ -1,0 +1,32 @@
+[
+  {
+    "id": "evt_landing01",
+    "slug": "glass-landing",
+    "title": "Jelly lands on glass",
+    "type": "impact",
+    "timestampSeconds": 1.6,
+    "targetDurationSeconds": 0.72,
+    "intensity": "medium",
+    "materialNote": "Soft gelatin weight on a thin glass platform."
+  },
+  {
+    "id": "evt_bubble02",
+    "slug": "bubble-pop",
+    "title": "Bubble enemy pops",
+    "type": "creature",
+    "timestampSeconds": 5.2,
+    "targetDurationSeconds": 0.72,
+    "intensity": "medium",
+    "materialNote": "Elastic bubble skin collapsing into tiny glitter."
+  },
+  {
+    "id": "evt_crystal03",
+    "slug": "route-confirm",
+    "title": "Route crystal confirms",
+    "type": "ui",
+    "timestampSeconds": 8.85,
+    "targetDurationSeconds": 0.36,
+    "intensity": "soft",
+    "materialNote": "Small luminous crystal with a readable confirmation tick."
+  }
+]

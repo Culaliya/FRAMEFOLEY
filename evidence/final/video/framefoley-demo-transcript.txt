@@ -1,0 +1,17 @@
+A game can already move beautifully and still feel unfinished in silence. FRAMEFOLEY turns one short gameplay clip into a tested, inspectable sound kit. It is not a chat box, and it does not pretend to understand the whole game. It helps a creator make three precise sound decisions.
+
+This is JELLY RELAY, an original twelve-second demo generated from code, with no third-party footage and no embedded audio. I can also upload a validated MP4 or WebM. Here I mark the glass landing at one point six seconds, the bubble pop at five point two, and the route confirmation at eight point eight five. Then I lock one of four bounded sonic styles.
+
+Each event receives exactly two independent candidates. This recording uses the original cached demo, and the screen explicitly says CACHED DEMO and MOCKED LOCAL STORAGE. It never calls these files live, and it never claims they reached B2. Separate final-version live evidence is required for real Genblaze run IDs, B2 objects, and canonical manifest verification.
+
+Genblaze orchestrates each generated candidate and records its provenance. Backblaze B2 stores the original clip, generated assets, manifests, QC reports, repaired derivatives, preview, and export bundle. Deterministic code performs the technical audio checks. The developer still makes the creative decision by ear.
+
+Provider output does not grade itself. FRAMEFOLEY decodes the bytes and measures duration, peak, RMS, leading and trailing silence, channels, sample rate, and SHA-two-fifty-six. Fixed thresholds decide pass, repair, regenerate, or fail. A repair can trim silence, control gain, limit, downmix to mono, resample to forty-eight kilohertz, and create approved WAV and OGG derivatives. It preserves original lineage and never edits the canonical Genblaze manifest.
+
+Technical validity is only the first gate. I can play candidate A alone, switch to B in the exact video context, stop every audio node, compare waveforms and metrics, and then approve by ear. Nothing autoplays, and the application never chooses the creative winner for me.
+
+The server render is authoritative. Each approved WAV is delayed to the marked gameplay timestamp, receives a bounded gain trim from minus twelve to plus six decibels, and is mixed and limited through fixed FFmpeg argument arrays. The result is an H.264 and AAC preview. A mix map records every event, chosen candidate, timestamp, gain, source hash, and render hash. In this local recording, the status honestly remains LOCAL, MOCKED.
+
+The deterministic ZIP contains the mixed preview, WAV and OGG effects, waveforms, QC before and after, cache or canonical manifests, soundpack metadata, project state, and the provenance index. The ZIP itself receives a byte size, timestamp, inventory, and SHA-two-fifty-six. On production B2, the same server path writes the export under the private project prefix.
+
+Finally, the provenance inspector shows the source label, full prompt, parameters, provider and model, run lineage, timestamps, storage object key, manifest status, hashes, QC history, repairs, and human approval. The sound may be synthetic. The history is not. Provenance is not a rights warranty, but it makes generation, storage, processing, and the human decision visible enough to inspect. That is FRAMEFOLEY.

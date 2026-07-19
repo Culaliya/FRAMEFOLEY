@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="FRAMEFOLEY mark">
+  <rect width="120" height="120" rx="18" fill="#090B0C"/>
+  <path d="M20 30h80M20 90h80M28 20v80M92 20v80" stroke="#ECE7DB" stroke-width="5"/>
+  <path d="M42 43v34l33-17z" fill="#D8FF57"/>
+  <circle cx="92" cy="30" r="9" fill="#FF5B4A"/>
+</svg>
