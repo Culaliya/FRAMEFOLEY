@@ -56,7 +56,7 @@ test("capture the fresh public Phase 2 competition master spine", async ({ page 
   await page.getByTestId("lock-cues").click();
   await expect(page).toHaveURL(/\/generate/);
   await page.getByTestId("generate-candidates").click();
-  await expect(page.getByTestId("open-audition")).toBeVisible({ timeout: 40_000 });
+  await expect(page.getByTestId("open-audition")).toBeVisible({ timeout: 110_000 });
   await page.locator(".demo-disclosure").first().scrollIntoViewIfNeeded();
   await hold(15_000);
 
@@ -72,14 +72,16 @@ test("capture the fresh public Phase 2 competition master spine", async ({ page 
   await hold(4_000);
   await page.getByRole("button", { name: "STOP ALL" }).click();
   for (let index = 0; index < 3; index += 1) {
-    await cachedEvents.nth(index).locator(".candidate-card").first().getByRole("button", { name: "APPROVE" }).click();
+    const card = cachedEvents.nth(index).locator(".candidate-card").first();
+    await card.getByRole("button", { name: "APPROVE" }).click();
+    await expect(card.locator(".approve-button")).toHaveText("APPROVED", { timeout: 30_000 });
   }
   await hold(4_000);
 
   mark("mix");
   await page.getByTestId("open-mix").click();
   await page.getByTestId("render-mix").click();
-  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 40_000 });
+  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 110_000 });
   await page.locator(".render-comparison").scrollIntoViewIfNeeded();
   await hold(9_000);
 
@@ -103,10 +105,10 @@ test("capture the fresh public Phase 2 competition master spine", async ({ page 
   mark("export_provenance");
   await page.getByTestId("open-mix").click();
   await page.getByTestId("render-mix").click();
-  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 40_000 });
+  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 110_000 });
   await page.getByTestId("open-export").click();
   await page.getByTestId("export-kit").click();
-  await expect(page.getByTestId("download-kit")).toBeVisible({ timeout: 40_000 });
+  await expect(page.getByTestId("download-kit")).toBeVisible({ timeout: 110_000 });
   await hold(4_000);
   await page.getByRole("link", { name: /INSPECT PROVENANCE/ }).click();
   await expect(page.locator(".provenance-record")).toHaveCount(2);

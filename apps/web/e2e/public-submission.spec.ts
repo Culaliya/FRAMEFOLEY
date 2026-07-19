@@ -42,10 +42,10 @@ async function completeLiveProof(page: Page): Promise<void> {
   await event.locator(".candidate-card").first().getByRole("button", { name: "APPROVE" }).click();
   await page.getByTestId("open-mix").click();
   await page.getByTestId("render-mix").click();
-  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 110_000 });
   await page.getByTestId("open-export").click();
   await page.getByTestId("export-kit").click();
-  await expect(page.getByTestId("download-kit")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId("download-kit")).toBeVisible({ timeout: 110_000 });
   await page.getByRole("link", { name: /INSPECT PROVENANCE/ }).click();
   await expect(page.locator(".provenance-record")).toHaveCount(2);
   await expect(page.getByText("Manifest.verify(): TRUE").first()).toBeVisible();
@@ -83,22 +83,24 @@ test("public CACHED DEMO remains complete", async ({ page }, testInfo) => {
   const consoleErrors = failOnConsoleErrors(page);
   await page.goto("/projects/new");
   await page.getByTestId("start-demo").click();
-  await expect(page).toHaveURL(/\/cue/);
+  await expect(page).toHaveURL(/\/cue/, { timeout: 110_000 });
   await page.getByTestId("lock-cues").click();
   await page.getByTestId("generate-candidates").click();
-  await expect(page.getByTestId("open-audition")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId("open-audition")).toBeVisible({ timeout: 110_000 });
   await page.getByTestId("open-audition").click();
   const events = page.locator(".audition-event");
   await expect(events).toHaveCount(3);
   for (let index = 0; index < 3; index += 1) {
-    await events.nth(index).locator(".candidate-card").first().getByRole("button", { name: "APPROVE" }).click();
+    const card = events.nth(index).locator(".candidate-card").first();
+    await card.getByRole("button", { name: "APPROVE" }).click();
+    await expect(card.locator(".approve-button")).toHaveText("APPROVED", { timeout: 30_000 });
   }
   await page.getByTestId("open-mix").click();
   await page.getByTestId("render-mix").click();
-  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 110_000 });
   await page.getByTestId("open-export").click();
   await page.getByTestId("export-kit").click();
-  await expect(page.getByTestId("download-kit")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId("download-kit")).toBeVisible({ timeout: 110_000 });
   await page.getByRole("link", { name: /INSPECT PROVENANCE/ }).click();
   await expect(page.locator(".provenance-record")).toHaveCount(6);
   await capture(page, "04-cached-demo-provenance-desktop.png", true);

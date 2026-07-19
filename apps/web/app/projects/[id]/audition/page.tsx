@@ -264,7 +264,6 @@ export default function AuditionPage() {
             </header>
             <div className="candidate-pair">
               {soundEvent.candidates.map((candidate) => {
-                const candidateKey = `${soundEvent.id}:${candidate.id}`;
                 return (
                   <CandidateCard
                     key={candidate.id}
@@ -279,7 +278,7 @@ export default function AuditionPage() {
                     }
                     selected={(selected[soundEvent.id] ?? soundEvent.candidates[0]?.id) === candidate.id}
                     approved={soundEvent.approvedCandidateId === candidate.id}
-                    busy={busyKey === candidateKey}
+                    busy={busyKey !== null}
                     onSelect={() =>
                       setSelected((current) => ({ ...current, [soundEvent.id]: candidate.id }))
                     }
