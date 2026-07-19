@@ -2,7 +2,7 @@ FRAMEFOLEY FINAL TEST RESULTS
 Evidence label: LOCAL BUILD / MOCKED INTEGRATIONS / CACHED DEMO
 Aggregate status: PASS
 
-Clean source-only copy:
+Clean clone of implementation commit 7acd9e687626824ae62865b66d1fa6ef848132fd:
 - make install: PASS
 - JSON Schema generated types: PASS
 - Ruff formatting: PASS (40 files)

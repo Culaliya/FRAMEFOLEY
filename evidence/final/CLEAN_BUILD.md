@@ -1,10 +1,11 @@
 # Clean build evidence
 
-Status: **PASS — LOCAL CLEAN-COPY**
+Status: **PASS — LOCAL CLEAN CLONE**
 
-A new source-only temporary directory was created without `.venv`,
-`node_modules`, `.next`, `.data`, caches, browser reports, or final evidence.
-The following commands completed from that directory:
+A fresh clone of implementation commit
+`7acd9e687626824ae62865b66d1fa6ef848132fd` was created without `.venv`,
+`node_modules`, `.next`, `.data`, caches, or browser reports. The following
+commands completed from that clone:
 
 ```text
 make install       PASS
@@ -25,7 +26,8 @@ Verified inside the clean copy:
 - 5 browser checks across desktop/tablet/phone, with 0 failures and no console
   errors.
 
-The source directory is not yet a git repository, so this proves a clean source
-copy rather than a public clean clone. Docker CLI is absent on this machine, so
-the two Dockerfiles and Compose file are source-reviewed but container builds
-remain **UNVERIFIED** pending a Docker-capable host.
+This proves the committed source itself is locally reproducible. Public clean
+clone remains **UNVERIFIED** until owner-authorized repository publication.
+Docker CLI is absent on this machine, so the two Dockerfiles and Compose file
+are source-reviewed but container builds remain **UNVERIFIED** pending a
+Docker-capable host.

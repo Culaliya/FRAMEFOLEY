@@ -21,14 +21,14 @@
   "requirementsLockSha256": "e51fe8a1977464265f3a2e84bad9ff63b90e4dc786d3efaa7fc00eed1ec04161",
   "schemaVersion": 1,
   "screenshotCount": 15,
-  "sourceCommit": "UNVERIFIED - source directory is not a git repository",
-  "sourceTreeFileCount": 471,
-  "sourceTreeSha256": "ab39a2843ac48634491fa8d42e23f8f1501617c2ec12367521234304e2ca66bf",
+  "sourceCommit": "7acd9e687626824ae62865b66d1fa6ef848132fd",
+  "sourceTreeFileCount": 134,
+  "sourceTreeSha256": "23a964384b595472cfad3a05fb5be6275925b47bf81647da3ee03728591b8e1d",
   "video": {
-    "durationSeconds": 176.16,
-    "filename": "framefoley-demo-raw.webm",
-    "sha256": "faf5a6b30211b4b8f687fa79f35eb939f9c604318876aed56f975c9764fc0f19",
-    "sizeBytes": 9303620,
+    "durationSeconds": 176.0,
+    "filename": "framefoley-demo.mp4",
+    "sha256": "ddd242d474c419c3b64c259057e0ab9a990b7d3f9199781114cfecbdd6c3f258",
+    "sizeBytes": 8442951,
     "status": "CACHED DEMO"
   },
   "webDependencies": {

@@ -26,6 +26,11 @@ SKIP_PARTS = {
     "playwright-report",
     "test-results",
 }
+SKIP_FILES = {
+    "AGENTS.md",
+    "CODEX_FRAMEFOLEY_PHASE_0_TECHNICAL_SPIKE.md",
+    "FRAMEFOLEY_PRODUCT_BLUEPRINT.md",
+}
 
 
 def _write_json(path: Path, payload: object) -> None:
@@ -53,11 +58,29 @@ def _source_commit() -> str:
     return completed.stdout.strip()
 
 
+def _source_paths() -> list[Path]:
+    try:
+        completed = subprocess.run(
+            ["git", "ls-files", "-z"],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            timeout=15,
+        )
+    except (FileNotFoundError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return sorted(ROOT.rglob("*"))
+    return [ROOT / item.decode("utf-8") for item in completed.stdout.split(b"\0") if item]
+
+
 def _source_fingerprint() -> tuple[str, int]:
     digest = hashlib.sha256()
     count = 0
-    for path in sorted(ROOT.rglob("*")):
-        if not path.is_file() or any(part in SKIP_PARTS for part in path.parts):
+    for path in _source_paths():
+        if (
+            not path.is_file()
+            or path.name in SKIP_FILES
+            or any(part in SKIP_PARTS for part in path.parts)
+        ):
             continue
         if path.name.startswith(".env") and path.name != ".env.example":
             continue

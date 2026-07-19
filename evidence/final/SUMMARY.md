@@ -1,6 +1,6 @@
 # FRAMEFOLEY Phase 1 final evidence summary
 
-Current recommendation: **SUBMIT AFTER OWNER PUBLICATION**
+Current recommendation: **SUBMIT AFTER FIXES — publication only**
 
 ## Proven locally
 
