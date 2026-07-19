@@ -378,7 +378,11 @@ def main() -> int:
     if not RAW_VIDEO.is_file() or not TIMINGS.is_file():
         raise FileNotFoundError("run the fresh public Phase 2 Playwright capture first")
     _write_text_tracks()
-    raw_duration = float(_probe(RAW_VIDEO)["format"]["duration"])
+    raw_probe = _probe(RAW_VIDEO)
+    raw_duration_value = raw_probe.get("format", {}).get("duration")
+    if raw_duration_value is None:
+        raise ValueError("fresh public recording is truncated or missing WebM duration metadata")
+    raw_duration = float(raw_duration_value)
     marks = _load_marks()
     with tempfile.TemporaryDirectory(prefix="framefoley-phase2-video-") as temporary:
         directory = Path(temporary)

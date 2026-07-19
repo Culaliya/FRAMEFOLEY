@@ -75,6 +75,23 @@ def test_project_response_reports_b2_storage_label(tmp_path: Path) -> None:
     assert response.json()["storageLabel"] == "BACKBLAZE B2"
 
 
+def test_project_load_does_not_depend_on_head_exists(tmp_path: Path) -> None:
+    class HeadDeniedStore(LocalObjectStore):
+        def exists(self, key: str) -> bool:
+            del key
+            return False
+
+    store = HeadDeniedStore(tmp_path / "head-denied-objects")
+    with TestClient(create_app(_settings(tmp_path), store=store)) as client:
+        created = client.post("/v1/projects/demo").json()
+        loaded = client.get(
+            f"/v1/projects/{created['projectId']}",
+            headers=_auth(created["projectToken"]),
+        )
+        assert loaded.status_code == 200
+        assert loaded.json()["project"]["id"] == created["projectId"]
+
+
 def test_demo_project_completes_end_to_end(tmp_path: Path) -> None:
     settings = _settings(tmp_path)
     store = LocalObjectStore(tmp_path / "objects")

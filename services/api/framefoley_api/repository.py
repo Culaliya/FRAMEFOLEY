@@ -6,6 +6,8 @@ import hashlib
 import json
 from datetime import UTC, datetime
 
+from genblaze_core.exceptions import StorageError
+from genblaze_core.storage.errors import StorageErrorCode
 from pydantic import ValidationError
 
 from framefoley_api.contracts import validate_project_document
@@ -35,14 +37,29 @@ class ProjectRepository:
 
     def load(self, project_id: str) -> FrameFoleyProject:
         key = project_key(project_id)
-        if not self.store.exists(key):
+        try:
+            encoded = self.store.get(key)
+        except FileNotFoundError as exc:
             raise PublicError(
                 "PROJECT_NOT_FOUND",
                 "Project was not found or has expired.",
                 status_code=404,
-            )
+            ) from exc
+        except StorageError as exc:
+            if exc.error_code is StorageErrorCode.NOT_FOUND:
+                raise PublicError(
+                    "PROJECT_NOT_FOUND",
+                    "Project was not found or has expired.",
+                    status_code=404,
+                ) from exc
+            raise PublicError(
+                "PROJECT_STORAGE_UNAVAILABLE",
+                "Private project storage is temporarily unavailable.",
+                retryable=bool(exc.is_retriable),
+                status_code=503,
+            ) from exc
         try:
-            payload = json.loads(self.store.get(key))
+            payload = json.loads(encoded)
             if not isinstance(payload, dict) or payload.get("schemaVersion") != 1:
                 raise ValueError("unsupported project schema version")
             validate_project_document(payload)
