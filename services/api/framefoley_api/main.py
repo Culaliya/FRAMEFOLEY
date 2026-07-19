@@ -676,7 +676,15 @@ def create_app(
         return StreamingResponse(
             stream(),
             media_type="text/event-stream",
-            headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+            headers={
+                "Cache-Control": "no-cache",
+                "X-Accel-Buffering": "no",
+                # Cloudflare intentionally removes X-Accel-Buffering from public
+                # responses. Keep the standard origin directive and expose a
+                # product-owned, non-secret companion so the public verifier can
+                # distinguish documented edge stripping from an application bug.
+                "X-FrameFoley-Buffering": "disabled",
+            },
         )
 
     @app.post(

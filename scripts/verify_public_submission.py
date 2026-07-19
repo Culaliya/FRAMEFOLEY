@@ -132,7 +132,10 @@ def _approve_render_export(
     return exported, provenance
 
 
-def _verify_sse_headers(client: httpx.Client, api_url: str, project_id: str, token: str) -> None:
+def _verify_sse_headers(
+    client: httpx.Client, api_url: str, project_id: str, token: str
+) -> dict[str, Any]:
+    started = time.monotonic()
     with client.stream(
         "GET",
         f"{api_url}/v1/projects/{project_id}/stream",
@@ -140,10 +143,33 @@ def _verify_sse_headers(client: httpx.Client, api_url: str, project_id: str, tok
     ) as response:
         response.raise_for_status()
         _require(response.headers.get("cache-control") == "no-cache", "SSE cache header mismatch")
-        _require(
-            response.headers.get("x-accel-buffering") == "no",
-            "SSE buffering header mismatch",
+        accel_buffering = response.headers.get("x-accel-buffering")
+        cloudflare_edge = bool(response.headers.get("cf-ray")) or (
+            response.headers.get("server", "").lower() == "cloudflare"
         )
+        _require(
+            accel_buffering == "no" or (accel_buffering is None and cloudflare_edge),
+            "SSE origin buffering directive is absent without a documented stripping edge",
+        )
+        _require(
+            response.headers.get("x-framefoley-buffering") == "disabled",
+            "SSE public buffering contract mismatch",
+        )
+        first_line = next((line for line in response.iter_lines() if line), "")
+        first_event_seconds = round(time.monotonic() - started, 3)
+        _require(
+            first_line.startswith(("id:", "event:")),
+            "SSE did not yield an authoritative event",
+        )
+        _require(first_event_seconds < 10, "SSE first event was buffered too long")
+        return {
+            "cacheControl": "no-cache",
+            "originXAccelBuffering": (
+                "no" if accel_buffering == "no" else "STRIPPED_BY_CLOUDFLARE"
+            ),
+            "publicBufferingContract": "disabled",
+            "firstEventSeconds": first_event_seconds,
+        }
 
 
 def _verify_cached_demo(client: httpx.Client, api_url: str) -> dict[str, Any]:
@@ -154,7 +180,7 @@ def _verify_cached_demo(client: httpx.Client, api_url: str) -> dict[str, Any]:
     _require(envelope.get("storageLabel") == "BACKBLAZE B2", "cached demo is not B2-backed")
     project = envelope["project"]
     _require(project.get("evidenceLabel") == "CACHED DEMO", "cached demo label mismatch")
-    _verify_sse_headers(client, api_url, project_id, token)
+    sse = _verify_sse_headers(client, api_url, project_id, token)
     queued = _json(
         client.put(
             f"{api_url}/v1/projects/{project_id}/events",
@@ -186,6 +212,7 @@ def _verify_cached_demo(client: httpx.Client, api_url: str) -> dict[str, Any]:
         "candidateCount": 6,
         "finalState": exported.get("state"),
         "download": "ZIP VERIFIED",
+        "sse": sse,
     }
 
 

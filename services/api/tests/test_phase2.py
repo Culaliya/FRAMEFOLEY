@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import json
 import time
@@ -16,6 +17,7 @@ from framefoley_api.security import TokenSigner
 from framefoley_api.settings import Settings
 from framefoley_api.storage import LocalObjectStore
 from pydantic import ValidationError
+from starlette.requests import Request
 
 from scripts.build_test_live_proof_fixture import build as build_test_proof
 
@@ -85,6 +87,35 @@ def test_capabilities_are_server_owned_truthful_and_secret_free(tmp_path: Path) 
             for forbidden in ("bucket", "keyid", "appkey", "credential", "elevenlabsapikey")
         )
         assert response.headers["cache-control"].startswith("public, max-age=15")
+
+
+def test_sse_origin_disables_buffering_with_public_companion_header(tmp_path: Path) -> None:
+    store = LocalObjectStore(tmp_path / "sse-objects")
+    app = create_app(_settings(tmp_path), store=store)
+    with TestClient(app) as client:
+        created = client.post("/v1/projects/demo").json()
+        route = next(
+            item
+            for item in app.routes
+            if getattr(item, "path", None) == "/v1/projects/{project_id}/stream"
+        )
+        request = Request(
+            {
+                "type": "http",
+                "method": "GET",
+                "path": f"/v1/projects/{created['projectId']}/stream",
+                "headers": [
+                    (
+                        b"authorization",
+                        f"Bearer {created['projectToken']}".encode(),
+                    )
+                ],
+            }
+        )
+        response = asyncio.run(route.endpoint(project_id=created["projectId"], request=request))
+        assert response.headers["cache-control"] == "no-cache"
+        assert response.headers["x-accel-buffering"] == "no"
+        assert response.headers["x-framefoley-buffering"] == "disabled"
 
 
 def test_custom_upload_is_blocked_in_public_demo_but_available_in_live_contract(
