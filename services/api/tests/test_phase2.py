@@ -116,6 +116,8 @@ def test_sse_origin_disables_buffering_with_public_companion_header(tmp_path: Pa
         assert response.headers["cache-control"] == "no-cache"
         assert response.headers["x-accel-buffering"] == "no"
         assert response.headers["x-framefoley-buffering"] == "disabled"
+        first_frame = asyncio.run(response.body_iterator.__anext__())
+        assert first_frame == b": framefoley-stream-ready\n\n"
 
 
 def test_custom_upload_is_blocked_in_public_demo_but_available_in_live_contract(

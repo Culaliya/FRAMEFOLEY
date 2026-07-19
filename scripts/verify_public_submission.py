@@ -158,8 +158,8 @@ def _verify_sse_headers(
         first_line = next((line for line in response.iter_lines() if line), "")
         first_event_seconds = round(time.monotonic() - started, 3)
         _require(
-            first_line.startswith(("id:", "event:")),
-            "SSE did not yield an authoritative event",
+            first_line.startswith((":", "id:", "event:")),
+            "SSE did not yield a valid stream frame",
         )
         _require(first_event_seconds < 10, "SSE first event was buffered too long")
         return {
@@ -169,6 +169,7 @@ def _verify_sse_headers(
             ),
             "publicBufferingContract": "disabled",
             "firstEventSeconds": first_event_seconds,
+            "firstFrameKind": "COMMENT" if first_line.startswith(":") else "EVENT",
         }
 
 

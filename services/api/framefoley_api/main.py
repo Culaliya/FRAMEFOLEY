@@ -652,6 +652,9 @@ def create_app(
 
         async def stream() -> AsyncIterator[bytes]:
             nonlocal cursor
+            # A standards-compliant SSE comment flushes the connection without
+            # inventing a pipeline event or changing authoritative project state.
+            yield b": framefoley-stream-ready\n\n"
             idle_ticks = 0
             while True:
                 if await request.is_disconnected():
