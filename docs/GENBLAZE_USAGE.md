@@ -2,7 +2,8 @@
 
 ## Exact pinned interface
 
-Phase 1 reuses the Phase 0 verified package interface without guessing names:
+The product uses the officially inspected, pinned package interface without
+guessing names:
 
 ```text
 genblaze-core==0.3.4
@@ -74,3 +75,11 @@ project retry budget. The hard project ceiling is 12 live calls.
 
 Mock providers exist only in integration tests and are labeled `MOCKED` in
 evidence. They cannot satisfy the final live gate.
+
+## LIVE evidence replay boundary
+
+The public proof replay does not construct a `Pipeline` or provider. It loads
+the private immutable B2 bundle, re-hashes every object, parses the retained
+canonical manifests with the same pinned `genblaze-core`, and requires
+`Manifest.verify()` to return true for both. The recorded provider call count is
+two; the replay-open call count is zero.

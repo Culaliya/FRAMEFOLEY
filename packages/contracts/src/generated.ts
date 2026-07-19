@@ -23,6 +23,8 @@ export interface FrameFoleyProject {
   liveCallCount: number;
   retryBudgetRemaining: number;
   generationRequestKeys: Array<Sha256>;
+  evidenceLabel?: "CACHED DEMO" | "LIVE EVIDENCE REPLAY" | "LIVE";
+  proofReplay?: ProofReplayMetadata;
   error?: ApiError | null;
 }
 
@@ -37,7 +39,16 @@ export interface SourceClip {
   sha256: Sha256;
   thumbnailKey: ObjectKey;
   sourceAudioStripped: true;
-  origin: "demo" | "upload";
+  origin: "demo" | "upload" | "live_proof";
+}
+
+export interface ProofReplayMetadata {
+  proofVersion: "live-v1";
+  capturedAt: string;
+  recordedProviderCallCount: 2;
+  replayProviderCallCount: 0;
+  b2ObjectCount: number;
+  costDisclosure: string;
 }
 
 export interface StyleProfile {

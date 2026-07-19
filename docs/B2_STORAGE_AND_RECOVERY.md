@@ -44,6 +44,30 @@ provenance/index.html
 Cached demo candidates use `cache-manifest.json`, explicitly non-canonical.
 Canonical Genblaze objects stay unmodified under their hierarchical subtree.
 
+The immutable LIVE proof is separate from expiring anonymous projects:
+
+```text
+framefoley/proof/live/v1/
+  proof-index.json
+  checksums.sha256
+  source/original.mp4
+  source/preview.mp4
+  source/thumbnail.webp
+  events/event.json
+  candidates/{clean|character}/candidate.json
+  candidates/{clean|character}/raw-audio.mp3
+  candidates/{clean|character}/approved-audio.wav
+  candidates/{clean|character}/approved-audio.ogg
+  manifests/{clean|character}.json
+  qc/{clean|character}-before.json
+  qc/{clean|character}-after.json
+  waveforms/{clean|character}.png
+```
+
+The proof index contains only safe summary facts. Private candidate records and
+all media are still covered by the complete checksum inventory. The prefix is
+never exposed directly or mixed into the anonymous lifecycle rule.
+
 ## Restart recovery
 
 The API writes a schema v1 `project.json` after every material state/candidate
@@ -53,12 +77,19 @@ does not guess migrations. Integration tests create a project, destroy the app
 instance, start a new instance against the same store, and recover the source
 hash and state.
 
+A LIVE EVIDENCE REPLAY clones verified proof bytes into the same project layout
+and saves its `project.json` to B2. It therefore survives an API restart and
+continues through approval, render, export, and provenance without accessing
+the provider.
+
 ## Access model
 
 - B2 credentials exist only in API environment variables.
 - A project HMAC token is scoped to exactly one project ID and expiry.
 - Short-lived object tokens embed an already validated object key.
 - Canonical provenance stores object keys/URIs, never signed query strings.
+- The immutable proof prefix is server-only. Replay media receives a new
+  project-scoped key before any browser asset URL is created.
 - Browser upload uses a short-lived project object token in the local/API path.
   A deployment may replace this with B2 presigning only after verifying the same
   prefix and redaction guarantees.

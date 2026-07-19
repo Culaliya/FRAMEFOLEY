@@ -8,6 +8,7 @@
 | `demo/jelly-relay-thumbnail.webp` | Deterministic frame from the same generator | Same command |
 | `demo/jelly-relay-events.json` | Original event metadata specified for FRAMEFOLEY | Same command |
 | `demo/cache/raw/*.wav` | Original procedural synthesis (oscillators/noise/envelopes), not provider output | Same command |
+| `apps/web/public/jelly-relay-approved-mix.mp4` | JELLY RELAY plus its three approved procedural CACHED DEMO cues | `python scripts/build_landing_preview.py` |
 | `apps/web/public/framefoley-mark.svg` | Original simple vector mark made for this product | Stored as source SVG |
 | UI visual system | Original CSS shapes, film rails, timeline, waveform framing, and palette | `apps/web/app/globals.css` |
 
@@ -29,6 +30,11 @@ Live candidate provenance records ElevenLabs SFX model/provider through
 Genblaze, canonical manifest, B2 object key, hashes, prompt, parameters, QC, and
 human approval. Deterministic derivatives preserve lineage and are not labeled
 as raw provider output.
+
+The private LIVE EVIDENCE REPLAY bundle contains two real outputs from the
+authorized recorded LIVE gate. Publication re-downloads and re-hashes the B2
+objects and verifies their canonical Genblaze manifests. Opening a replay makes
+no new provider call; replay-session approval is recorded separately.
 
 ## Cached demo audio
 

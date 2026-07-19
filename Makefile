@@ -3,7 +3,7 @@ SHELL := /bin/bash
 PYTHON_BIN ?= $(shell command -v python3.13 2>/dev/null || command -v python3.12 2>/dev/null || command -v python3.11 2>/dev/null || if test -x "$$HOME/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3"; then printf '%s' "$$HOME/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3"; else command -v python3 2>/dev/null; fi)
 VENV_PYTHON := .venv/bin/python
 
-.PHONY: install preflight test local-manifest b2-smoke live-sfx qc evidence format-check lint type contracts build browser-test secret-scan check live-smoke full-demo-generation api web
+.PHONY: install preflight test local-manifest b2-smoke live-sfx qc evidence format-check lint type contracts build browser-test secret-scan check live-smoke full-demo-generation landing-preview publish-live-proof phase2-proof-test verify-public phase2-evidence capture-phase2-video build-phase2-video api web
 
 install:
 	$(PYTHON_BIN) -c 'import sys; assert sys.version_info >= (3, 11), "Python 3.11+ required"'
@@ -71,5 +71,29 @@ live-smoke:
 full-demo-generation:
 	@test "$$FRAMEFOLEY_ALLOW_LIVE_CALLS" = "1" || (echo "ERROR: set FRAMEFOLEY_ALLOW_LIVE_CALLS=1" >&2; exit 2)
 	FRAMEFOLEY_STORAGE_MODE=b2 GENERATION_MODE=live LIVE_GENERATION_ENABLED=true $(VENV_PYTHON) scripts/phase1_live_gate.py --events 3
+
+landing-preview:
+	$(VENV_PYTHON) scripts/build_landing_preview.py
+
+publish-live-proof:
+	@test "$$FRAMEFOLEY_ALLOW_PROOF_PUBLISH" = "1" || (echo "ERROR: set FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1" >&2; exit 2)
+	$(VENV_PYTHON) scripts/publish_live_proof.py
+
+phase2-proof-test:
+	$(VENV_PYTHON) -m pytest -q services/api/tests/test_phase2.py tests/test_phase2_copy.py
+	pnpm --filter @framefoley/web exec vitest run lib/readiness.test.ts lib/api.test.ts
+
+verify-public:
+	$(VENV_PYTHON) scripts/verify_public_submission.py
+
+phase2-evidence:
+	$(VENV_PYTHON) scripts/build_phase2_evidence.py
+
+capture-phase2-video:
+	@test "$$FRAMEFOLEY_ALLOW_PUBLIC_CAPTURE" = "1" || (echo "ERROR: set FRAMEFOLEY_ALLOW_PUBLIC_CAPTURE=1" >&2; exit 2)
+	PUBLIC_BASE_URL=https://framefoley-culaliya.onrender.com PUBLIC_SUBMISSION_VERIFY=1 CAPTURE_PHASE2_MASTER=1 pnpm --filter @framefoley/web exec playwright test e2e/phase2-video.spec.ts --project=desktop --workers=1
+
+build-phase2-video:
+	$(VENV_PYTHON) scripts/build_phase2_video.py
 
 check: contracts format-check lint type test build secret-scan

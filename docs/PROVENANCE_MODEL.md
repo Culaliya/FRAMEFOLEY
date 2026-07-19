@@ -11,7 +11,8 @@ a replacement for provider-plan and jurisdiction review.
 Every candidate records, when applicable:
 
 - event ID/title/timestamp and candidate variant;
-- source label: `LIVE`, `CACHED DEMO`, or `MOCKED`;
+- source label: `LIVE`, `CACHED DEMO`, or `MOCKED`, plus the project-level
+  `LIVE EVIDENCE REPLAY` label when recorded LIVE bytes are opened again;
 - full deterministic prompt and bounded parameters;
 - provider and model;
 - Genblaze run ID and retry parent run ID;
@@ -32,6 +33,9 @@ candidate records. The human-readable HTML is derived from the same JSON.
   `Manifest.verify()`.
 - A cached demo has an application cache record, never a canonical Genblaze
   manifest, and therefore remains `manifestVerified=false`.
+- A LIVE evidence replay preserves the original candidate `sourceLabel=LIVE`,
+  canonical hash, asset hash, run lineage, QC, and repairs. Its project record
+  separately states two recorded calls and zero calls to open the replay.
 - Technical QC is deterministic code. Creative approval is a separate human
   action and never inferred from a pass verdict.
 - A repaired derivative retains the original run/hash lineage; repair does not

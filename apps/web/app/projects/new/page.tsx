@@ -2,11 +2,13 @@
 
 import { ArrowRight, FileVideo, LockKeyhole, Play, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, DragEvent, useRef, useState } from "react";
+import { ChangeEvent, DragEvent, useEffect, useRef, useState } from "react";
 
+import { ReadinessGate } from "@/components/readiness-gate";
 import { SiteHeader } from "@/components/site-header";
 import { InlineError } from "@/components/ui";
-import { api, FrameFoleyApiError } from "@/lib/api";
+import { useSoundLabReadiness } from "@/hooks/use-readiness";
+import { api, type CapabilityContract, FrameFoleyApiError } from "@/lib/api";
 import { storeProjectToken } from "@/lib/token-store";
 
 const MAX_BYTES = 30 * 1024 * 1024;
@@ -37,10 +39,28 @@ export default function NewProjectPage() {
   const [busy, setBusy] = useState<"demo" | "upload" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [capabilities, setCapabilities] = useState<CapabilityContract | null>(null);
+  const readiness = useSoundLabReadiness();
+
+  useEffect(() => {
+    let active = true;
+    void api.capabilities().then((value) => {
+      if (active) setCapabilities(value);
+    }).catch(() => {
+      if (active) setCapabilities(null);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   async function startDemo() {
     setBusy("demo");
     setError(null);
+    if (!(await readiness.ensureReady())) {
+      setBusy(null);
+      return;
+    }
     try {
       const project = await api.createDemo();
       storeProjectToken(project.projectId, project.projectToken);
@@ -55,6 +75,13 @@ export default function NewProjectPage() {
     setBusy("upload");
     setError(null);
     try {
+      if (!capabilities?.customUploadCanComplete) {
+        throw new Error("Custom clip mode is available in a self-hosted LIVE build.");
+      }
+      if (!(await readiness.ensureReady())) {
+        setBusy(null);
+        return;
+      }
       await validateFile(file);
       const project = await api.uploadSource(file);
       storeProjectToken(project.projectId, project.projectToken);
@@ -98,6 +125,11 @@ export default function NewProjectPage() {
         </header>
 
         <InlineError message={error} />
+        <ReadinessGate
+          stage={readiness.stage}
+          payload={readiness.payload}
+          onRetry={() => void readiness.ensureReady()}
+        />
 
         <div className="source-choices">
           <article className="demo-source-card">
@@ -130,34 +162,53 @@ export default function NewProjectPage() {
             </div>
           </article>
 
-          <button
-            type="button"
-            className={`upload-source-card ${dragging ? "is-dragging" : ""}`}
-            onClick={() => inputRef.current?.click()}
-            onDragOver={(event) => {
-              event.preventDefault();
-              setDragging(true);
-            }}
-            onDragLeave={() => setDragging(false)}
-            onDrop={onDrop}
-            disabled={busy !== null}
-          >
-            <input
-              ref={inputRef}
-              type="file"
-              accept="video/mp4,video/webm"
-              onChange={onFile}
-              hidden
-            />
-            <span className="upload-icon">
-              {busy === "upload" ? <span className="button-loader" /> : <Upload />}
-            </span>
-            <span>
-              <strong>{busy === "upload" ? "VALIDATING + STORING" : "DROP YOUR GAMEPLAY CLIP"}</strong>
-              <small>or choose an MP4 / WebM</small>
-            </span>
-            <ArrowRight aria-hidden="true" />
-          </button>
+          {capabilities?.customUploadCanComplete ? (
+            <button
+              type="button"
+              className={`upload-source-card ${dragging ? "is-dragging" : ""}`}
+              onClick={() => inputRef.current?.click()}
+              onDragOver={(event) => {
+                event.preventDefault();
+                setDragging(true);
+              }}
+              onDragLeave={() => setDragging(false)}
+              onDrop={onDrop}
+              disabled={busy !== null}
+              data-testid="custom-upload"
+            >
+              <input
+                ref={inputRef}
+                type="file"
+                accept="video/mp4,video/webm"
+                onChange={onFile}
+                hidden
+              />
+              <span className="upload-icon">
+                {busy === "upload" ? <span className="button-loader" /> : <Upload />}
+              </span>
+              <span>
+                <strong>{busy === "upload" ? "VALIDATING + STORING" : "DROP YOUR GAMEPLAY CLIP"}</strong>
+                <small>or choose an MP4 / WebM</small>
+              </span>
+              <ArrowRight aria-hidden="true" />
+            </button>
+          ) : (
+            <article className="upload-source-card upload-source-info" data-testid="custom-upload-info">
+              <span className="upload-icon"><Upload /></span>
+              <span>
+                <strong>CUSTOM CLIP MODE</strong>
+                <small>Available in a self-hosted LIVE build.</small>
+                <small>The public competition demo cannot spend provider credit.</small>
+                <a
+                  href="https://github.com/Culaliya/FRAMEFOLEY#clean-local-setup"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  OPEN SELF-HOSTED SETUP ↗
+                </a>
+              </span>
+            </article>
+          )}
         </div>
 
         <aside className="source-requirements">

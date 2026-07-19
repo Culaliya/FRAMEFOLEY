@@ -9,8 +9,26 @@ import type {
 export interface ProjectCreation {
   projectId: string;
   projectToken: string;
-  phase: "source";
+  phase: "source" | "generate";
   expiresAt: string;
+}
+
+export interface CapabilityContract {
+  schemaVersion: 1;
+  generationMode: "live" | "demo" | "disabled";
+  storage: "BACKBLAZE B2" | "MOCKED LOCAL STORAGE";
+  customUploadCanComplete: boolean;
+  liveProofReplayAvailable: boolean;
+  anonymousProviderSpendEnabled: boolean;
+  projectTtlHours: number;
+}
+
+export interface ReadinessContract {
+  status: "ready" | "not_ready";
+  generationMode?: "live" | "demo" | "disabled";
+  storage?: "BACKBLAZE B2" | "MOCKED LOCAL STORAGE";
+  mediaTools?: { ffmpeg: boolean; ffprobe: boolean };
+  storageReady?: boolean;
 }
 
 export interface ProjectEnvelope {
@@ -68,6 +86,21 @@ function auth(token: string, extras: HeadersInit = {}): HeadersInit {
 }
 
 export const api = {
+  async readiness(): Promise<ReadinessContract> {
+    const response = await fetch(`${API_BASE}/readyz`, { cache: "no-store" });
+    try {
+      return (await response.json()) as ReadinessContract;
+    } catch {
+      return { status: "not_ready" };
+    }
+  },
+
+  capabilities(): Promise<CapabilityContract> {
+    return fetch(`${API_BASE}/v1/capabilities`, { cache: "no-store" }).then(
+      parseResponse<CapabilityContract>,
+    );
+  },
+
   createProject(title: string): Promise<ProjectCreation> {
     return fetch(`${API_BASE}/v1/projects`, {
       method: "POST",
@@ -78,6 +111,12 @@ export const api = {
 
   createDemo(): Promise<ProjectCreation> {
     return fetch(`${API_BASE}/v1/projects/demo`, { method: "POST" }).then(
+      parseResponse<ProjectCreation>,
+    );
+  },
+
+  createLiveProof(): Promise<ProjectCreation> {
+    return fetch(`${API_BASE}/v1/projects/live-proof`, { method: "POST" }).then(
       parseResponse<ProjectCreation>,
     );
   },
@@ -180,29 +219,40 @@ export const api = {
     token: string,
     signal: AbortSignal,
     onEvent: (event: SseEvent) => void,
+    onFallback?: () => Promise<void>,
   ): Promise<void> {
-    const response = await fetch(`${API_BASE}/v1/projects/${projectId}/stream`, {
-      headers: auth(token),
-      signal,
-    });
-    if (!response.ok) await parseResponse<never>(response);
-    const reader = response.body?.getReader();
-    if (!reader) return;
-    const decoder = new TextDecoder();
-    let buffer = "";
-    while (!signal.aborted) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const records = buffer.split("\n\n");
-      buffer = records.pop() ?? "";
-      for (const record of records) {
-        const data = record
-          .split("\n")
-          .find((line) => line.startsWith("data: "))
-          ?.slice(6);
-        if (data && data !== "{}") onEvent(JSON.parse(data) as SseEvent);
+    let lastEventId = "0";
+    for (let attempt = 0; attempt < 2; attempt += 1) {
+      try {
+        const response = await fetch(`${API_BASE}/v1/projects/${projectId}/stream`, {
+          headers: auth(token, lastEventId === "0" ? {} : { "Last-Event-ID": lastEventId }),
+          signal,
+        });
+        if (!response.ok) await parseResponse<never>(response);
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error("Event stream is unavailable.");
+        const decoder = new TextDecoder();
+        let buffer = "";
+        while (!signal.aborted) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const records = buffer.split("\n\n");
+          buffer = records.pop() ?? "";
+          for (const record of records) {
+            const lines = record.split("\n");
+            const eventId = lines.find((line) => line.startsWith("id: "))?.slice(4);
+            if (eventId && /^\d+$/.test(eventId)) lastEventId = eventId;
+            const data = lines.find((line) => line.startsWith("data: "))?.slice(6);
+            if (data && data !== "{}") onEvent(JSON.parse(data) as SseEvent);
+          }
+        }
+        if (signal.aborted) return;
+      } catch (caught) {
+        if (signal.aborted) throw caught;
+        if (attempt === 0) continue;
       }
     }
+    await onFallback?.();
   },
 };

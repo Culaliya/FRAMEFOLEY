@@ -43,6 +43,27 @@ access until expiry. Users must not share it.
 - Provider call timeout is 45 s; pipeline timeout is 60 s; no hidden retries.
 - Demo cache remains available when live is closed.
 
+The public competition deployment is `GENERATION_MODE=demo` and exposes a
+server-owned capability contract. It reports both
+`anonymousProviderSpendEnabled=false` and `customUploadCanComplete=false`.
+The browser cannot override these facts, and the upload-ticket endpoint also
+fails closed when the live contract is incomplete.
+
+## Immutable proof controls
+
+- Publication requires `FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1` plus private B2
+  credentials; it imports no ElevenLabs key.
+- `proof/live/v1/` is immutable: existing different bytes stop publication.
+- A complete checksum inventory covers every allowed proof object and rejects
+  missing or unexpected paths.
+- Both canonical manifests must return true from the official
+  `Manifest.verify()` implementation after B2 download.
+- Provider, model, run, asset hash, QC, and repair lineage must match the strict
+  LIVE-only index.
+- Opening a replay invokes no generation service and records zero replay calls.
+- The proof prefix never reaches the browser. Media is cloned into an isolated
+  expiring project protected by the existing HMAC/object-token boundary.
+
 Per-IP/edge rate limiting depends on the selected host and is therefore an
 **OWNER-VERIFIED** deployment control, not a source-code claim.
 
@@ -53,11 +74,23 @@ The current connector may report no cost. An absent value means **UNAVAILABLE**,
 not zero. The owner must configure and capture an ElevenLabs account spend/usage
 cap separately. No cap is claimed active without account evidence.
 
+For the zero-spend public build, an ElevenLabs account spend cap and edge/IP
+rate limit remain prudent defense in depth but are not submission blockers:
+there is no public provider-call path. B2 lifecycle expiration and an external
+uptime monitor are likewise recommended and owner-controlled, not silently
+claimed active.
+
 Live commands require an explicit command opt-in and are absent from normal CI:
 
 ```text
 FRAMEFOLEY_ALLOW_LIVE_CALLS=1 make live-smoke
 FRAMEFOLEY_ALLOW_LIVE_CALLS=1 make full-demo-generation
+```
+
+Proof publication is a separate, no-provider-call command:
+
+```text
+FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1 make publish-live-proof
 ```
 
 ## Scanning

@@ -136,6 +136,7 @@ export default function AuditionPage() {
   if (state.loading) return <ProjectLoading />;
   if (!state.project || state.error) return <ProjectError message={state.error ?? "Unknown project."} />;
   const project = state.project;
+  const proofReplay = project.evidenceLabel === "LIVE EVIDENCE REPLAY";
   if (!project.source) return <ProjectError message="The source clip is missing." />;
   const allApproved = project.events.every((event) => event.approvedCandidateId);
 
@@ -183,11 +184,21 @@ export default function AuditionPage() {
   return (
     <ProjectChrome project={project} active="audition">
       <PageIntro
-        step="03 / AUDITION"
+        step={proofReplay ? "LIVE EVIDENCE REPLAY / HUMAN AUDITION" : "03 / AUDITION"}
         title="A sound can be valid and still be wrong for the frame. Choose by ear."
         copy="Technical QC keeps broken files out. Creative approval stays with you. Nothing plays until you ask."
       />
       <InlineError message={error} />
+
+      {proofReplay ? (
+        <details className="demo-disclosure proof-disclosure" open>
+          <summary>HOW THIS WAS PRODUCED</summary>
+          <p>
+            These are two real provider outputs captured during the recorded LIVE gate, stored and
+            re-verified from Backblaze B2. Playing or approving them now makes zero provider calls.
+          </p>
+        </details>
+      ) : null}
 
       <section className="audition-monitor panel-rule">
         <div className="panel-topline">

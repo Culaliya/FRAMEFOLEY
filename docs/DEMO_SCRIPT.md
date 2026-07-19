@@ -1,106 +1,119 @@
-# Three-minute demo script
+# FRAMEFOLEY competition demo script
 
-Target length: approximately 2:40–3:05. The recorded product flow uses the
-original JELLY RELAY clip and the visibly labeled cached demo for repeatability;
-the narration distinguishes that from separately captured LIVE evidence.
+Target master: **2:56 (176 seconds), 1920×1080**. The screen recording must be
+the actual public deployment. Narration is English. The MP4 contains an English
+subtitle track and ships with a matching WebVTT sidecar.
 
-## 00:00–00:20 — promise
+## 0:00–0:08 — hear the decision
 
-**Visual:** Landing page, animated film rail, then source selection.
+**Visual:** Public landing page. Play the same JELLY RELAY moment first with
+`SILENT SOURCE`, then switch to `APPROVED FOLEY MIX`. Keep the cue ticks visible.
 
-**Narration:**
+**Audio:** Let the contrast speak. No narration over the first Foley hits.
 
-“A game can already move beautifully and still feel unfinished in silence.
-FRAMEFOLEY turns one short gameplay clip into a tested, inspectable sound kit.
-It is not a chat box and it does not pretend to understand the whole game. It
-helps a creator make three precise sound decisions.”
+## 0:08–0:22 — problem
 
-## 00:20–00:43 — source and cue
-
-**Visual:** Open the original 12-second JELLY RELAY demo. Show silent playback,
-three markers at 1.60, 5.20, and 8.85 seconds, keyboard adjustment, and style.
+**Visual:** Hero and instant comparison.
 
 **Narration:**
 
-“This original demo clip is generated from code and contains no third-party
-footage or embedded audio. I can upload MP4 or WebM, or use the demo. I mark the
-glass landing, the bubble pop, and the route confirmation, then lock one of four
-bounded sonic styles.”
+“Game prototypes often move before they sound. Creators need precise Foley at
+the frame—not a generic music generator, automatic scene guess, or chat box.
+FRAMEFOLEY keeps that decision small and audible.”
 
-## 00:43–01:15 — generation truth
+## 0:22–0:47 — mark three cues
 
-**Visual:** Pipeline console. Point to prompt locked, provider/model, B2 stored,
-hash, QC, repair, and cache disclosure.
-
-**Narration:**
-
-“Each event receives exactly two independent candidates. This recording uses
-the original cached demo, so the UI says CACHED DEMO and never calls it live.
-Our separate final-version live evidence records real Genblaze run IDs, B2
-objects, and canonical manifest verification.”
-
-Say this exact competition disclosure:
-
-“Genblaze orchestrates each generated candidate and records its provenance.
-Backblaze B2 stores the original clip, generated assets, manifests, QC reports,
-repaired derivatives, preview, and export bundle. Deterministic code performs
-the technical audio checks. The developer still makes the creative decision by
-ear.”
-
-## 01:15–01:52 — QC and A/B audition
-
-**Visual:** Show waveform, metrics, provider/model, manifest badge, repaired
-badge, solo A, play B in frame, stop all, and approve A for each event.
+**Visual:** Open the public JELLY RELAY flow. Show the silent source, glass
+landing, bubble pop, route confirm, bounded marker adjustment, and LUNAR ARCADE
+style lock.
 
 **Narration:**
 
-“Provider output does not grade itself. FRAMEFOLEY decodes the bytes, measures
-duration, peak, RMS, silence, channels, and sample rate, then applies fixed
-thresholds. A repair can trim silence, control gain, limit, downmix, resample,
-and convert format. It keeps the original lineage and does not rewrite the
-generated content. Technical validity is only the first gate: I compare A and B
-alone and at the exact frame, then approve by ear.”
+“This original silent clip lasts twelve seconds. I mark three moments that
+matter: glass landing, bubble pop, and route confirmation. Each cue has a
+bounded timestamp, duration, intensity, and material note. One style stays
+locked across the kit, so comparison remains coherent.”
 
-## 01:52–02:20 — authoritative mix
+## 0:47–1:13 — CACHED DEMO pipeline
 
-**Visual:** Approved event list, timestamp/gain rails, before and after monitors,
-render hash, B2-ready status.
-
-**Narration:**
-
-“The server render is authoritative. Each approved WAV is delayed to its exact
-timestamp, receives a bounded gain trim, is mixed and limited through fixed
-FFmpeg arguments, and becomes an H.264/AAC preview. The mix map records every
-event, candidate, timestamp, gain, source hash, and render hash.”
-
-## 02:20–02:48 — export
-
-**Visual:** Export bundle object, inventory, B2 object ready, final checksum.
+**Visual:** Lock cues, generate the public candidates, then show prompt lock,
+two variants, QC before/after, repair, private B2 storage, and the CACHED DEMO
+disclosure.
 
 **Narration:**
 
-“The deterministic ZIP contains the mixed preview, WAV and OGG effects,
-waveforms, QC before and after, manifests, soundpack metadata, project state,
-and the provenance index. The ZIP itself receives a B2 object, byte size,
-timestamp, and SHA-256.”
+“The public three-cue workflow uses six original CACHED DEMO candidates. That
+lets judges test the complete product while anonymous traffic spends no
+provider credit. Deterministic code decodes every sound, checks duration, peak,
+RMS, silence, channels, and sample rate, then records any repair. Private
+Backblaze B2 stores the project, media, QC, render, export, and provenance.”
 
-## 02:48–03:05 — provenance close
+## 1:13–1:39 — A/B and human approval
 
-**Visual:** Provenance inspector: LIVE/CACHED label, prompt, parameters, run and
-parent IDs, timestamps, B2 key, manifest status, hashes, QC, approval, and JSON
-download.
+**Visual:** In audition, hear candidate A and B in exact video context. Approve
+by ear. Complete the remaining two approvals quickly.
 
 **Narration:**
 
-“The sound may be synthetic. The history is not. Provenance is not a rights
-warranty, but it makes the generation, storage, technical processing, and human
-decision visible enough to inspect. That is FRAMEFOLEY.”
+“Technical validity does not choose the creative winner. I hear A and B at the
+exact gameplay frame, solo or in context. One may feel cleaner; the other may
+have more character. Human approval remains authoritative. Only my explicit
+choice advances the project.”
 
-## Caption and recording rules
+## 1:39–1:57 — deterministic mix
 
-- Include the transcript as WebVTT and plain text.
-- No caption may cover a functional control, video, timeline, waveform, or hash.
-- Do not show credentials, project tokens, signed URLs, account email, or B2
-  console identity.
-- Say `CACHED DEMO` during the reproducible demo and `LIVE` only while displaying
-  the separately captured live evidence.
+**Visual:** Open MIX, render, then play before/after while the B2-ready record and
+render identity remain visible.
+
+**Narration:**
+
+“FRAMEFOLEY delays each approved WAV to its cue, applies bounded gain, and
+renders through fixed FFmpeg argument arrays. The before-and-after preview and
+mix map receive stable hashes and return to private B2.”
+
+## 1:57–2:26 — real LIVE proof, zero new calls
+
+**Visual:** Return to landing and open `LIVE EVIDENCE REPLAY`. Show the five
+proof facts, hear both real candidates, approve one, then open provenance. Show
+Genblaze run, ElevenLabs model, B2 record, asset hash, and
+`Manifest.verify(): TRUE`.
+
+**Narration:**
+
+“Now this is LIVE EVIDENCE REPLAY: two real provider outputs generated during
+an authorized Genblaze run with the ElevenLabs sound-effects model. They were
+stored in Backblaze B2, downloaded again, re-hashed, and both canonical
+manifests verify true. Opening this replay makes zero new provider calls. I can
+still hear both and make a fresh human approval.”
+
+## 2:26–2:47 — ZIP and provenance
+
+**Visual:** Render and export the replay. Show the deterministic ZIP inventory,
+then provenance fields: source label, run, model, manifest hash, asset SHA-256,
+QC before/after, repairs, and replay approval.
+
+**Narration:**
+
+“The deterministic ZIP carries the approved sound, preview, manifest, QC,
+project state, and provenance. The inspector keeps generation lineage, storage,
+technical processing, and this replay-session approval separate and visible.”
+
+## 2:47–2:56 — close
+
+**Visual:** Provenance page, then FRAMEFOLEY mark and public URLs.
+
+**Narration:**
+
+“The sound may be synthetic. The history is not. This is FRAMEFOLEY.”
+
+## Recording and caption rules
+
+- Do not show credentials, account identity, private dashboard, authorization
+  headers, project tokens, cookies, signed URLs, or a private console.
+- Do not reuse the local earlier-phase video as the final master.
+- Do not include a long Render cold start; use the bounded public readiness flow
+  before recording.
+- Say `CACHED DEMO` for the public three-cue path, `LIVE EVIDENCE REPLAY` for
+  recorded real outputs, and `LIVE` only for their source label.
+- Never imply replay opening is a fresh Genblaze or ElevenLabs request.
+- Captions must not cover controls, video, timeline, waveforms, or hashes.

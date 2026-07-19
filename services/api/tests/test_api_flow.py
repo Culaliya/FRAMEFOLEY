@@ -209,8 +209,18 @@ def test_demo_project_completes_end_to_end(tmp_path: Path) -> None:
 
 
 def test_custom_upload_and_project_token_isolation(tmp_path: Path) -> None:
-    settings = _settings(tmp_path)
-    with TestClient(create_app(settings)) as client:
+    settings = replace(
+        _settings(tmp_path),
+        generation_mode="live",
+        storage_mode="b2",
+        live_generation_enabled=True,
+        b2_key_id="test-key-id",
+        b2_app_key="test-app-key-value",
+        b2_bucket="test-private-bucket",
+        b2_region="us-test-001",
+        elevenlabs_api_key="test-provider-key",
+    )
+    with TestClient(create_app(settings, store=LocalObjectStore(tmp_path / "objects"))) as client:
         first = client.post("/v1/projects", json={"title": "Private upload"})
         assert first.status_code == 201
         first_id = first.json()["projectId"]

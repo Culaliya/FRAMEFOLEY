@@ -47,6 +47,7 @@ export default function ProvenancePage() {
     return <ProjectError message={state.error ?? "The provenance document is unavailable."} />;
   }
   const project = state.project;
+  const proofReplay = project.evidenceLabel === "LIVE EVIDENCE REPLAY";
 
   async function copy(value: string, key: string) {
     await navigator.clipboard.writeText(value);
@@ -77,6 +78,19 @@ export default function ProvenancePage() {
         </button>
       </header>
 
+      {proofReplay ? (
+        <section className="provenance-replay-note">
+          <StatusStamp label="LIVE EVIDENCE REPLAY" tone="lime" icon="shield" />
+          <div>
+            <strong>THE PROVIDER CALLS HAPPENED DURING THE RECORDED LIVE GATE — NOT NOW.</strong>
+            <p>
+              Two real Genblaze / ElevenLabs outputs were loaded from private B2, re-hashed, and
+              re-verified before this isolated project opened. Replay provider calls: 0.
+            </p>
+          </div>
+        </section>
+      ) : null}
+
       <section className="provenance-overview">
         <div><Fingerprint /><span>PROJECT ID</span><code>{document.projectId}</code></div>
         <div><Database /><span>STORAGE RECORD</span><strong>{state.storageLabel ?? "UNAVAILABLE"}</strong></div>
@@ -96,6 +110,7 @@ export default function ProvenancePage() {
                   <h2>{record.event.title}</h2>
                 </div>
                 <div className="record-stamps">
+                  {proofReplay ? <StatusStamp label="LIVE EVIDENCE REPLAY" tone="lime" icon="shield" /> : null}
                   <StatusStamp label={candidate.sourceLabel} tone={candidate.sourceLabel === "LIVE" ? "lime" : "cyan"} />
                   {record.approvalStatus ? <StatusStamp label="APPROVED" tone="lime" /> : null}
                 </div>
@@ -103,16 +118,27 @@ export default function ProvenancePage() {
               <dl className="record-grid">
                 <div><dt>PROVIDER</dt><dd>{candidate.provider}</dd></div>
                 <div><dt>MODEL</dt><dd>{candidate.model}</dd></div>
-                <div><dt>GENBLAZE RUN</dt><dd>{candidate.genblazeRunId ?? "NOT A LIVE RUN"}</dd></div>
+                <div>
+                  <dt>GENBLAZE RUN</dt>
+                  <dd className="copy-run">
+                    {candidate.genblazeRunId ? `${candidate.genblazeRunId.slice(0, 8)}…${candidate.genblazeRunId.slice(-4)}` : "NOT A LIVE RUN"}
+                    {candidate.genblazeRunId ? (
+                      <button type="button" onClick={() => void copy(candidate.genblazeRunId ?? "", `${key}:run`)}>
+                        <Copy size={12} /> {copied === `${key}:run` ? "COPIED" : "COPY"}
+                      </button>
+                    ) : null}
+                  </dd>
+                </div>
                 <div><dt>PARENT RUN</dt><dd>{candidate.parentRunId ?? "—"}</dd></div>
-                <div><dt>MANIFEST</dt><dd>{candidate.manifestVerified ? "CANONICAL / VERIFIED" : "CACHE RECORD / NON-CANONICAL"}</dd></div>
-                <div><dt>QC AFTER</dt><dd>{candidate.qcAfter?.verdict.toUpperCase() ?? "—"}</dd></div>
+                <div><dt>MANIFEST</dt><dd>{candidate.manifestVerified ? "Manifest.verify(): TRUE" : "CACHE RECORD / NON-CANONICAL"}</dd></div>
+                <div><dt>QC BEFORE / AFTER</dt><dd>{candidate.qcBefore?.verdict.toUpperCase() ?? "—"} / {candidate.qcAfter?.verdict.toUpperCase() ?? "—"}</dd></div>
                 <div><dt>STARTED</dt><dd>{candidate.startedAt ? new Date(candidate.startedAt).toLocaleString() : "—"}</dd></div>
                 <div><dt>ENDED</dt><dd>{candidate.endedAt ? new Date(candidate.endedAt).toLocaleString() : "—"}</dd></div>
                 <div><dt>LATENCY</dt><dd>{candidate.latencySeconds != null ? `${candidate.latencySeconds.toFixed(3)} SEC` : "—"}</dd></div>
                 <div><dt>COST</dt><dd>{candidate.costUsd != null ? `$${candidate.costUsd.toFixed(6)}` : "NOT REPORTED"}</dd></div>
                 <div><dt>MANIFEST URI</dt><dd>{candidate.manifestUri ?? "—"}</dd></div>
                 <div><dt>STORAGE OBJECT</dt><dd>{candidate.rawAssetKey ?? "—"}</dd></div>
+                <div><dt>HUMAN DECISION</dt><dd>{record.approvalStatus ? "APPROVED IN THIS REPLAY" : "AWAITING REPLAY APPROVAL"}</dd></div>
               </dl>
               <div className="prompt-ledger">
                 <div className="prompt-label"><span>PARAMETERS</span></div>

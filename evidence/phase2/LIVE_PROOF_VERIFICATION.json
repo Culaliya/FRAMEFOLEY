@@ -1,0 +1,31 @@
+{
+  "assetHashMatchCount": 2,
+  "b2RedownloadHashMatch": true,
+  "candidateCount": 2,
+  "candidates": [
+    {
+      "assetSha256": "7c8e4f40ae3b1dc4e56531b211185d3c2ebd80646078d275483b88f91a9007ae",
+      "b2DownloadedAssetHashMatched": true,
+      "candidateId": "cand_d318d507ff32",
+      "manifestHash": "cab2a9534339400c470f2a052f9453a231d06f67ad3a15bf25bb990c3f614415",
+      "manifestVerifyReturned": true
+    },
+    {
+      "assetSha256": "738f231a719ae5183b4908b259128faff2abc628949d3ba4e2b98d37c91a6be9",
+      "b2DownloadedAssetHashMatched": true,
+      "candidateId": "cand_cdffd8b2498e",
+      "manifestHash": "c9d957fa4d72f078eda854d633ee4af9721ad0d6a599930a8621595eeaeb2c9e",
+      "manifestVerifyReturned": true
+    }
+  ],
+  "costDisclosure": "The provider reported USD 0.00 for the recorded gate; this is not evidence that an ElevenLabs account spend or usage cap is active.",
+  "evidenceLabel": "LIVE EVIDENCE REPLAY",
+  "manifestVerifyTrueCount": 2,
+  "proofChecksumsSha256": "9d253f14a004c1861e182fa041181c01297f8bcfdf13960640fcb699ec32133c",
+  "proofVersion": "live-v1",
+  "providerCallsDuringPublication": 0,
+  "providerCallsDuringReplayOpen": 0,
+  "publicationStatus": "created",
+  "schemaVersion": 1,
+  "storage": "BACKBLAZE B2"
+}

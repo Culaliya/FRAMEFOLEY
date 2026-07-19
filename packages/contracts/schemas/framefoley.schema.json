@@ -93,6 +93,10 @@
           "items": { "$ref": "#/definitions/Sha256" },
           "uniqueItems": true
         },
+        "evidenceLabel": {
+          "enum": ["CACHED DEMO", "LIVE EVIDENCE REPLAY", "LIVE"]
+        },
+        "proofReplay": { "$ref": "#/definitions/ProofReplayMetadata" },
         "error": {
           "anyOf": [{ "$ref": "#/definitions/ApiError" }, { "type": "null" }],
           "default": null
@@ -126,7 +130,27 @@
         "sha256": { "$ref": "#/definitions/Sha256" },
         "thumbnailKey": { "$ref": "#/definitions/ObjectKey" },
         "sourceAudioStripped": { "const": true },
-        "origin": { "enum": ["demo", "upload"] }
+        "origin": { "enum": ["demo", "upload", "live_proof"] }
+      }
+    },
+    "ProofReplayMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proofVersion",
+        "capturedAt",
+        "recordedProviderCallCount",
+        "replayProviderCallCount",
+        "b2ObjectCount",
+        "costDisclosure"
+      ],
+      "properties": {
+        "proofVersion": { "const": "live-v1" },
+        "capturedAt": { "type": "string", "format": "date-time" },
+        "recordedProviderCallCount": { "const": 2 },
+        "replayProviderCallCount": { "const": 0 },
+        "b2ObjectCount": { "type": "integer", "minimum": 1 },
+        "costDisclosure": { "type": "string", "minLength": 1, "maxLength": 300 }
       }
     },
     "StyleProfile": {

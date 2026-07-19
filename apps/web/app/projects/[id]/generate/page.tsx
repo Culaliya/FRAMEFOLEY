@@ -48,6 +48,7 @@ function CandidatePipeline({
   candidate?: GenerationCandidate;
   variant: "clean" | "character";
 }) {
+  const replay = candidate?.sourceLabel === "LIVE" && candidate.parameters?.proofVersion === "live-v1";
   return (
     <article className={`pipeline-candidate ${candidate?.status === "failed" ? "failed" : ""}`}>
       <header>
@@ -62,7 +63,15 @@ function CandidatePipeline({
         {PIPELINE.map((label, index) => {
           const state = stage(candidate, index);
           const displayLabel =
-            label === "GENBLAZE RUN STARTED" && candidate?.sourceLabel === "CACHED DEMO"
+            replay && label === "GENBLAZE RUN STARTED"
+              ? "RECORDED GENBLAZE RUN"
+              : replay && label === "PROVIDER RESPONDED"
+                ? "REAL PROVIDER OUTPUT LOADED"
+                : replay && label === "ASSET STORED"
+                  ? "B2 BYTES RE-DOWNLOADED"
+                  : replay && label === "MANIFEST CHECKED"
+                    ? "MANIFEST RE-VERIFIED"
+            : label === "GENBLAZE RUN STARTED" && candidate?.sourceLabel === "CACHED DEMO"
               ? "DEMO CACHE LOCATED"
               : label === "PROVIDER RESPONDED" && candidate?.sourceLabel === "CACHED DEMO"
                 ? "ORIGINAL CACHE LOADED"
@@ -100,6 +109,7 @@ export default function GeneratePage() {
   if (state.loading) return <ProjectLoading />;
   if (!state.project || state.error) return <ProjectError message={state.error ?? "Unknown project."} />;
   const project = state.project;
+  const proofReplay = project.evidenceLabel === "LIVE EVIDENCE REPLAY";
   const ready = ["audition_ready", "generation_partial"].includes(project.state);
 
   async function generate() {
@@ -108,7 +118,9 @@ export default function GeneratePage() {
     setError(null);
     const controller = new AbortController();
     abortRef.current = controller;
-    void api.stream(id, state.token, controller.signal, (event: SseEvent) => dispatch(event)).catch(
+    void api.stream(id, state.token, controller.signal, (event: SseEvent) => dispatch(event), async () => {
+      await state.refresh();
+    }).catch(
       (caught: unknown) => {
         if (!(caught instanceof DOMException && caught.name === "AbortError")) return;
       },
@@ -131,17 +143,38 @@ export default function GeneratePage() {
   return (
     <ProjectChrome project={project} active="generate">
       <PageIntro
-        step="PIPELINE / SIX BOUNDED CANDIDATES"
+        step={proofReplay ? "LIVE EVIDENCE / ZERO-CALL REPLAY" : "PIPELINE / SIX BOUNDED CANDIDATES"}
         title="Every sound earns its place on the rail."
-        copy="Status only advances after the actual provider, storage, manifest, and deterministic audio checks complete."
+        copy={proofReplay
+          ? "Inspect the recorded provider outputs and their verification trail, then choose by ear. Opening this replay makes no provider call."
+          : "Status only advances after the actual provider, storage, manifest, and deterministic audio checks complete."}
       />
       <InlineError message={error} />
+
+      {proofReplay ? (
+        <section className="live-proof-banner" data-testid="live-proof-banner">
+          <div>
+            <StatusStamp label="LIVE EVIDENCE REPLAY" tone="lime" icon="shield" />
+            <h2>REAL OUTPUTS. REPLAYED WITHOUT NEW SPEND.</h2>
+            <p>
+              These candidates were generated during an authorized LIVE Genblaze run and stored
+              in Backblaze B2. Opening this replay makes no provider call.
+            </p>
+          </div>
+          <dl>
+            <div><dt>PROVIDER OUTPUTS</dt><dd>2 REAL</dd></div>
+            <div><dt>CANONICAL MANIFESTS</dt><dd>2 / 2 VERIFIED</dd></div>
+            <div><dt>DURABLE CHECK</dt><dd>STORED + RE-HASHED FROM B2</dd></div>
+            <div><dt>CALLS TO OPEN</dt><dd>0 PROVIDER CALLS</dd></div>
+          </dl>
+        </section>
+      ) : null}
 
       <section className="generation-summary">
         <div>
           <Sparkles aria-hidden="true" />
           <span>GENERATION MODE</span>
-          <strong>{project.generationMode.toUpperCase()}</strong>
+          <strong>{proofReplay ? "ZERO-CALL REPLAY" : project.generationMode.toUpperCase()}</strong>
         </div>
         <div>
           <Database aria-hidden="true" />
@@ -154,13 +187,15 @@ export default function GeneratePage() {
           <strong>QC + SHA-256</strong>
         </div>
         <div className="quota-block">
-          <span>LIVE GENERATION</span>
-          <strong>6 CANDIDATES MAX</strong>
-          <small>1 controlled retry per candidate · project budget {project.retryBudgetRemaining}</small>
+          <span>{proofReplay ? "RECORDED LIVE GATE" : "CANDIDATE LIMIT"}</span>
+          <strong>{proofReplay ? "2 PROVIDER OUTPUTS" : "6 CANDIDATES MAX"}</strong>
+          <small>{proofReplay
+            ? "2 recorded calls · 0 calls to replay"
+            : `1 controlled retry per candidate · project budget ${project.retryBudgetRemaining}`}</small>
         </div>
       </section>
 
-      {project.generationMode === "demo" ? (
+      {project.evidenceLabel === "CACHED DEMO" ? (
         <div className="demo-disclosure">
           <StatusStamp label="CACHED DEMO" tone="cyan" icon="storage" />
           <p>
@@ -168,6 +203,17 @@ export default function GeneratePage() {
             export path. They are never represented as live provider calls or canonical manifests.
           </p>
         </div>
+      ) : null}
+
+      {proofReplay ? (
+        <details className="demo-disclosure proof-disclosure" open>
+          <summary>HOW THIS WAS PRODUCED</summary>
+          <p>
+            Real Genblaze provider outputs captured in an authorized run, verified again from B2,
+            and replayed without spending provider credit. Human approval in this project happens now;
+            the provider calls did not.
+          </p>
+        </details>
       ) : null}
 
       {state.storageLabel === "MOCKED LOCAL STORAGE" ? (

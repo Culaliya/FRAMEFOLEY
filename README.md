@@ -7,17 +7,20 @@ provenance-backed sound kit. A creator marks one to three moments, generates two
 sound-effect candidates per moment, chooses by ear, renders the approved mix,
 and exports WAV, OGG, preview, QC, manifest, and provenance files.
 
-This repository contains the bounded Phase 1 competition product authorized
-after the Phase 0 **GO** in `docs/SPIKE_REPORT.md`. It is intentionally not a
-chat app, DAW, account system, TTS tool, music generator, or multi-provider
-platform.
+This repository contains the bounded competition build. It is intentionally
+not a chat app, DAW, account system, TTS tool, music generator, or
+multi-provider platform.
 
 ## What is implemented
 
 - Responsive Next.js App Router UI for source, cue, generation, audition, mix,
   export, and provenance.
 - Original deterministic 12-second **JELLY RELAY** silent demo.
-- Validated MP4/WebM upload, source normalization, thumbnail, and SHA-256.
+- Instant silent-versus-approved-Foley landing comparison.
+- Server-owned deployment capabilities; the public zero-spend build never
+  advertises a custom-upload path it cannot complete.
+- Validated MP4/WebM upload, source normalization, thumbnail, and SHA-256 in a
+  self-hosted LIVE build.
 - One to three accessible markers and four bounded style presets.
 - Exactly two candidates per event through the Phase 0 Genblaze path.
 - Deterministic ffprobe/FFmpeg QC, repair, waveform, WAV, and OGG derivatives.
@@ -25,6 +28,10 @@ platform.
 - Authoritative server-side preview mix and deterministic ZIP export.
 - HMAC project tokens and recoverable object-backed state; B2 is production's
   system of record.
+- Immutable **LIVE EVIDENCE REPLAY**: two authorized Genblaze/ElevenLabs
+  outputs are re-downloaded, re-hashed, canonical-manifest verified, and opened
+  for A/B approval with zero new provider calls.
+- Bounded Render cold-start readiness and SSE-to-authoritative-state recovery.
 - Shared JSON Schema v1 contracts and generated TypeScript types.
 - Unit, integration, browser, recovery, security, and production-build checks.
 
@@ -35,13 +42,13 @@ Browser (Next.js + Web Audio)
        | project-scoped HMAC token / SSE
        v
 FastAPI state machine + deterministic media pipeline
-       |                         |
-       | live only               | fixed FFmpeg arrays
-       v                         v
-Genblaze -> ElevenLabs SFX      QC / repair / render / export
-       |
-       v
-Private Backblaze B2 project prefix (durable production record)
+       |                         |                         |
+       | self-hosted LIVE        | fixed FFmpeg arrays     | zero-call replay
+       v                         v                         v
+Genblaze -> ElevenLabs SFX      QC / repair / render      immutable B2 proof
+       \__________________________|_________________________/
+                                  v
+              Private Backblaze B2 (durable system of record)
 ```
 
 No database is used. `project.json` plus immutable/source/derivative objects
@@ -107,6 +114,7 @@ make type
 make test            # Python + web unit/integration
 make build           # Python compile + Next production build
 make browser-test    # desktop/tablet/phone Playwright flow
+make phase2-proof-test
 make secret-scan
 make check
 ```
@@ -127,6 +135,10 @@ The second command uses all three demo events and therefore six initial calls.
 Neither command is run by `make check`. Both record sanitized call count, cost
 when the connector reports it, B2 object hashes, and manifest verification.
 
+The anonymous public deployment does not expose this gate. Its capability
+contract reports `customUploadCanComplete=false` and
+`anonymousProviderSpendEnabled=false`.
+
 Exact live path:
 
 ```text
@@ -136,17 +148,38 @@ genblaze-elevenlabs==0.3.1
 ElevenLabsSFXProvider / eleven_text_to_sound_v2
 ```
 
+## Immutable LIVE proof replay
+
+The versioned private proof bundle is published only from the already
+authorized, final-version LIVE artifacts. Publication requires a separate B2
+opt-in and imports no ElevenLabs credential:
+
+```bash
+./scripts/run_phase2_proof_publish_securely.sh
+# equivalent fail-closed command:
+FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1 make publish-live-proof
+```
+
+The command re-downloads and hashes every source object, requires both canonical
+manifests to return true from `Manifest.verify()`, and then writes
+`framefoley/proof/live/v1/`. Opening `POST /v1/projects/live-proof` verifies the
+private bundle again, creates an isolated expiring project, and makes zero
+provider calls.
+
 ## Evidence labels
 
 - **LIVE** — real provider output reached B2 and its canonical manifest passed
   `Manifest.verify()`.
+- **LIVE EVIDENCE REPLAY** — verified recorded LIVE outputs copied into a new
+  private replay project; opening it makes zero provider calls.
 - **CACHED DEMO** — original bundled demo asset; never represented as live.
 - **MOCKED** — local/fake test behavior; never production evidence.
 - **OWNER-VERIFIED** — a setting or external account fact checked by the owner.
 - **UNVERIFIED** — not yet proven from source or captured evidence.
 
-The sanitized delivery pack is under `evidence/final/`. Phase 0 evidence remains
-under `artifacts/phase0/` and is not relabeled as Phase 1 proof.
+The current submission pack is under `evidence/phase2/`. The earlier delivery
+pack remains under `evidence/final/`, and Phase 0 evidence remains under
+`artifacts/phase0/`; historical evidence is never relabeled.
 
 ## Security and privacy
 
@@ -165,22 +198,22 @@ See `docs/SECURITY_AND_COST.md` and `docs/OWNER_CHECKLIST.md` before publishing.
 
 ## Current publication status
 
-The bounded public competition deployment was verified on 2026-07-19:
+The public competition surfaces are:
 
 - **Live app:** <https://framefoley-culaliya.onrender.com>
 - **API readiness:** <https://framefoley-api-culaliya.onrender.com/readyz>
 - **Public source:** <https://github.com/Culaliya/FRAMEFOLEY>
-- **Public demo video:**
-  <https://raw.githubusercontent.com/Culaliya/FRAMEFOLEY/main/evidence/final/video/framefoley-demo.mp4>
-- **Deployed source commit:**
-  `4a4d994eeaa07507d4da8189b92ac2f14c4ba586`
+- **Final video:** owner-verified public YouTube/Vimeo URL pending
+- **Deployed source commit:** recorded after the final public verification
 
-The public app runs the explicitly labeled **CACHED DEMO** path, persists its
-project objects to private Backblaze B2, and keeps live ElevenLabs generation
-disabled so anonymous traffic cannot consume provider credit. The separate
-sanitized evidence pack records the explicitly authorized final-version LIVE
-gate.
+The public three-cue workflow uses explicitly labeled **CACHED DEMO**
+candidates, persists complete projects to private Backblaze B2, and keeps live
+ElevenLabs generation disabled so anonymous traffic cannot spend provider
+credit. **LIVE EVIDENCE REPLAY** contains real recorded Genblaze/ElevenLabs
+outputs stored and re-verified from B2; opening it makes no new provider call.
+Custom upload is available in a self-hosted LIVE build, not falsely promised by
+the public zero-spend deployment.
 
-Publication is verified; the B2 lifecycle rule, ElevenLabs account plan/terms,
-and provider spend/usage cap remain owner-controlled **UNVERIFIED** settings.
-See `docs/OWNER_CHECKLIST.md` before submission.
+Submission blockers and prudent non-blocking controls are separated in
+`product/docs/OWNER_VERIFICATION_PHASE_2.md`. Never infer an account-console
+setting from source code.

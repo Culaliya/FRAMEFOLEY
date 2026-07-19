@@ -29,7 +29,7 @@ export function ProjectChrome({
       <SiteHeader compact />
       <nav className="phase-rail" aria-label="Project phases">
         <div className="project-identity">
-          <span className="eyebrow">PRIVATE PROJECT</span>
+          <span className="eyebrow">{project.evidenceLabel ?? "PRIVATE PROJECT"}</span>
           <strong>{project.title}</strong>
         </div>
         <ol>

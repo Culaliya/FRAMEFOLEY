@@ -1,0 +1,48 @@
+{
+  "b2ObjectCount": 24,
+  "candidateCount": 2,
+  "candidates": [
+    {
+      "assetSha256": "7c8e4f40ae3b1dc4e56531b211185d3c2ebd80646078d275483b88f91a9007ae",
+      "candidateId": "cand_d318d507ff32",
+      "latencySeconds": 4.195,
+      "manifestHash": "cab2a9534339400c470f2a052f9453a231d06f67ad3a15bf25bb990c3f614415",
+      "manifestVerified": true,
+      "qcAfter": "pass",
+      "qcBefore": "repairable",
+      "repairs": [
+        "raise_low_gain",
+        "resample_48000_hz",
+        "downmix_mono",
+        "format_pcm_s16le_wav"
+      ],
+      "runId": "9433ec16-44b4-40ce-849f-ac0dd02a062f",
+      "variant": "clean"
+    },
+    {
+      "assetSha256": "738f231a719ae5183b4908b259128faff2abc628949d3ba4e2b98d37c91a6be9",
+      "candidateId": "cand_cdffd8b2498e",
+      "latencySeconds": 4.961,
+      "manifestHash": "c9d957fa4d72f078eda854d633ee4af9721ad0d6a599930a8621595eeaeb2c9e",
+      "manifestVerified": true,
+      "qcAfter": "pass",
+      "qcBefore": "repairable",
+      "repairs": [
+        "resample_48000_hz",
+        "downmix_mono",
+        "format_pcm_s16le_wav"
+      ],
+      "runId": "46081af2-03e7-42d8-b961-6c52cf89d254",
+      "variant": "character"
+    }
+  ],
+  "capturedAt": "2026-07-19T06:13:40.540113Z",
+  "costDisclosure": "The provider reported USD 0.00 for the recorded gate; this is not evidence that an ElevenLabs account spend or usage cap is active.",
+  "eventCount": 1,
+  "model": "eleven_text_to_sound_v2",
+  "proofVersion": "live-v1",
+  "provider": "elevenlabs-sfx",
+  "providerCallCount": 2,
+  "schemaVersion": 1,
+  "sourceLabel": "LIVE"
+}

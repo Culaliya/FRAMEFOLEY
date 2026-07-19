@@ -27,9 +27,11 @@ from framefoley_api.errors import PublicError
 from framefoley_api.events import EventLog
 from framefoley_api.exporting import build_provenance, export_project
 from framefoley_api.generation import GenerationService
+from framefoley_api.live_proof import LiveProofService
 from framefoley_api.media import MAX_SOURCE_BYTES, prepare_source
 from framefoley_api.models import (
     ApprovalRequest,
+    CapabilityResponse,
     CreateProjectRequest,
     EventsUpdateRequest,
     FrameFoleyProject,
@@ -221,10 +223,14 @@ def create_app(
     active_settings = settings or Settings.from_env()
     object_store = store or create_object_store(active_settings)
     repository = ProjectRepository(object_store)
+    live_proof = LiveProofService(object_store, repository)
     signer = TokenSigner.from_secret(active_settings.hmac_secret)
     events = EventLog()
     generator = GenerationService(active_settings, repository, events)
     generation_slots = threading.BoundedSemaphore(active_settings.max_concurrent_generation)
+    capability_lock = threading.Lock()
+    capability_proof_checked_at = 0.0
+    capability_proof_ready = False
 
     app = FastAPI(
         title="FRAMEFOLEY API",
@@ -284,14 +290,38 @@ def create_app(
             )
         return project
 
-    def creation_response(project: FrameFoleyProject) -> ProjectCreationResponse:
+    def creation_response(
+        project: FrameFoleyProject, *, phase: Literal["source", "generate"] = "source"
+    ) -> ProjectCreationResponse:
         token = signer.project_token(project.id, int(project.expires_at.timestamp()))
         return ProjectCreationResponse(
             project_id=project.id,
             project_token=token,
-            phase="source",
+            phase=phase,
             expires_at=project.expires_at,
         )
+
+    def custom_upload_can_complete() -> bool:
+        try:
+            active_settings.require_live()
+        except ValueError:
+            return False
+        return True
+
+    def live_proof_replay_available() -> bool:
+        nonlocal capability_proof_checked_at, capability_proof_ready
+        now = time.monotonic()
+        with capability_lock:
+            if now - capability_proof_checked_at < 15:
+                return capability_proof_ready
+            try:
+                live_proof.verify()
+            except PublicError:
+                capability_proof_ready = False
+            else:
+                capability_proof_ready = True
+            capability_proof_checked_at = now
+            return capability_proof_ready
 
     def project_response(project: FrameFoleyProject, request: Request) -> ProjectResponse:
         expires_at = min(int(project.expires_at.timestamp()), int(time.time()) + 3600)
@@ -310,7 +340,11 @@ def create_app(
 
     @app.get("/healthz")
     def health() -> dict[str, str]:
-        return {"status": "ok", "service": "framefoley-api", "version": "1.0.0"}
+        payload = {"status": "ok", "service": "framefoley-api", "version": "1.0.0"}
+        source_commit = os.getenv("RENDER_GIT_COMMIT") or os.getenv("FRAMEFOLEY_SOURCE_COMMIT")
+        if source_commit and re.fullmatch(r"[a-f0-9]{40}", source_commit):
+            payload["sourceCommit"] = source_commit
+        return payload
 
     @app.get("/readyz")
     def readiness() -> JSONResponse:
@@ -325,7 +359,27 @@ def create_app(
                 "status": "ready",
                 "generationMode": active_settings.generation_mode,
                 "storage": object_store.label,
+                "mediaTools": {"ffmpeg": True, "ffprobe": True},
+                "storageReady": True,
             }
+        )
+
+    @app.get("/v1/capabilities", response_model=CapabilityResponse)
+    def capabilities() -> Response:
+        storage_label: Literal["BACKBLAZE B2", "MOCKED LOCAL STORAGE"] = (
+            "BACKBLAZE B2" if object_store.label == "BACKBLAZE B2" else "MOCKED LOCAL STORAGE"
+        )
+        payload = CapabilityResponse(
+            generation_mode=active_settings.generation_mode,
+            storage=storage_label,
+            custom_upload_can_complete=custom_upload_can_complete(),
+            live_proof_replay_available=live_proof_replay_available(),
+            anonymous_provider_spend_enabled=custom_upload_can_complete(),
+            project_ttl_hours=active_settings.project_ttl_hours,
+        )
+        return JSONResponse(
+            payload.model_dump(mode="json", by_alias=True),
+            headers={"Cache-Control": "public, max-age=15, stale-while-revalidate=15"},
         )
 
     @app.post("/v1/projects", response_model=ProjectCreationResponse, status_code=201)
@@ -337,6 +391,7 @@ def create_app(
     @app.post("/v1/projects/demo", response_model=ProjectCreationResponse, status_code=201)
     def create_demo_project() -> ProjectCreationResponse:
         project = _new_project(active_settings, "JELLY RELAY")
+        project.evidence_label = "CACHED DEMO"
         video_path = active_settings.repo_root / "demo" / "jelly-relay.mp4"
         thumbnail_path = active_settings.repo_root / "demo" / "jelly-relay-thumbnail.webp"
         if not video_path.is_file() or not thumbnail_path.is_file():
@@ -380,6 +435,13 @@ def create_app(
         repository.save(project)
         return creation_response(project)
 
+    @app.post("/v1/projects/live-proof", response_model=ProjectCreationResponse, status_code=201)
+    def create_live_proof_project() -> ProjectCreationResponse:
+        proof = live_proof.verify()
+        project = _new_project(active_settings, "LIVE EVIDENCE REPLAY")
+        live_proof.hydrate_project(project, proof)
+        return creation_response(project, phase="generate")
+
     @app.post(
         "/v1/projects/{project_id}/upload-url",
         response_model=UploadUrlResponse,
@@ -387,6 +449,12 @@ def create_app(
     def create_upload_url(
         project_id: str, body: UploadUrlRequest, request: Request
     ) -> UploadUrlResponse:
+        if not custom_upload_can_complete():
+            raise PublicError(
+                "CUSTOM_UPLOAD_UNAVAILABLE",
+                "Custom clip mode is available in a self-hosted LIVE build.",
+                status_code=409,
+            )
         project = authorized_project(project_id, request)
         if ProjectState(project.state) not in {ProjectState.CREATED, ProjectState.SOURCE_FAILED}:
             raise PublicError(

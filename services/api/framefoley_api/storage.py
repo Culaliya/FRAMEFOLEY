@@ -15,9 +15,12 @@ def validate_object_key(key: str, *, project_id: str | None = None) -> str:
     path = PurePosixPath(key)
     if path.is_absolute() or "\\" in key or ".." in path.parts:
         raise ValueError("unsafe object key")
-    required = f"framefoley/v1/projects/{project_id}/" if project_id else "framefoley/v1/projects/"
-    if not key.startswith(required):
-        raise ValueError("object key is outside the allowed project prefix")
+    if project_id:
+        required = f"framefoley/v1/projects/{project_id}/"
+        if not key.startswith(required):
+            raise ValueError("object key is outside the allowed project prefix")
+    elif not key.startswith(("framefoley/v1/projects/", "framefoley/proof/live/v1/")):
+        raise ValueError("object key is outside the allowed FRAMEFOLEY prefixes")
     return path.as_posix()
 
 

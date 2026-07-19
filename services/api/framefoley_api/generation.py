@@ -141,6 +141,7 @@ class GenerationService:
                 "Demo generation is limited to the built-in JELLY RELAY project.",
                 status_code=409,
             )
+        project.evidence_label = "CACHED DEMO"
         failures = 0
         for event in project.events:
             event.candidates = []
@@ -305,6 +306,7 @@ class GenerationService:
         )
 
     def _generate_live(self, project: FrameFoleyProject) -> FrameFoleyProject:
+        project.evidence_label = "LIVE"
         try:
             self.settings.require_live()
             backend = S3StorageBackend.for_backblaze(

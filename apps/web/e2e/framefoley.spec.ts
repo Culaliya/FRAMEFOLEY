@@ -1,5 +1,4 @@
 import { expect, test, type Page } from "@playwright/test";
-import { resolve } from "node:path";
 
 function failOnConsoleErrors(page: Page): string[] {
   const errors: string[] = [];
@@ -59,15 +58,68 @@ test("desktop demo completes audition, mix, export, and provenance", async ({ pa
   expect(consoleErrors).toEqual([]);
 });
 
-test("desktop custom MP4 upload reaches the cue editor", async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== "desktop", "Custom upload is exercised once.");
+test("public demo explains custom upload without exposing a dead-end control", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Capability-gated upload is exercised once.");
   const consoleErrors = failOnConsoleErrors(page);
   await page.goto("/projects/new");
-  await page.locator('input[type="file"]').setInputFiles(
-    resolve(process.cwd(), "../../demo/jelly-relay.mp4"),
-  );
-  await expect(page).toHaveURL(/\/projects\/prj_[a-z0-9]+\/cue/, { timeout: 30_000 });
-  await expect(page.getByText("SOURCE AUDIO STRIPPED")).toBeVisible();
+  await expect(page.getByTestId("custom-upload-info")).toBeVisible();
+  await expect(page.getByText("Available in a self-hosted LIVE build.")).toBeVisible();
+  await expect(page.getByTestId("custom-upload")).toHaveCount(0);
+  await expect(page.locator('input[type="file"]')).toHaveCount(0);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("landing comparison requires a gesture for sound and keeps one timeline", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Audio comparison behavior runs once.");
+  const consoleErrors = failOnConsoleErrors(page);
+  await page.goto("/");
+  const video = page.locator(".comparison-stage video");
+  await expect(video).toBeVisible();
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+  const before = await video.evaluate((element: HTMLVideoElement) => element.currentTime);
+  await page.getByTestId("comparison-mix").click();
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.muted)).toBe(false);
+  const after = await video.evaluate((element: HTMLVideoElement) => element.currentTime);
+  expect(Math.abs(after - before)).toBeLessThan(0.75);
+  await page.getByTestId("comparison-silent").click();
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.muted)).toBe(true);
+  await page.getByTestId("comparison-mix").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByTestId("comparison-mix")).toHaveAttribute("aria-pressed", "true");
+  await page.evaluate(() => {
+    Object.defineProperty(document, "hidden", { configurable: true, value: true });
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+  await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.paused && element.muted)).toBe(true);
+  expect(consoleErrors).toEqual([]);
+});
+
+test("LIVE evidence replay completes with zero provider calls", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "The complete replay spine runs once.");
+  const consoleErrors = failOnConsoleErrors(page);
+  await page.goto("/");
+  await page.getByTestId("open-live-proof").click();
+  await expect(page).toHaveURL(/\/projects\/prj_[a-z0-9]+\/generate/, { timeout: 30_000 });
+  await expect(page.getByTestId("live-proof-banner")).toBeVisible();
+  await expect(page.getByText("2 / 2 VERIFIED")).toBeVisible();
+  await expect(page.getByText("0 PROVIDER CALLS", { exact: true })).toBeVisible();
+  await page.getByTestId("open-audition").click();
+  const event = page.locator(".audition-event").first();
+  await expect(event.locator(".candidate-card")).toHaveCount(2);
+  await event.locator(".candidate-card").first().getByRole("button", { name: "SOLO" }).click();
+  await event.locator(".candidate-card").nth(1).getByRole("button", { name: "IN FRAME" }).click();
+  await page.getByRole("button", { name: "STOP ALL" }).click();
+  await event.locator(".candidate-card").first().getByRole("button", { name: "APPROVE" }).click();
+  await page.getByTestId("open-mix").click();
+  await page.getByTestId("render-mix").click();
+  await expect(page.getByTestId("open-export")).toBeVisible({ timeout: 30_000 });
+  await page.getByTestId("open-export").click();
+  await page.getByTestId("export-kit").click();
+  await expect(page.getByTestId("download-kit")).toBeVisible({ timeout: 30_000 });
+  await page.getByRole("link", { name: /INSPECT PROVENANCE/ }).click();
+  await expect(page.getByText("THE PROVIDER CALLS HAPPENED DURING THE RECORDED LIVE GATE — NOT NOW.")).toBeVisible();
+  await expect(page.getByText("Manifest.verify(): TRUE").first()).toBeVisible();
+  await expect(page.locator(".provenance-record")).toHaveCount(2);
   expect(consoleErrors).toEqual([]);
 });
 
@@ -96,7 +148,8 @@ test("tablet keeps the editorial monitor and phase rail visible", async ({ page 
   const consoleErrors = failOnConsoleErrors(page);
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /YOUR GAME/ })).toBeVisible();
-  await expect(page.locator(".hero-machine")).toBeVisible();
+  await expect(page.locator(".instant-comparison")).toBeVisible();
+  await expect(page.getByTestId("open-live-proof")).toBeVisible();
   await page.goto("/projects/new");
   await expect(page.getByText("JELLY RELAY")).toBeVisible();
   expect(consoleErrors).toEqual([]);
@@ -106,8 +159,8 @@ test("reduced motion disables decorative loops", async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop", "Reduced-motion audit runs once.");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  const duration = await page.locator(".jelly").evaluate(
-    (element) => getComputedStyle(element).animationDuration,
-  );
-  expect(["0.001s", "0s"]).toContain(duration);
+  const paused = await page
+    .locator(".comparison-stage video")
+    .evaluate((element: HTMLVideoElement) => element.paused);
+  expect(paused).toBe(true);
 });

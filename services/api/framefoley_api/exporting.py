@@ -44,6 +44,13 @@ def build_provenance(project: FrameFoleyProject) -> dict[str, Any]:
             "CACHED DEMO": "Original bundled cache; never represented as a live generation.",
             "MOCKED": "Test-only behavior; never represented as production evidence.",
         },
+        "projectEvidenceLabel": project.evidence_label,
+        "proofReplayDisclosure": (
+            "Recorded LIVE provider outputs re-verified from private B2; opening and exporting "
+            "this replay made zero provider calls."
+            if project.evidence_label == "LIVE EVIDENCE REPLAY"
+            else None
+        ),
         "project": project.model_dump(mode="json", by_alias=True, exclude_none=True),
         "candidates": candidates,
     }
@@ -178,12 +185,19 @@ def export_project(project: FrameFoleyProject, repository: ProjectRepository) ->
         json.dumps({"schemaVersion": 1, "events": soundpack_events}, indent=2, sort_keys=True)
         + "\n"
     ).encode("utf-8")
+    replay_disclosure = (
+        "This project is a LIVE EVIDENCE REPLAY. Its provider calls occurred during the "
+        "recorded authorized gate; opening, auditioning, rendering, and exporting the replay "
+        "made zero new provider calls.\n\n"
+        if project.evidence_label == "LIVE EVIDENCE REPLAY"
+        else ""
+    )
     files["README.md"] = f"""# {project.title} — FRAMEFOLEY sound kit
 
 This bundle contains an approved mixed preview, WAV and OGG sound effects,
 technical QC reports, waveform images, manifests, and a provenance index.
 
-Provider/model disclosure is recorded per candidate in `provenance-index.json`.
+{replay_disclosure}Provider/model disclosure is recorded per candidate in `provenance-index.json`.
 Genblaze orchestrates LIVE candidates and their canonical manifests. Backblaze
 B2 is the durable production system of record. Entries labeled CACHED DEMO are
 original bundled examples and are not represented as live generations.

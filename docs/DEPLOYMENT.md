@@ -56,21 +56,37 @@ NEXT_PUBLIC_API_BASE_URL=https://your-api-origin.example
 
 `NEXT_PUBLIC_*` is intentionally public and must contain only the API origin.
 
+For the public zero-spend competition deployment, use:
+
+```text
+FRAMEFOLEY_STORAGE_MODE=b2
+GENERATION_MODE=demo
+LIVE_GENERATION_ENABLED=false
+ELEVENLABS_API_KEY=<absent>
+```
+
+The API then reports `customUploadCanComplete=false` and
+`anonymousProviderSpendEnabled=false`. Do not override those facts in frontend
+copy. The private B2 values remain required for complete project persistence and
+LIVE evidence replay.
+
 ## Deployment order
 
 1. Create/confirm the private B2 bucket and scoped application key.
 2. Configure the anonymous lifecycle rule and retain secret-safe evidence.
-3. Configure the provider spend/usage cap; do not claim it before capture.
-4. Deploy the API container with live generation initially disabled.
-5. Confirm `/healthz` and `/readyz`; `readyz` must name `BACKBLAZE B2`.
-6. Deploy the web with the API origin baked into its build.
-7. Set API `FRONTEND_ORIGIN` to the exact public web origin.
-8. Add platform edge/IP rate limiting and SSE no-buffer configuration.
-9. Run the cached demo publicly on desktop, tablet, and phone.
-10. Explicitly enable a bounded live gate and verify a final-version candidate
-    reaches B2 with canonical manifest verification.
-11. Disable live again if judging does not require it continuously, or retain
-    the kill switch and monitored budget.
+3. Treat provider spend/usage cap as prudent but non-blocking while public
+   provider calls remain disabled; never claim it active before owner capture.
+4. Publish and verify the immutable `proof/live/v1/` bundle with the explicit
+   B2-only command. It must make zero provider calls.
+5. Deploy the API container with live generation disabled.
+6. Confirm `/healthz`, `/readyz`, and `/v1/capabilities`; readiness must name
+   `BACKBLAZE B2` and capabilities must show zero anonymous provider spend.
+7. Deploy the web with the API origin baked into its build.
+8. Set API `FRONTEND_ORIGIN` to the exact public web origin.
+9. Preserve SSE no-buffer configuration. Edge/IP rate limiting remains prudent.
+10. Run CACHED DEMO and LIVE EVIDENCE REPLAY publicly on desktop, tablet, and
+    phone, including approval, render, export, download, and provenance.
+11. Keep public LIVE generation disabled throughout judging.
 
 ## Security headers and transport
 

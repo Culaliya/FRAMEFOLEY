@@ -149,7 +149,16 @@ class SourceClip(ContractModel):
     sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
     thumbnail_key: str
     source_audio_stripped: Literal[True] = True
-    origin: Literal["demo", "upload"]
+    origin: Literal["demo", "upload", "live_proof"]
+
+
+class ProofReplayMetadata(ContractModel):
+    proof_version: Literal["live-v1"]
+    captured_at: datetime
+    recorded_provider_call_count: Literal[2]
+    replay_provider_call_count: Literal[0] = 0
+    b2_object_count: int = Field(ge=1)
+    cost_disclosure: str = Field(min_length=1, max_length=300)
 
 
 class MixRender(ContractModel):
@@ -199,6 +208,8 @@ class FrameFoleyProject(ContractModel):
     live_call_count: int = Field(default=0, ge=0, le=12)
     retry_budget_remaining: int = Field(ge=0, le=6)
     generation_request_keys: list[str] = Field(default_factory=list, max_length=16)
+    evidence_label: Literal["CACHED DEMO", "LIVE EVIDENCE REPLAY", "LIVE"] | None = None
+    proof_replay: ProofReplayMetadata | None = None
     error: ApiError | None = None
 
 
@@ -218,8 +229,83 @@ class CreateProjectRequest(ContractModel):
 class ProjectCreationResponse(ContractModel):
     project_id: str
     project_token: str
-    phase: Literal["source"]
+    phase: Literal["source", "generate"]
     expires_at: datetime
+
+
+class CapabilityResponse(ContractModel):
+    schema_version: Literal[1] = 1
+    generation_mode: Literal["live", "demo", "disabled"]
+    storage: Literal["BACKBLAZE B2", "MOCKED LOCAL STORAGE"]
+    custom_upload_can_complete: bool
+    live_proof_replay_available: bool
+    anonymous_provider_spend_enabled: bool
+    project_ttl_hours: int = Field(ge=1, le=720)
+
+
+class LiveProofEventV1(ContractModel):
+    id: str = Field(pattern=r"^evt_[a-z0-9]{8,24}$")
+    slug: str = Field(pattern=r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+    title: str = Field(min_length=1, max_length=80)
+    type: Literal["impact", "creature", "ui", "ambience"]
+    timestamp_seconds: float = Field(ge=0, le=15)
+    target_duration_seconds: float = Field(ge=0.08, le=8)
+    intensity: Literal["soft", "medium", "hard"]
+    material_note: str | None = Field(default=None, max_length=180)
+
+
+class LiveProofCandidateV1(ContractModel):
+    candidate_id: str = Field(pattern=r"^cand_[a-z0-9]{8,24}$")
+    variant: Literal["clean", "character"]
+    run_id: str = Field(min_length=36, max_length=36)
+    asset_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    manifest_hash: str = Field(pattern=r"^[a-f0-9]{64}$")
+    manifest_verified: Literal[True]
+    qc_before: Literal["pass", "repairable"]
+    qc_after: Literal["pass"]
+    repairs: list[str] = Field(default_factory=list, max_length=12)
+    latency_seconds: float = Field(ge=0)
+
+
+class LiveProofCandidatePayloadV1(ContractModel):
+    """Private replay metadata covered by the proof checksum inventory."""
+
+    schema_version: Literal[1] = 1
+    candidate_id: str = Field(pattern=r"^cand_[a-z0-9]{8,24}$")
+    variant: Literal["clean", "character"]
+    prompt: str = Field(min_length=1, max_length=1200)
+    approved_wav_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    approved_ogg_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    waveform_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    manifest_object_sha256: str = Field(pattern=r"^[a-f0-9]{64}$")
+    started_at: datetime
+    ended_at: datetime
+
+
+class LiveProofIndexV1(ContractModel):
+    schema_version: Literal[1] = 1
+    proof_version: Literal["live-v1"]
+    captured_at: datetime
+    source_label: Literal["LIVE"]
+    provider: Literal["elevenlabs-sfx"]
+    model: Literal["eleven_text_to_sound_v2"]
+    provider_call_count: Literal[2]
+    event_count: Literal[1]
+    candidate_count: Literal[2]
+    b2_object_count: int = Field(ge=1)
+    candidates: list[LiveProofCandidateV1] = Field(min_length=2, max_length=2)
+    cost_disclosure: str = Field(min_length=1, max_length=300)
+
+    @field_validator("candidates")
+    @classmethod
+    def validate_candidates(cls, value: list[LiveProofCandidateV1]) -> list[LiveProofCandidateV1]:
+        if {candidate.variant for candidate in value} != {"clean", "character"}:
+            raise ValueError("proof requires exactly one clean and one character candidate")
+        if len({candidate.candidate_id for candidate in value}) != 2:
+            raise ValueError("proof candidate IDs must be unique")
+        if len({candidate.run_id for candidate in value}) != 2:
+            raise ValueError("proof run IDs must be unique")
+        return value
 
 
 class UploadUrlRequest(ContractModel):
