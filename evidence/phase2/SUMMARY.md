@@ -11,7 +11,7 @@ Evidence labels are literal: `LIVE`, `LIVE EVIDENCE REPLAY`,
 - Public verification: **OWNER-VERIFIED**
 - Competition video: **PASS**
 - Public YouTube verification: **OWNER-VERIFIED**
-- Source commit: `f6d3ba3dc8e1dcd17a4c70d556c7e00f9f0aff25`
+- Source commit: `284f9270cea80a567832c0309ee78b4c99708b9a`
 
 The public CACHED DEMO makes no provider call. LIVE EVIDENCE REPLAY
 contains two fresh outputs from the owner-verified paid-plan v2 gate;

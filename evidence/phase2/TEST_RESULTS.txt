@@ -1,28 +1,28 @@
 FRAMEFOLEY Phase 2 required gate results
-Recorded: 2026-07-20T09:51:17.968222+00:00
-Source commit: f6d3ba3dc8e1dcd17a4c70d556c7e00f9f0aff25
+Recorded: 2026-07-20T10:15:23.270294+00:00
+Source commit: 284f9270cea80a567832c0309ee78b4c99708b9a
 
 $ make check
-PASS (exit 0, 20.638s)
+PASS (exit 0, 21.457s)
 All checks passed!
 Success: no issues found in 37 source files
-59 passed in 7.32s
+59 passed in 7.16s
  Test Files  6 passed (6)
       Tests  14 passed (14)
-✓ Compiled successfully in 1259ms
+✓ Compiled successfully in 1345ms
 Secret scan: PASS (source + evidence; values never printed)
 
 $ make browser-test
-PASS (exit 0, 15.714s)
+PASS (exit 0, 17.077s)
   32 skipped
-  7 passed (14.9s)
+  7 passed (16.0s)
 
 $ make phase2-proof-test
-PASS (exit 0, 5.996s)
-18 passed in 4.08s
+PASS (exit 0, 5.146s)
+18 passed in 3.65s
  Test Files  2 passed (2)
       Tests  5 passed (5)
 
 $ make secret-scan
-PASS (exit 0, 1.061s)
+PASS (exit 0, 0.962s)
 Secret scan: PASS (source + evidence; values never printed)
