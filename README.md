@@ -150,19 +150,19 @@ ElevenLabsSFXProvider / eleven_text_to_sound_v2
 
 ## Immutable LIVE proof replay
 
-The versioned private proof bundle is published only from the already
-authorized, final-version LIVE artifacts. Publication requires a separate B2
-opt-in and imports no ElevenLabs credential:
+The current versioned private proof bundle is published only from the bounded
+paid-plan remediation artifacts. The secure command performs one authorized
+two-candidate LIVE run, writes the fresh source evidence separately, then
+publishes v2 without a second provider call:
 
 ```bash
-./scripts/run_phase2_proof_publish_securely.sh
-# equivalent fail-closed command:
-FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1 make publish-live-proof
+./scripts/run_paid_live_v2_securely.sh
 ```
 
 The command re-downloads and hashes every source object, requires both canonical
 manifests to return true from `Manifest.verify()`, and then writes
-`framefoley/proof/live/v1/`. Opening `POST /v1/projects/live-proof` verifies the
+`framefoley/proof/live/v2/`. The historical `framefoley/proof/live/v1/` prefix
+remains immutable and is never overwritten. Opening `POST /v1/projects/live-proof` verifies the
 private bundle again, creates an isolated expiring project, and makes zero
 provider calls.
 

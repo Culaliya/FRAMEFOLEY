@@ -43,9 +43,9 @@ export interface SourceClip {
 }
 
 export interface ProofReplayMetadata {
-  proofVersion: "live-v1";
+  proofVersion: "live-v1" | "live-v2";
   capturedAt: string;
-  recordedProviderCallCount: 2;
+  recordedProviderCallCount: number;
   replayProviderCallCount: 0;
   b2ObjectCount: number;
   costDisclosure: string;

@@ -19,7 +19,13 @@ def validate_object_key(key: str, *, project_id: str | None = None) -> str:
         required = f"framefoley/v1/projects/{project_id}/"
         if not key.startswith(required):
             raise ValueError("object key is outside the allowed project prefix")
-    elif not key.startswith(("framefoley/v1/projects/", "framefoley/proof/live/v1/")):
+    elif not key.startswith(
+        (
+            "framefoley/v1/projects/",
+            "framefoley/proof/live/v1/",
+            "framefoley/proof/live/v2/",
+        )
+    ):
         raise ValueError("object key is outside the allowed FRAMEFOLEY prefixes")
     return path.as_posix()
 

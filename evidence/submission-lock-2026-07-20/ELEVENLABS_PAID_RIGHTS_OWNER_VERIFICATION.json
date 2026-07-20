@@ -1,0 +1,12 @@
+{
+  "billingDetailsRetained": false,
+  "evidenceLabel": "OWNER-VERIFIED",
+  "legacyProofV1Mutable": false,
+  "ownerAcceptedTermsAndPayment": true,
+  "paidPlanTier": "starter",
+  "proofV2GenerationStatus": "PASS",
+  "recordedAt": "2026-07-20T17:15:47+08:00",
+  "schemaVersion": 1,
+  "secretsRetained": false,
+  "sfxExploreSharingDisabled": true
+}

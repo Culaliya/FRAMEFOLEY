@@ -1,0 +1,130 @@
+{
+  "evidenceLabel": "LIVE",
+  "objectCount": 24,
+  "objects": [
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_bubble02/event.json",
+      "sha256": "34c85dbb83ad2fae8d23ac9df84491ff71fd8149031bc99d7eb121c948ec469e",
+      "sizeBytes": 281
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_crystal03/event.json",
+      "sha256": "b3804338c65f0611b043ea640ae46467c5868c91db9eccab4fc42b22f323ca80",
+      "sizeBytes": 291
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_252f272a013b/approved-audio.ogg",
+      "sha256": "55927f49c340975923e90393b32ce92b8fc73f97e3591d19d37b651b9abd2a21",
+      "sizeBytes": 14581
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_252f272a013b/approved-audio.wav",
+      "sha256": "1c91437f774b8c34efe00e52618c8eb8eef126c665901ad46a0e288976ecd4ad",
+      "sizeBytes": 46562
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_252f272a013b/derivative.json",
+      "sha256": "b2e60240d9c0efe2bf61789b103b51de53f40eda467485fd68bc845d76ccaabf",
+      "sizeBytes": 534
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_252f272a013b/qc-after.json",
+      "sha256": "2cf8fd89331a2a3b202f496b3bdf805d6a93b455be3a95c55d8f5febd58e3734",
+      "sizeBytes": 441
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_252f272a013b/qc-before.json",
+      "sha256": "44d43f97710515cc54961ae8ce84024739a884d83eeda08f624a0b8afc3aedcf",
+      "sizeBytes": 414
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_252f272a013b/waveform.png",
+      "sha256": "02fdc61eb9c593e4b3c5d46b9015304b3d4b36432ae1655c1d3dc603b0d32cfc",
+      "sizeBytes": 3857
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_450059ff6f1f/approved-audio.ogg",
+      "sha256": "3ae99c0029b7511ff7e8724e35c4f915de6de90368f34929875457b885ba09b7",
+      "sizeBytes": 13893
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_450059ff6f1f/approved-audio.wav",
+      "sha256": "02a390ea1332cb6dda60707be605514cbc02f84c92797a6e2fba81efa07fea7d",
+      "sizeBytes": 43540
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_450059ff6f1f/derivative.json",
+      "sha256": "4ce1e224cd3cfbe3c7196ae14024bc83fa809540daef4b05aec5d5e64adc1baa",
+      "sizeBytes": 505
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_450059ff6f1f/qc-after.json",
+      "sha256": "9b3760cd34fe85903d2f32f78cd47c9754543d4211b3eccb138e8bd8067d39f0",
+      "sizeBytes": 412
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_450059ff6f1f/qc-before.json",
+      "sha256": "2ee9fed45465a84981ee8d0041851c0b51c548b664dcdc61b09330073d3d09f9",
+      "sizeBytes": 381
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/candidates/cand_450059ff6f1f/waveform.png",
+      "sha256": "83b417a54f99dc1968b94a79df29b26eb8646807cde9cbc686e605d660cf11e9",
+      "sizeBytes": 5473
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/events/evt_landing01/event.json",
+      "sha256": "8a3d3ecaa43fcfa58b4cf73944a9336b1ebee94e1d6337876532f8819e08925b",
+      "sizeBytes": 282
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/genblaze/runs/2026-07-20/aacb46bd-e8bc-4970-8da7-839804250759/assets/8ea96515-cf88-4b7e-967d-93cdd5de4072.mp3",
+      "sha256": "f727c42f70a7556aee515bdf996b818939c9e66c9bd0bf9feb9006fa319a6337",
+      "sizeBytes": 12582
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/genblaze/runs/2026-07-20/aacb46bd-e8bc-4970-8da7-839804250759/manifest.json",
+      "sha256": "4c4ea6761cdd9f2db23502313c35a155c054824a58e017fe36c85bdb934b6768",
+      "sizeBytes": 2177
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/genblaze/runs/2026-07-20/fdef6cf9-e8ee-4389-8355-555e6ea0abd1/assets/d112b206-966e-4164-b1f4-df5d2c8cfd03.mp3",
+      "sha256": "7b787fc0d852ca696c22b42fcf2a084b75c142896433348137351e73453eab07",
+      "sizeBytes": 12582
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/genblaze/runs/2026-07-20/fdef6cf9-e8ee-4389-8355-555e6ea0abd1/manifest.json",
+      "sha256": "bc58403053906e619a266d98b715d8cb02430dbe0391060d47be1b93ccb0448f",
+      "sizeBytes": 2154
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/project.json",
+      "sha256": "2a1eb8c291853b23d8cec7f58f12fe915a5da37fe4760219be94f1e1a329cd9e",
+      "sizeBytes": 8324
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/source/original.mp4",
+      "sha256": "11600dff6e61888aa9cad67205f24a7ebba52fedb579d40bc7e050edde2ab86f",
+      "sizeBytes": 276047
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/source/preview.mp4",
+      "sha256": "11600dff6e61888aa9cad67205f24a7ebba52fedb579d40bc7e050edde2ab86f",
+      "sizeBytes": 276047
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/source/source-metadata.json",
+      "sha256": "56dc8fd07574832a6120d70ccf2ab55e3d6a75b54fd341c1f237d9eef9886b79",
+      "sizeBytes": 484
+    },
+    {
+      "key": "framefoley/v1/projects/prj_a34f10c57d140e52/source/thumbnail.webp",
+      "sha256": "c62edccbaf8f84551b20a73b79b887875a9095fe6755844aaf0777a7771d8f92",
+      "sizeBytes": 15968
+    }
+  ],
+  "prefix": "framefoley/v1/projects/prj_a34f10c57d140e52/",
+  "projectId": "prj_a34f10c57d140e52",
+  "recordedAt": "2026-07-20T09:21:16.316521+00:00",
+  "schemaVersion": 1
+}

@@ -76,8 +76,9 @@ LIVE evidence replay.
 2. Configure the anonymous lifecycle rule and retain secret-safe evidence.
 3. Treat provider spend/usage cap as prudent but non-blocking while public
    provider calls remain disabled; never claim it active before owner capture.
-4. Publish and verify the immutable `proof/live/v1/` bundle with the explicit
-   B2-only command. It must make zero provider calls.
+4. Publish and verify the immutable `proof/live/v2/` bundle from the paid-plan
+   remediation evidence. Publication itself must make zero provider calls;
+   historical `proof/live/v1/` remains untouched.
 5. Deploy the API container with live generation disabled.
 6. Confirm `/healthz`, `/readyz`, and `/v1/capabilities`; readiness must name
    `BACKBLAZE B2` and capabilities must show zero anonymous provider spend.

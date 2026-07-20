@@ -1,7 +1,8 @@
 # YouTube upload metadata
 
-Use only after `RIGHTS_AND_LICENSE_AUDIT.md` changes from blocked to an
-owner-accepted, evidence-backed state and the final master is rebuilt if needed.
+Use only for the proof-v2 master rebuilt after the dated owner-verified Starter
+and Sound Effects Explore-sharing opt-out record. Never upload the older v1
+master as the cash-prize submission video.
 
 ## Title
 

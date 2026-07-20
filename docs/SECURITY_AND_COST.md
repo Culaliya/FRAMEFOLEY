@@ -53,7 +53,9 @@ fails closed when the live contract is incomplete.
 
 - Publication requires `FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1` plus private B2
   credentials; it imports no ElevenLabs key.
-- `proof/live/v1/` is immutable: existing different bytes stop publication.
+- `proof/live/v2/` is the current immutable replay: existing different bytes
+  stop publication. Historical `proof/live/v1/` remains accepted only as a
+  versioned legacy record and is never overwritten by the v2 command.
 - A complete checksum inventory covers every allowed proof object and rejects
   missing or unexpected paths.
 - Both canonical manifests must return true from the official

@@ -149,7 +149,7 @@ def build(output: Path) -> str:
             )
         )
     index = LiveProofIndexV1(
-        proof_version="live-v1",
+        proof_version="live-v2",
         captured_at=datetime(2026, 7, 19, 6, 13, 40, tzinfo=UTC),
         source_label="LIVE",
         provider="elevenlabs-sfx",
@@ -160,6 +160,9 @@ def build(output: Path) -> str:
         b2_object_count=24,
         candidates=proof_candidates,
         cost_disclosure=COST_DISCLOSURE,
+        rights_evidence_label="OWNER-VERIFIED",
+        paid_plan_tier="starter",
+        sfx_explore_sharing_disabled=True,
     )
     store = LocalObjectStore(output)
     return write_immutable_proof_bundle(store, index, objects)

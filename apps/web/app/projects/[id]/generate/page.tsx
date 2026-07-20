@@ -48,7 +48,10 @@ function CandidatePipeline({
   candidate?: GenerationCandidate;
   variant: "clean" | "character";
 }) {
-  const replay = candidate?.sourceLabel === "LIVE" && candidate.parameters?.proofVersion === "live-v1";
+  const proofVersion = candidate?.parameters?.proofVersion;
+  const replay =
+    candidate?.sourceLabel === "LIVE" &&
+    (proofVersion === "live-v1" || proofVersion === "live-v2");
   return (
     <article className={`pipeline-candidate ${candidate?.status === "failed" ? "failed" : ""}`}>
       <header>
@@ -155,10 +158,10 @@ export default function GeneratePage() {
         <section className="live-proof-banner" data-testid="live-proof-banner">
           <div>
             <StatusStamp label="LIVE EVIDENCE REPLAY" tone="lime" icon="shield" />
-            <h2>REAL OUTPUTS. REPLAYED WITHOUT NEW PROVIDER CALLS.</h2>
+            <h2>PAID-PLAN LIVE V2. REPLAYED WITHOUT NEW PROVIDER CALLS.</h2>
             <p>
-              These candidates were generated during an authorized LIVE Genblaze run and stored
-              in Backblaze B2. Opening this replay makes no provider call.
+              These candidates were generated during the owner-authorized paid-plan LIVE v2
+              Genblaze run and stored in Backblaze B2. Opening this replay makes no provider call.
             </p>
           </div>
           <dl>
@@ -209,9 +212,9 @@ export default function GeneratePage() {
         <details className="demo-disclosure proof-disclosure" open>
           <summary>HOW THIS WAS PRODUCED</summary>
           <p>
-            Real Genblaze provider outputs captured in an authorized run, verified again from B2,
-            and replayed without spending provider credit. Human approval in this project happens now;
-            the provider calls did not.
+            Real Genblaze provider outputs captured after the owner-verified paid-plan rights gate,
+            verified again from B2, and replayed without spending provider credit. Human approval in
+            this project happens now; the provider calls did not.
           </p>
         </details>
       ) : null}

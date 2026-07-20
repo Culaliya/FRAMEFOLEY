@@ -6,7 +6,7 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 QcVerdictValue = Literal["pass", "repairable", "regenerate", "failed"]
 SseEventType = Literal[
@@ -153,9 +153,9 @@ class SourceClip(ContractModel):
 
 
 class ProofReplayMetadata(ContractModel):
-    proof_version: Literal["live-v1"]
+    proof_version: Literal["live-v1", "live-v2"]
     captured_at: datetime
-    recorded_provider_call_count: Literal[2]
+    recorded_provider_call_count: int = Field(ge=2, le=4)
     replay_provider_call_count: Literal[0] = 0
     b2_object_count: int = Field(ge=1)
     cost_disclosure: str = Field(min_length=1, max_length=300)
@@ -284,17 +284,20 @@ class LiveProofCandidatePayloadV1(ContractModel):
 
 class LiveProofIndexV1(ContractModel):
     schema_version: Literal[1] = 1
-    proof_version: Literal["live-v1"]
+    proof_version: Literal["live-v1", "live-v2"]
     captured_at: datetime
     source_label: Literal["LIVE"]
     provider: Literal["elevenlabs-sfx"]
     model: Literal["eleven_text_to_sound_v2"]
-    provider_call_count: Literal[2]
+    provider_call_count: int = Field(ge=2, le=4)
     event_count: Literal[1]
     candidate_count: Literal[2]
     b2_object_count: int = Field(ge=1)
     candidates: list[LiveProofCandidateV1] = Field(min_length=2, max_length=2)
     cost_disclosure: str = Field(min_length=1, max_length=300)
+    rights_evidence_label: Literal["OWNER-VERIFIED"] | None = None
+    paid_plan_tier: Literal["starter"] | None = None
+    sfx_explore_sharing_disabled: bool | None = None
 
     @field_validator("candidates")
     @classmethod
@@ -306,6 +309,16 @@ class LiveProofIndexV1(ContractModel):
         if len({candidate.run_id for candidate in value}) != 2:
             raise ValueError("proof run IDs must be unique")
         return value
+
+    @model_validator(mode="after")
+    def validate_rights_remediation(self) -> LiveProofIndexV1:
+        if self.proof_version == "live-v2" and (
+            self.rights_evidence_label != "OWNER-VERIFIED"
+            or self.paid_plan_tier != "starter"
+            or self.sfx_explore_sharing_disabled is not True
+        ):
+            raise ValueError("live-v2 requires the owner-verified paid-rights record")
+        return self
 
 
 class UploadUrlRequest(ContractModel):

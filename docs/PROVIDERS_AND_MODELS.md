@@ -30,6 +30,8 @@ upgrades are intentionally not used.
 
 ## Rights note
 
-Provider/model disclosure does not itself grant rights. The owner must confirm
-the active ElevenLabs plan and terms for the intended submission/use. See
-`ASSET_PROVENANCE.md` and `OWNER_CHECKLIST.md`.
+Provider/model disclosure does not itself grant rights. For the current v2
+submission bytes, the owner confirmed Starter and accepted the applicable terms,
+then disabled Sound Effects Explore sharing before the fresh bounded calls. See
+`ASSET_PROVENANCE.md` and the dated submission-lock rights record. Historical v1
+bytes are not selected for the cash-prize submission.

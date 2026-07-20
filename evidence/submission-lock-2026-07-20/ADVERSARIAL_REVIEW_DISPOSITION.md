@@ -14,8 +14,8 @@ Source review:
 | Broad `WITHOUT NEW SPEND` wording | FIXED IN SOURCE | Replay banner says `WITHOUT NEW PROVIDER CALLS`. |
 | First-touch proof line missing | FIXED IN SOURCE | Landing now states `2 REAL PROVIDER OUTPUTS · RE-VERIFIED FROM B2 · 0 CALLS TO REPLAY`. |
 | Copy regression coverage | FIXED IN TEST | `tests/test_phase2_copy.py` asserts the exact replacement text and rejects the three old phrases. |
-| Dependency / asset evidence | TECHNICAL AUDIT COMPLETE; OWNER RIGHTS DECISION BLOCKED | See `RIGHTS_AND_LICENSE_AUDIT.md`, `docs/ASSET_PROVENANCE.md`, and `docs/THIRD_PARTY_NOTICES.md`. |
-| Public YouTube video | BLOCKED BEFORE PUBLICATION | The existing LIVE outputs were generated while the inspected ElevenLabs account is on Free; current provider terms and the cash-prize rules require an owner rights decision and remediation first. |
+| Dependency / asset evidence | PAID LIVE V2 RIGHTS REMEDIATED; DEPENDENCY NOTICES RETAINED | Starter, owner terms confirmation, disabled SFX Explore sharing, fresh calls, B2 hashes, and immutable proof v2 are recorded in `RIGHTS_AND_LICENSE_AUDIT.md`. |
+| Public YouTube video | READY AFTER V2 REBUILD AND FINAL QA | The older master remains historical; upload only the rebuilt proof-v2 master after its gates pass. |
 | Render availability during judging | OWNER OPERATIONAL COMMITMENT REQUIRED | This is a future availability fact and cannot be converted into current proof. |
 
 ## Explicitly not implemented

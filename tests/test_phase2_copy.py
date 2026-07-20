@@ -48,6 +48,7 @@ def test_first_touch_copy_names_replay_and_provider_cost_boundaries_exactly() ->
     assert "2 REAL PROVIDER OUTPUTS · RE-VERIFIED FROM B2 · 0 CALLS TO REPLAY" in landing
     assert "PUBLIC ZERO-PROVIDER-SPEND DEMO" in landing
     assert "REPLAYED WITHOUT NEW PROVIDER CALLS" in generate
+    assert "PAID-PLAN LIVE V2" in generate
     assert "zero-provider-spend" in current_docs.lower()
     assert "OPEN A VERIFIED LIVE RUN" not in landing
     assert "PUBLIC ZERO-SPEND DEMO" not in landing

@@ -46,10 +46,13 @@ creative preview, not evidence of a provider request made now.
 
 ## LIVE evidence replay
 
-The immutable private bundle lives under `framefoley/proof/live/v1/`. Its
-strict index records two outputs from the authorized LIVE gate. Every source,
-event, candidate record, canonical manifest, QC report, waveform, and derivative
-is covered by `checksums.sha256`.
+The current immutable private bundle lives under `framefoley/proof/live/v2/`.
+Its strict index records two outputs from the owner-verified paid-plan LIVE
+remediation gate and the disabled Sound Effects Explore-sharing state. Every
+source, event, candidate record, canonical manifest, QC report, waveform, and
+derivative is covered by `checksums.sha256`. Historical
+`framefoley/proof/live/v1/` bytes stay immutable and are not selected by the
+public replay service.
 
 `POST /v1/projects/live-proof` downloads and re-hashes the bundle, validates the
 index, requires both official Genblaze `Manifest.verify()` calls to return true,

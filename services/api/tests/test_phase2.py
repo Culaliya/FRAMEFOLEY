@@ -176,6 +176,7 @@ def test_live_proof_replay_makes_zero_provider_calls_and_completes(
         project = envelope["project"]
         assert project["evidenceLabel"] == "LIVE EVIDENCE REPLAY"
         assert project["liveCallCount"] == 0
+        assert project["proofReplay"]["proofVersion"] == "live-v2"
         assert project["proofReplay"]["recordedProviderCallCount"] == 2
         assert project["proofReplay"]["replayProviderCallCount"] == 0
         event = project["events"][0]
@@ -249,6 +250,25 @@ def test_non_live_records_cannot_enter_proof_bundle(tmp_path: Path, invalid_labe
     with TestClient(create_app(_settings(tmp_path), store=store)) as client:
         response = client.post("/v1/projects/live-proof")
         assert response.status_code == 503
+
+
+def test_live_v2_requires_owner_verified_paid_rights_record(tmp_path: Path) -> None:
+    store = _proof_store(tmp_path)
+    payload = json.loads(store.get(PROOF_PREFIX + "proof-index.json"))
+    payload.pop("rightsEvidenceLabel")
+    with pytest.raises(ValidationError):
+        LiveProofIndexV1.model_validate(payload)
+
+
+def test_live_v1_index_remains_parseable_as_historical_evidence(tmp_path: Path) -> None:
+    store = _proof_store(tmp_path)
+    payload = json.loads(store.get(PROOF_PREFIX + "proof-index.json"))
+    payload["proofVersion"] = "live-v1"
+    payload.pop("rightsEvidenceLabel")
+    payload.pop("paidPlanTier")
+    payload.pop("sfxExploreSharingDisabled")
+    parsed = LiveProofIndexV1.model_validate(payload)
+    assert parsed.proof_version == "live-v1"
 
 
 def test_proof_projects_are_token_isolated_and_signed_assets_expire(tmp_path: Path) -> None:

@@ -47,7 +47,7 @@ Canonical Genblaze objects stay unmodified under their hierarchical subtree.
 The immutable LIVE proof is separate from expiring anonymous projects:
 
 ```text
-framefoley/proof/live/v1/
+framefoley/proof/live/v2/
   proof-index.json
   checksums.sha256
   source/original.mp4
@@ -64,9 +64,11 @@ framefoley/proof/live/v1/
   waveforms/{clean|character}.png
 ```
 
-The proof index contains only safe summary facts. Private candidate records and
-all media are still covered by the complete checksum inventory. The prefix is
-never exposed directly or mixed into the anonymous lifecycle rule.
+The v2 proof index contains only safe summary facts, including the
+`OWNER-VERIFIED` paid-plan and disabled Explore-sharing basis. Private candidate
+records and all media are still covered by the complete checksum inventory. The
+prefix is never exposed directly or mixed into the anonymous lifecycle rule.
+Historical `framefoley/proof/live/v1/` is retained unchanged.
 
 ## Restart recovery
 

@@ -84,8 +84,8 @@ export default function ProvenancePage() {
           <div>
             <strong>THE PROVIDER CALLS HAPPENED DURING THE RECORDED LIVE GATE — NOT NOW.</strong>
             <p>
-              Two real Genblaze / ElevenLabs outputs were loaded from private B2, re-hashed, and
-              re-verified before this isolated project opened. Replay provider calls: 0.
+              Two paid-plan LIVE v2 Genblaze / ElevenLabs outputs were loaded from private B2,
+              re-hashed, and re-verified before this isolated project opened. Replay provider calls: 0.
             </p>
           </div>
         </section>

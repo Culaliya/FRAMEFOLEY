@@ -28,10 +28,21 @@ from framefoley_api.models import (
 from framefoley_api.repository import ProjectRepository
 from framefoley_api.storage import ObjectStore, content_type_for_key
 
-PROOF_PREFIX = "framefoley/proof/live/v1/"
+CURRENT_PROOF_VERSION = "live-v2"
+PROOF_PREFIX_V1 = "framefoley/proof/live/v1/"
+PROOF_PREFIX_V2 = "framefoley/proof/live/v2/"
+PROOF_PREFIX = PROOF_PREFIX_V2
 PROOF_INDEX_KEY = PROOF_PREFIX + "proof-index.json"
 PROOF_CHECKSUMS_KEY = PROOF_PREFIX + "checksums.sha256"
 _SHA256 = re.compile(r"^[a-f0-9]{64}$")
+
+
+def proof_prefix_for_version(proof_version: str) -> str:
+    if proof_version == "live-v1":
+        return PROOF_PREFIX_V1
+    if proof_version == "live-v2":
+        return PROOF_PREFIX_V2
+    raise ValueError("unsupported LIVE proof version")
 
 
 def _sha256(data: bytes) -> str:
@@ -103,20 +114,32 @@ class VerifiedLiveProof:
 class LiveProofService:
     """Verify the private immutable proof before any replay project is created."""
 
-    def __init__(self, store: ObjectStore, repository: ProjectRepository) -> None:
+    def __init__(
+        self,
+        store: ObjectStore,
+        repository: ProjectRepository,
+        *,
+        proof_version: str = CURRENT_PROOF_VERSION,
+    ) -> None:
         self.store = store
         self.repository = repository
+        self.proof_version = proof_version
+        self.proof_prefix = proof_prefix_for_version(proof_version)
+        self.proof_index_key = self.proof_prefix + "proof-index.json"
+        self.proof_checksums_key = self.proof_prefix + "checksums.sha256"
 
     def available(self) -> bool:
-        return self.store.exists(PROOF_INDEX_KEY) and self.store.exists(PROOF_CHECKSUMS_KEY)
+        return self.store.exists(self.proof_index_key) and self.store.exists(
+            self.proof_checksums_key
+        )
 
     def verify(self) -> VerifiedLiveProof:
         try:
-            checksum_bytes = self.store.get(PROOF_CHECKSUMS_KEY)
+            checksum_bytes = self.store.get(self.proof_checksums_key)
             checksums = _parse_checksums(checksum_bytes)
             objects: dict[str, bytes] = {}
             for relative, expected_hash in checksums.items():
-                key = PROOF_PREFIX + relative
+                key = self.proof_prefix + relative
                 if not self.store.exists(key):
                     raise ValueError(f"proof object is missing: {relative}")
                 payload = self.store.get(key)
@@ -125,6 +148,8 @@ class LiveProofService:
                 objects[relative] = payload
 
             index = LiveProofIndexV1.model_validate_json(objects["proof-index.json"])
+            if index.proof_version != self.proof_version:
+                raise ValueError("proof index version does not match its immutable prefix")
             if _sha256(objects["source/preview.mp4"]) != _sha256(objects["source/original.mp4"]):
                 raise ValueError("proof preview does not match the silent source")
             LiveProofEventV1.model_validate_json(objects["events/event.json"])
@@ -363,22 +388,23 @@ def write_immutable_proof_bundle(
     checksums = ("\n".join(checksum_lines) + "\n").encode("utf-8")
     full_payloads = {**payloads, "checksums.sha256": checksums}
 
-    existing = [path for path in full_payloads if store.exists(PROOF_PREFIX + path)]
+    proof_prefix = proof_prefix_for_version(index.proof_version)
+    existing = [path for path in full_payloads if store.exists(proof_prefix + path)]
     if existing:
         for path in existing:
-            if store.get(PROOF_PREFIX + path) != full_payloads[path]:
+            if store.get(proof_prefix + path) != full_payloads[path]:
                 raise ValueError("immutable proof prefix already contains different bytes")
         if len(existing) == len(full_payloads):
             repository = ProjectRepository(store)
-            LiveProofService(store, repository).verify()
+            LiveProofService(store, repository, proof_version=index.proof_version).verify()
             return "already-present"
 
     for path, payload in sorted(full_payloads.items()):
         store.put(
-            PROOF_PREFIX + path,
+            proof_prefix + path,
             payload,
             content_type=content_type_for_key(path),
         )
     repository = ProjectRepository(store)
-    LiveProofService(store, repository).verify()
+    LiveProofService(store, repository, proof_version=index.proof_version).verify()
     return "created"

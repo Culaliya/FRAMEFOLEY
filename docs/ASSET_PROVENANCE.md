@@ -31,10 +31,12 @@ Genblaze, canonical manifest, B2 object key, hashes, prompt, parameters, QC, and
 human approval. Deterministic derivatives preserve lineage and are not labeled
 as raw provider output.
 
-The private LIVE EVIDENCE REPLAY bundle contains two real outputs from the
-authorized recorded LIVE gate. Publication re-downloads and re-hashes the B2
-objects and verifies their canonical Genblaze manifests. Opening a replay makes
-no new provider call; replay-session approval is recorded separately.
+The current private LIVE EVIDENCE REPLAY bundle contains two real outputs from
+the owner-authorized paid-plan v2 remediation gate. Publication re-downloads and
+re-hashes the B2 objects and verifies their canonical Genblaze manifests.
+Opening a replay makes no new provider call; replay-session approval is recorded
+separately. Historical Free-plan v1 bytes stay immutable but are excluded from
+the current submission replay.
 
 ## Cached demo audio
 
@@ -44,10 +46,11 @@ complete product can be judged without spending credits or opening live calls.
 
 ## Rights limitation and owner check
 
-Provenance explains origin and transformation; it is not legal clearance. The
-owner must verify current ElevenLabs plan/terms for public competition use and
-retain any required notices. FRAMEFOLEY should not advertise ownership or
-exclusivity beyond what those current terms support.
+Provenance explains origin and transformation; it is not legal advice. The
+owner personally completed the Starter payment and terms action, and the dated
+secret-safe record confirms the disabled Sound Effects Explore-sharing state
+before the v2 calls. FRAMEFOLEY still must not advertise ownership or
+exclusivity beyond what the applicable terms support.
 
 The dated technical review and fail-closed provider-rights status are recorded
 in `evidence/submission-lock-2026-07-20/RIGHTS_AND_LICENSE_AUDIT.md`. Third-party

@@ -100,7 +100,7 @@ CAPTION_TRACK = (
         117.2,
         125.6,
         "Now this is LIVE EVIDENCE REPLAY: two real provider outputs generated during an "
-        "authorized Genblaze run with the ElevenLabs sound-effects model.",
+        "owner-authorized paid-plan Genblaze run with the ElevenLabs sound-effects model.",
     ),
     Caption(126.0, 128.6, "[Recorded LIVE candidate A plays]", False),
     Caption(129.6, 132.2, "[Recorded LIVE candidate B plays]", False),

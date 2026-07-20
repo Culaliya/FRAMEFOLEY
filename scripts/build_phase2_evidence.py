@@ -294,6 +294,7 @@ def assemble() -> int:
     commit = _commit()
     public = _load_json(EVIDENCE / "PUBLIC_VERIFICATION_SANITIZED.json")
     proof = _load_json(EVIDENCE / "LIVE_PROOF_VERIFICATION.json")
+    proof_index = _load_json(EVIDENCE / "LIVE_PROOF_INDEX_SANITIZED.json")
     gates = _load_json(EVIDENCE / "GATE_RESULTS_SANITIZED.json")
     clean = _load_json(EVIDENCE / "CLEAN_BUILD_RESULT_SANITIZED.json")
     video = _video_metadata()
@@ -318,6 +319,10 @@ def assemble() -> int:
         ),
     )
     proof_status = proof.get("evidenceLabel", "UNVERIFIED") if proof else "UNVERIFIED"
+    proof_version = proof.get("proofVersion", "UNVERIFIED") if proof else "UNVERIFIED"
+    rights_status = (
+        proof_index.get("rightsEvidenceLabel", "UNVERIFIED") if proof_index else "UNVERIFIED"
+    )
     public_status = public.get("evidenceLabel", "UNVERIFIED") if public else "UNVERIFIED"
     gate_status = "PASS" if gates and gates.get("allPassed") is True else "UNVERIFIED"
     clean_status = clean.get("status", "UNVERIFIED") if clean else "UNVERIFIED"
@@ -333,13 +338,17 @@ def assemble() -> int:
                 f"- Required automated gates: **{gate_status}**",
                 f"- Clean-clone install: **{clean_status}**",
                 f"- Immutable B2 proof: **{proof_status}**",
+                f"- Selected proof version: **{proof_version}**",
+                f"- Paid-plan rights basis: **{rights_status}**",
                 f"- Public verification: **{public_status}**",
                 f"- Competition video: **{video['status']}**",
                 f"- Source commit: `{commit}`",
                 "",
                 "The public CACHED DEMO makes no provider call. LIVE EVIDENCE REPLAY",
-                "contains two outputs from the authorized recorded LIVE gate; opening it",
-                "makes zero provider calls. Human approval remains the creative authority.",
+                "contains two fresh outputs from the owner-verified paid-plan v2 gate;",
+                "opening it makes zero provider calls. Historical v1 remains immutable and",
+                "excluded from the current submission. Human approval remains the creative",
+                "authority.",
             ]
         ),
     )

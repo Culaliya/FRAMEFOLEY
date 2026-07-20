@@ -15,7 +15,8 @@ Legal acceptance remains an owner action.
 | FRAMEFOLEY mark and UI visual system | Original SVG and CSS | SAFE | No external asset notice needed. |
 | System font stacks | No font file is downloaded or redistributed | SAFE | Continue using system fallbacks. |
 | Lucide UI icons | `lucide-react@1.25.0`; installed package contains ISC and Feather-derived MIT notices | ATTRIBUTE / NOTICE RETAINED | See `docs/THIRD_PARTY_NOTICES.md`. |
-| LIVE EVIDENCE REPLAY sound effects | ElevenLabs Sound Effects generated through Genblaze and stored in B2 | **BLOCKED FOR CASH-PRIZE SUBMISSION** | Do not publish the current master as the hackathon video until provider-plan rights are remediated. |
+| Historical LIVE proof v1 sound effects | ElevenLabs Sound Effects generated while the inspected account was Free | **DO NOT USE FOR CASH-PRIZE SUBMISSION** | Retain immutable historical evidence; the current replay service does not select v1. |
+| Paid LIVE proof v2 sound effects | Fresh ElevenLabs Sound Effects generated after Starter and the disabled Explore-sharing state were owner-verified; Genblaze manifests and B2 hashes verified | **OWNER-VERIFIED / RIGHTS REMEDIATED** | Use only the v2 replay bytes and a master rebuilt from v2. |
 
 ## Dependency metadata review
 
@@ -38,8 +39,8 @@ owner's acceptance of the applicable licenses.
 The following facts were checked on 2026-07-20 without retaining account,
 payment, cookie, key, or identity data:
 
-1. The signed-in ElevenLabs subscription page displayed the current plan as
-   **Free**.
+1. The earlier signed-in inspection displayed **Free**; those historical v1
+   outputs were not treated as retroactively commercial.
 2. ElevenLabs' current publishing guidance says its Free plan does not include
    a commercial license. It also requires `elevenlabs.io` or `11.ai` in the
    title when Free-plan output is published non-commercially.
@@ -56,6 +57,17 @@ payment, cookie, key, or identity data:
    not include copyrighted third-party material without permission, and its
    submission ownership and IP representations are broader than a casual
    non-commercial upload.
+6. At 2026-07-20 17:15 CST, after the owner personally completed payment and
+   final terms confirmation, the signed-in workspace displayed **Starter**.
+7. Before the new calls, the Sound Effects UI was changed to state that
+   generated results would not be shared to Explore for other users to download.
+8. At 2026-07-20 17:21 CST, the bounded remediation gate made exactly two new
+   provider calls, produced two ready LIVE candidates, stored 24 project objects
+   in B2, and recorded two `Manifest.verify() == true` results.
+9. Immutable `framefoley/proof/live/v2/` publication returned `created`; two
+   downloaded asset hashes matched, two manifests re-verified, and publication
+   itself made zero provider calls. The v2 index records the owner-verified
+   Starter and disabled Explore-sharing basis.
 
 Official references reviewed:
 
@@ -67,25 +79,19 @@ Official references reviewed:
 
 ## Fail-closed verdict
 
-**PROVIDER RIGHTS: BLOCKED — OWNER ACTION REQUIRED.**
+**PROVIDER RIGHTS FOR LIVE V2: REMEDIATED — FINAL MEDIA REBUILD REQUIRED.**
 
-The current LIVE proof bytes and the current final video must not be represented
-as cleared for this cash-prize submission. Attribution alone would support the
-provider's stated non-commercial Free-plan sharing condition, but it does not
-close the hackathon's rights representations.
+The historical v1 bytes remain excluded. The fresh v2 bytes were generated only
+after the owner completed the paid-plan/terms action and disabled SFX Explore
+sharing. They are covered by fresh canonical manifests, B2 object hashes, and an
+immutable v2 checksum inventory.
 
-Smallest defensible remediation:
+Remaining completion gate:
 
-1. Owner explicitly authorizes or performs a paid-plan change and accepts the
-   current Terms, Sound Effects Terms, Prohibited Use Policy, and the residual
-   non-exclusivity/sublicensing implications.
-2. Before new SFX calls, owner decides whether to enable the Sound Effects
-   sublicensing opt-out.
-3. Generate fresh final-version LIVE candidates under the paid plan through the
-   existing explicit live gate. Preserve immutable `proof/live/v1/`; publish a
-   new versioned proof rather than mutating canonical or immutable records.
-4. Rebuild the final video from the remediated proof, rerun the existing gates,
-   then upload publicly and verify signed-out playback.
+1. Deploy source that selects proof v2.
+2. Re-run the public replay and capture the final master from v2.
+3. Run the full gates and no-secret/media checks.
+4. Upload the rebuilt master publicly and verify signed-out playback.
 
 These steps are submission-rights remediation only. They do not authorize any
 Phase 3 candidate or product feature.

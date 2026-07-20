@@ -194,8 +194,8 @@ export default function AuditionPage() {
         <details className="demo-disclosure proof-disclosure" open>
           <summary>HOW THIS WAS PRODUCED</summary>
           <p>
-            These are two real provider outputs captured during the recorded LIVE gate, stored and
-            re-verified from Backblaze B2. Playing or approving them now makes zero provider calls.
+            These are two real provider outputs captured during the paid-plan LIVE v2 gate, stored
+            and re-verified from Backblaze B2. Playing or approving them now makes zero provider calls.
           </p>
         </details>
       ) : null}

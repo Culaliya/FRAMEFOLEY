@@ -145,9 +145,9 @@
         "costDisclosure"
       ],
       "properties": {
-        "proofVersion": { "const": "live-v1" },
+        "proofVersion": { "enum": ["live-v1", "live-v2"] },
         "capturedAt": { "type": "string", "format": "date-time" },
-        "recordedProviderCallCount": { "const": 2 },
+        "recordedProviderCallCount": { "type": "integer", "minimum": 2, "maximum": 4 },
         "replayProviderCallCount": { "const": 0 },
         "b2ObjectCount": { "type": "integer", "minimum": 1 },
         "costDisclosure": { "type": "string", "minLength": 1, "maxLength": 300 }

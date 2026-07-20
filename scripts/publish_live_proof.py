@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import os
@@ -26,20 +27,33 @@ from genblaze_core import Manifest
 from framefoley_spike.provenance import sanitize_text
 
 ROOT = Path(__file__).resolve().parents[1]
-FINAL_EVIDENCE = ROOT / "evidence" / "final"
+DEFAULT_SOURCE_EVIDENCE = ROOT / "evidence" / "paid-live-v2"
 PHASE2_EVIDENCE = ROOT / "evidence" / "phase2"
 VIDEO_AUDIO_CACHE = ROOT / ".data" / "phase2-video-live"
-COST_DISCLOSURE = (
-    "The provider reported USD 0.00 for the recorded gate; this is not evidence "
-    "that an ElevenLabs account spend or usage cap is active."
-)
 
 
-def _load_json(name: str) -> dict[str, Any]:
-    payload = json.loads((FINAL_EVIDENCE / name).read_text(encoding="utf-8"))
+def _load_json(source_evidence: Path, name: str) -> dict[str, Any]:
+    payload = json.loads((source_evidence / name).read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
         raise ValueError(f"{name} must contain one JSON object")
     return payload
+
+
+def _resolve_source_evidence(requested: Path) -> Path:
+    source = (ROOT / requested).resolve() if not requested.is_absolute() else requested.resolve()
+    evidence_root = (ROOT / "evidence").resolve()
+    if source == evidence_root or not source.is_relative_to(evidence_root):
+        raise ValueError("proof source evidence must be a named directory under evidence/")
+    return source
+
+
+def _cost_disclosure(calls: dict[str, Any]) -> str:
+    reported = calls.get("actualCostUsd")
+    value = f"{float(reported):.8f}" if isinstance(reported, int | float) else "UNAVAILABLE"
+    return (
+        f"The connector recorded provider cost USD {value}; this is not evidence "
+        "that an ElevenLabs account spend or usage cap is active."
+    )
 
 
 def _sha256(data: bytes) -> str:
@@ -54,7 +68,7 @@ def _write_json(name: str, payload: object) -> None:
     )
 
 
-def run() -> int:
+def run(source_evidence: Path, proof_version: Literal["live-v1", "live-v2"]) -> int:
     if os.getenv("FRAMEFOLEY_ALLOW_PROOF_PUBLISH") != "1":
         print(
             "ERROR: set FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1 to authorize "
@@ -62,13 +76,24 @@ def run() -> int:
             file=sys.stderr,
         )
         return 2
+    if proof_version == "live-v2" and os.getenv("FRAMEFOLEY_OWNER_PAID_RIGHTS_CONFIRMED") != "1":
+        print(
+            "ERROR: live-v2 publication requires the explicit owner paid-rights gate.",
+            file=sys.stderr,
+        )
+        return 2
 
     settings = Settings.from_env()
     settings.require_b2()
-    calls = _load_json("LIVE_CALLS_SANITIZED.json")
-    manifests = _load_json("MANIFEST_VERIFICATION.json")
-    object_map = _load_json("B2_OBJECT_MAP.json")
-    if calls.get("evidenceLabel") != "LIVE" or calls.get("providerCallCount") != 2:
+    calls = _load_json(source_evidence, "LIVE_CALLS_SANITIZED.json")
+    manifests = _load_json(source_evidence, "MANIFEST_VERIFICATION.json")
+    object_map = _load_json(source_evidence, "B2_OBJECT_MAP.json")
+    provider_call_count = calls.get("providerCallCount")
+    if (
+        calls.get("evidenceLabel") != "LIVE"
+        or not isinstance(provider_call_count, int)
+        or not 2 <= provider_call_count <= 4
+    ):
         raise ValueError("source LIVE call evidence is missing or relabeled")
     if calls.get("candidateCount") != 2 or calls.get("readyVerifiedCandidateCount") != 2:
         raise ValueError("source LIVE evidence does not contain two ready verified candidates")
@@ -255,20 +280,27 @@ def run() -> int:
             )
 
         index = LiveProofIndexV1(
-            proof_version="live-v1",
+            proof_version=proof_version,
             captured_at=calls["recordedAt"],
             source_label="LIVE",
             provider="elevenlabs-sfx",
             model="eleven_text_to_sound_v2",
-            provider_call_count=2,
+            provider_call_count=provider_call_count,
             event_count=1,
             candidate_count=2,
             b2_object_count=int(object_map["objectCount"]),
             candidates=proof_candidates,
-            cost_disclosure=COST_DISCLOSURE,
+            cost_disclosure=_cost_disclosure(calls),
+            rights_evidence_label=("OWNER-VERIFIED" if proof_version == "live-v2" else None),
+            paid_plan_tier="starter" if proof_version == "live-v2" else None,
+            sfx_explore_sharing_disabled=(True if proof_version == "live-v2" else None),
         )
         status = write_immutable_proof_bundle(store, index, objects)
-        verified = LiveProofService(store, ProjectRepository(store)).verify()
+        verified = LiveProofService(
+            store,
+            ProjectRepository(store),
+            proof_version=proof_version,
+        ).verify()
         VIDEO_AUDIO_CACHE.mkdir(parents=True, exist_ok=True)
         for proof_candidate in verified.index.candidates:
             relative = f"candidates/{proof_candidate.variant}/approved-audio.wav"
@@ -314,8 +346,23 @@ def run() -> int:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--source-evidence",
+        type=Path,
+        default=DEFAULT_SOURCE_EVIDENCE,
+        help="Secret-safe LIVE gate output directory under evidence/.",
+    )
+    parser.add_argument(
+        "--proof-version",
+        choices=("live-v1", "live-v2"),
+        default="live-v2",
+    )
+    args = parser.parse_args()
     try:
-        return run()
+        source_evidence = _resolve_source_evidence(args.source_evidence)
+        proof_version = cast(Literal["live-v1", "live-v2"], args.proof_version)
+        return run(source_evidence, proof_version)
     except Exception as exc:
         print(
             f"LIVE proof publication stopped safely: {type(exc).__name__}: "

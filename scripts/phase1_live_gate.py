@@ -54,7 +54,17 @@ def _hash_objects(store: B2ObjectStore, keys: list[str]) -> list[dict[str, Any]]
     return records
 
 
-def run(event_count: int) -> int:
+def _resolve_evidence_root(repo_root: Path, requested: Path) -> Path:
+    evidence_root = (
+        (repo_root / requested).resolve() if not requested.is_absolute() else requested.resolve()
+    )
+    allowed_root = (repo_root / "evidence").resolve()
+    if evidence_root == allowed_root or not evidence_root.is_relative_to(allowed_root):
+        raise ValueError("LIVE evidence output must be a named directory under evidence/")
+    return evidence_root
+
+
+def run(event_count: int, requested_evidence_root: Path) -> int:
     if os.getenv("FRAMEFOLEY_ALLOW_LIVE_CALLS") != "1":
         print(
             "ERROR: set FRAMEFOLEY_ALLOW_LIVE_CALLS=1 to authorize this bounded live gate.",
@@ -64,7 +74,7 @@ def run(event_count: int) -> int:
 
     settings = Settings.from_env()
     settings.require_live()
-    evidence_root = settings.repo_root / "evidence" / "final"
+    evidence_root = _resolve_evidence_root(settings.repo_root, requested_evidence_root)
     store = B2ObjectStore(settings)
     project_id = "UNAVAILABLE"
     try:
@@ -195,9 +205,15 @@ def run(event_count: int) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--events", type=int, choices=(1, 3), required=True)
+    parser.add_argument(
+        "--evidence-dir",
+        type=Path,
+        default=Path("evidence/final"),
+        help="Secret-safe output directory under evidence/.",
+    )
     args = parser.parse_args()
     try:
-        return run(args.events)
+        return run(args.events, args.evidence_dir)
     except Exception as exc:
         print(
             f"LIVE gate stopped safely: {type(exc).__name__}: {sanitize_text(str(exc))}",

@@ -25,22 +25,27 @@ Do not convert an `UNVERIFIED` row to `PASS` because it is likely true. Record
 the smallest sufficient, secret-safe evidence in
 `evidence/phase2/OWNER_CHECKS.md`.
 
-## Publish the immutable LIVE proof
+## Publish the immutable paid LIVE proof v2
 
-The proof publication reads the already authorized Phase 1 LIVE objects from
-B2, verifies them, and writes the versioned private replay bundle. It imports
-no ElevenLabs credential and makes zero provider calls.
+The paid remediation command makes one bounded two-candidate LIVE run, stores
+fresh objects in B2, verifies both canonical manifests, and publishes the
+versioned private v2 replay bundle. The publication step makes zero additional
+provider calls and never modifies historical v1.
 
 ```bash
-./scripts/run_phase2_proof_publish_securely.sh
+./scripts/run_paid_live_v2_securely.sh
 ```
 
-The prompt asks only for the four B2 values in the local Terminal. Secret
-values are neither echoed nor written to `.env`. Type `RUN PHASE2 PROOF` only
-after the displayed scope is correct. The underlying fail-closed command is:
+The prompt asks for the four B2 values and ElevenLabs API key in the local
+Terminal. Secret values are neither echoed nor written to `.env`. Type
+`RUN PAID LIVE V2` only after the displayed scope is correct. The underlying
+fail-closed command is:
 
 ```bash
-FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1 make publish-live-proof
+FRAMEFOLEY_ALLOW_LIVE_CALLS=1 \
+FRAMEFOLEY_ALLOW_PROOF_PUBLISH=1 \
+FRAMEFOLEY_OWNER_PAID_RIGHTS_CONFIRMED=1 \
+make paid-live-v2
 ```
 
 Expected safe result:
