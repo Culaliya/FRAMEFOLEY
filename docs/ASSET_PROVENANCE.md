@@ -48,3 +48,7 @@ Provenance explains origin and transformation; it is not legal clearance. The
 owner must verify current ElevenLabs plan/terms for public competition use and
 retain any required notices. FRAMEFOLEY should not advertise ownership or
 exclusivity beyond what those current terms support.
+
+The dated technical review and fail-closed provider-rights status are recorded
+in `evidence/submission-lock-2026-07-20/RIGHTS_AND_LICENSE_AUDIT.md`. Third-party
+dependency notices are recorded in `docs/THIRD_PARTY_NOTICES.md`.

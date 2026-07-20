@@ -269,6 +269,15 @@ button:disabled {
   color: var(--steel);
 }
 
+.live-proof-microcopy {
+  color: var(--lime);
+}
+
+.live-proof-microcopy + .microcopy,
+.live-proof-microcopy + .self-hosted-upload-link {
+  margin-top: 8px;
+}
+
 .hero-machine {
   position: relative;
   border: 1px solid #405052;

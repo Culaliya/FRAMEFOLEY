@@ -56,7 +56,7 @@ NEXT_PUBLIC_API_BASE_URL=https://your-api-origin.example
 
 `NEXT_PUBLIC_*` is intentionally public and must contain only the API origin.
 
-For the public zero-spend competition deployment, use:
+For the public zero-provider-spend competition deployment, use:
 
 ```text
 FRAMEFOLEY_STORAGE_MODE=b2

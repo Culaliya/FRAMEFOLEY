@@ -172,16 +172,21 @@ export function LandingExperience() {
                 data-testid="open-live-proof"
               >
                 {proofBusy ? <span className="button-loader" /> : <ShieldCheck size={17} />}
-                OPEN A VERIFIED LIVE RUN
+                OPEN VERIFIED LIVE EVIDENCE REPLAY
               </button>
             </div>
+            {capabilities?.liveProofReplayAvailable === false ? null : (
+              <p className="microcopy live-proof-microcopy">
+                2 REAL PROVIDER OUTPUTS · RE-VERIFIED FROM B2 · 0 CALLS TO REPLAY
+              </p>
+            )}
             {capabilities?.customUploadCanComplete ? (
               <Link href="/projects/new?source=upload" className="self-hosted-upload-link">
                 SELF-HOSTED LIVE BUILD: UPLOAD MY CLIP ↗
               </Link>
             ) : (
               <p className="microcopy">
-                PUBLIC ZERO-SPEND DEMO · 3 EVENTS · 2 CANDIDATES EACH · PRIVATE B2 STORAGE
+                PUBLIC ZERO-PROVIDER-SPEND DEMO · 3 EVENTS · 2 CANDIDATES EACH · PRIVATE B2 STORAGE
               </p>
             )}
             {proofError ? <p className="landing-proof-error" role="alert">{proofError}</p> : null}

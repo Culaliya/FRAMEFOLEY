@@ -82,7 +82,7 @@ public capability contract reports both
 - ElevenLabs account spend cap — useful defense in depth for a later LIVE host,
   but the public judge flow has no provider-call path.
 - Edge/IP rate limit — useful against API and B2 traffic spikes, though it
-  cannot create ElevenLabs spend in the zero-spend public mode.
+  cannot create ElevenLabs spend in the zero-provider-spend public mode.
 - B2 lifecycle expiration — useful for storage hygiene; anonymous projects
   already carry application-level expiry metadata.
 - External uptime monitor — useful for Render Free cold starts and availability,

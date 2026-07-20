@@ -74,7 +74,7 @@ The current connector may report no cost. An absent value means **UNAVAILABLE**,
 not zero. The owner must configure and capture an ElevenLabs account spend/usage
 cap separately. No cap is claimed active without account evidence.
 
-For the zero-spend public build, an ElevenLabs account spend cap and edge/IP
+For the zero-provider-spend public build, an ElevenLabs account spend cap and edge/IP
 rate limit remain prudent defense in depth but are not submission blockers:
 there is no public provider-call path. B2 lifecycle expiration and an external
 uptime monitor are likewise recommended and owner-controlled, not silently

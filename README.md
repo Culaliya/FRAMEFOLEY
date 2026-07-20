@@ -17,7 +17,7 @@ multi-provider platform.
   export, and provenance.
 - Original deterministic 12-second **JELLY RELAY** silent demo.
 - Instant silent-versus-approved-Foley landing comparison.
-- Server-owned deployment capabilities; the public zero-spend build never
+- Server-owned deployment capabilities; the public zero-provider-spend build never
   advertises a custom-upload path it cannot complete.
 - Validated MP4/WebM upload, source normalization, thumbnail, and SHA-256 in a
   self-hosted LIVE build.
@@ -212,7 +212,7 @@ ElevenLabs generation disabled so anonymous traffic cannot spend provider
 credit. **LIVE EVIDENCE REPLAY** contains real recorded Genblaze/ElevenLabs
 outputs stored and re-verified from B2; opening it makes no new provider call.
 Custom upload is available in a self-hosted LIVE build, not falsely promised by
-the public zero-spend deployment.
+the public zero-provider-spend deployment.
 
 Submission blockers and prudent non-blocking controls are separated in
 `product/docs/OWNER_VERIFICATION_PHASE_2.md`. Never infer an account-console

@@ -27,6 +27,33 @@ def test_phase2_public_truth_labels_are_consistent() -> None:
     assert "HUMAN APPROVAL REMAINS AUTHORITATIVE" in upper
 
 
+def test_first_touch_copy_names_replay_and_provider_cost_boundaries_exactly() -> None:
+    landing = (ROOT / "apps" / "web" / "components" / "landing-experience.tsx").read_text(
+        encoding="utf-8"
+    )
+    generate = (
+        ROOT / "apps" / "web" / "app" / "projects" / "[id]" / "generate" / "page.tsx"
+    ).read_text(encoding="utf-8")
+    current_docs = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in [
+            ROOT / "README.md",
+            ROOT / "docs" / "DEVPOST_SUBMISSION.md",
+            ROOT / "docs" / "DEPLOYMENT.md",
+            ROOT / "docs" / "SECURITY_AND_COST.md",
+        ]
+    )
+
+    assert "OPEN VERIFIED LIVE EVIDENCE REPLAY" in landing
+    assert "2 REAL PROVIDER OUTPUTS · RE-VERIFIED FROM B2 · 0 CALLS TO REPLAY" in landing
+    assert "PUBLIC ZERO-PROVIDER-SPEND DEMO" in landing
+    assert "REPLAYED WITHOUT NEW PROVIDER CALLS" in generate
+    assert "zero-provider-spend" in current_docs.lower()
+    assert "OPEN A VERIFIED LIVE RUN" not in landing
+    assert "PUBLIC ZERO-SPEND DEMO" not in landing
+    assert "REPLAYED WITHOUT NEW SPEND" not in generate
+
+
 def test_upload_route_is_only_exposed_under_the_server_capability_branch() -> None:
     landing = (ROOT / "apps" / "web" / "components" / "landing-experience.tsx").read_text(
         encoding="utf-8"

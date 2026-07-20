@@ -155,7 +155,7 @@ export default function GeneratePage() {
         <section className="live-proof-banner" data-testid="live-proof-banner">
           <div>
             <StatusStamp label="LIVE EVIDENCE REPLAY" tone="lime" icon="shield" />
-            <h2>REAL OUTPUTS. REPLAYED WITHOUT NEW SPEND.</h2>
+            <h2>REAL OUTPUTS. REPLAYED WITHOUT NEW PROVIDER CALLS.</h2>
             <p>
               These candidates were generated during an authorized LIVE Genblaze run and stored
               in Backblaze B2. Opening this replay makes no provider call.

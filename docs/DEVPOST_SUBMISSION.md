@@ -33,7 +33,7 @@ hashes, a mixed preview, and human-readable provenance.
 The public three-cue JELLY RELAY workflow uses original CACHED DEMO candidates,
 so anonymous traffic cannot spend provider credit. Custom clip upload is
 available in a self-hosted LIVE build; it is not falsely promised by the
-zero-spend public deployment.
+zero-provider-spend public deployment.
 
 The public app also includes LIVE EVIDENCE REPLAY. It contains two real
 Genblaze/ElevenLabs outputs from an authorized LIVE run, stored in private

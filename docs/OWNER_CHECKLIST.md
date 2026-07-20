@@ -43,7 +43,7 @@ evidence.
 - [ ] Final master is 2:45–2:58, 1920×1080, narrated in English, and contains an
       embedded English subtitle track plus sidecar WebVTT.
 
-## Prudent but non-blocking in public zero-spend mode
+## Prudent but non-blocking in public zero-provider-spend mode
 
 - [ ] ElevenLabs account spend cap.
 - [ ] Edge/IP rate limit.
