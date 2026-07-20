@@ -60,8 +60,9 @@ them active without owner evidence.
    only and makes zero provider calls.
 2. Run `make verify-public` after the final commit is deployed.
 3. Review and update `evidence/phase2/OWNER_CHECKS.md`.
-4. Final master published and anonymously verified at
-   `https://youtu.be/8HMfkTeVxXM`.
+4. Creator-voiceover final master published and anonymously verified at
+   `https://youtu.be/Q8F8djVgkgA`; the earlier public proof-v2 upload remains
+   available as historical evidence.
 5. Run `make phase2-evidence`, then `make secret-scan` last.
 
 Completion of this checklist does not authorize another product phase.

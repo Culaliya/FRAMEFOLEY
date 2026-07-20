@@ -15,7 +15,7 @@ Source review:
 | First-touch proof line missing | FIXED IN SOURCE | Landing now states `2 REAL PROVIDER OUTPUTS · RE-VERIFIED FROM B2 · 0 CALLS TO REPLAY`. |
 | Copy regression coverage | FIXED IN TEST | `tests/test_phase2_copy.py` asserts the exact replacement text and rejects the three old phrases. |
 | Dependency / asset evidence | PAID LIVE V2 RIGHTS REMEDIATED; DEPENDENCY NOTICES RETAINED | Starter, owner terms confirmation, disabled SFX Explore sharing, fresh calls, B2 hashes, and immutable proof v2 are recorded in `RIGHTS_AND_LICENSE_AUDIT.md`. |
-| Public YouTube video | PUBLISHED AND ANONYMOUSLY VERIFIED | The rebuilt 2:56 proof-v2 master is public at `https://youtu.be/8HMfkTeVxXM`; 1080p, audio, manual English captions, and embedding were verified without account cookies. |
+| Public YouTube video | PUBLISHED AND ANONYMOUSLY VERIFIED | The current creator-voiceover edition is public at `https://youtu.be/Q8F8djVgkgA`; 1080p, audio, manual English captions, and embedding were verified without account cookies. The original proof-v2 upload remains public as historical evidence. |
 | Render availability during judging | OWNER OPERATIONAL COMMITMENT REQUIRED | This is a future availability fact and cannot be converted into current proof. |
 
 ## Explicitly not implemented

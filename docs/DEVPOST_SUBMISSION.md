@@ -132,6 +132,9 @@ first thirty seconds. No broader product phase is implied by this submission.
 - Provider: ElevenLabs Sound Effects
 - Model: `eleven_text_to_sound_v2`
 - Secondary provider: none
+- Submission-video narration: owner-authorized private ElevenLabs Instant Voice
+  Clone with Eleven Multilingual v2; this is submission media only, not a
+  product generation path
 
 ## Exact Genblaze use
 
@@ -170,7 +173,7 @@ Vitest, Playwright, and Docker.
 ```text
 LIVE APP: https://framefoley-culaliya.onrender.com
 SOURCE REPOSITORY: https://github.com/Culaliya/FRAMEFOLEY
-FINAL VIDEO: https://youtu.be/8HMfkTeVxXM
+FINAL VIDEO: https://youtu.be/Q8F8djVgkgA
 ```
 
 Deployed runtime commit: `2d9148851b6f288b0c4f2cef6dd5739e156fd73f`.

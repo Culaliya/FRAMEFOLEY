@@ -75,8 +75,9 @@ https://framefoley-culaliya.onrender.com
 https://github.com/Culaliya/FRAMEFOLEY
 ```
 
-The final video is public at <https://youtu.be/8HMfkTeVxXM>. Anonymous watch,
+The creator-voiceover final video is public at <https://youtu.be/Q8F8djVgkgA>. Anonymous watch,
 embed, oEmbed, player, 1080p, audio, and manual English-caption checks passed.
+The earlier proof-v2 upload remains public and is not relabeled or deleted.
 
 ## Prudent, non-blocking controls
 

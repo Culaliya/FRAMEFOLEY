@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "evidenceLabel": "OWNER-VERIFIED",
+  "verifiedAt": "2026-07-20T11:22:30Z",
+  "videoId": "Q8F8djVgkgA",
+  "publicUrl": "https://youtu.be/Q8F8djVgkgA",
+  "title": "FRAMEFOLEY — Gameplay Foley with Genblaze, Backblaze B2 & ElevenLabs | Creator Voiceover",
+  "channel": "Lele Wu",
+  "anonymousVerification": {
+    "watchHttpStatus": 200,
+    "oEmbedStatus": "PASS",
+    "embedHttpStatus": 200,
+    "playerStatus": "OK",
+    "playableInEmbed": true
+  },
+  "media": {
+    "durationSeconds": 176.0,
+    "highestQualityLabel": "1080p",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "audioChannels": 2,
+    "audioQuality": "AUDIO_QUALITY_MEDIUM",
+    "integratedLufs": -16.16,
+    "truePeakDbtp": -1.49,
+    "remasterSha256": "52510839d67137b522ca4e4f288e128bf3d67461dcff80f1e6f1621cfce675ea",
+    "audioMasterSha256": "c8fafd46addc39060eb23bf2af21deef39b45db527f3b3b64c218700283ab581",
+    "sourceVideoStreamSha256": "9102a1a05c569ebef5881a14ac314b985901cddcf24f34eced53cf19ee4aa975",
+    "outputVideoStreamSha256": "9102a1a05c569ebef5881a14ac314b985901cddcf24f34eced53cf19ee4aa975"
+  },
+  "captions": {
+    "manualEnglishTrackPresent": true,
+    "languageCode": "en",
+    "trackName": "English",
+    "sidecarWebVttSha256": "c6a9e57edb1b92ae0f9a5880ec38772aa7ae1700715c6e84eff33b41e80d5f0e"
+  },
+  "voiceover": {
+    "provider": "ElevenLabs",
+    "model": "Eleven Multilingual v2",
+    "voiceSource": "OWNER_AUTHORIZED_PRIVATE_INSTANT_VOICE_CLONE",
+    "paidPlanBasis": "OWNER-VERIFIED_STARTER",
+    "enrollmentRecordingPublished": false,
+    "productRuntimePathChanged": false
+  },
+  "youtubeChecks": {
+    "copyright": "NO_ISSUES_FOUND",
+    "communityGuidelines": "NO_ISSUES_FOUND"
+  },
+  "uploadSettings": {
+    "visibility": "PUBLIC",
+    "audience": "NOT_MADE_FOR_KIDS",
+    "videoLanguage": "en",
+    "aiUseDisclosed": true,
+    "license": "STANDARD_YOUTUBE_LICENSE",
+    "embeddingAllowed": true,
+    "shortsRemixAllowed": false,
+    "category": "SCIENCE_AND_TECHNOLOGY"
+  },
+  "previousPublicVideo": {
+    "publicUrl": "https://youtu.be/8HMfkTeVxXM",
+    "modified": false,
+    "stillPublic": true
+  },
+  "privacy": {
+    "cookiesOrAccountDataRecorded": false,
+    "signedQueryStringsRecorded": false,
+    "credentialsRecorded": false
+  },
+  "phase3Authorized": false
+}

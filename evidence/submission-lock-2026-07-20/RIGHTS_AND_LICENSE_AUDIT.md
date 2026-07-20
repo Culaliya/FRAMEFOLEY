@@ -104,3 +104,25 @@ reported no issues. The upload discloses AI use and disables Shorts remixing.
 
 These steps are submission-rights remediation only. They do not authorize any
 Phase 3 candidate or product feature.
+
+## Creator-voiceover public amendment
+
+On 2026-07-20, the owner explicitly authorized replacing only the English
+narration in the public submission video with the owner's private ElevenLabs
+Instant Voice Clone. Eleven Multilingual v2 generated the bounded narration
+segments while the owner-verified Starter basis remained current. The private
+enrollment recording, account identifiers, credentials, and provider URLs are
+not included in the public repository or evidence.
+
+The remaster preserves the locked 176-second proof-v2 visuals and approved
+Foley. The encoded H.264 stream SHA-256 is identical before and after the
+narration-only remaster. Corrected manual English captions, AI-use disclosure,
+and a public description of the owner-authorized voice clone accompany the new
+upload.
+
+The creator-voiceover edition is public at <https://youtu.be/Q8F8djVgkgA>.
+Anonymous checks returned watch, embed, and oEmbed HTTP `200`, player status
+`OK`, 1080p video, audio, a manual English caption track, and
+`playableInEmbed=true`. YouTube's copyright and Community Guidelines checks
+reported no issues. The original public upload at
+<https://youtu.be/8HMfkTeVxXM> remains unchanged and available.

@@ -1,5 +1,12 @@
 # YouTube upload metadata
 
+> Current submission video: the creator-voiceover edition is public and
+> anonymously verified at <https://youtu.be/Q8F8djVgkgA>. Its exact metadata,
+> artifact hashes, and verification are recorded in
+> `YOUTUBE_CREATOR_VOICEOVER_RELEASE.md` and
+> `YOUTUBE_CREATOR_VOICEOVER_VERIFICATION.json`. The record below is retained
+> for the original proof-v2 upload, which was not modified or deleted.
+
 Use only for the proof-v2 master rebuilt after the dated owner-verified Starter
 and Sound Effects Explore-sharing opt-out record. Never upload the older v1
 master as the cash-prize submission video.
