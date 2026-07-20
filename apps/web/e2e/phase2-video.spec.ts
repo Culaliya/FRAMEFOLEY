@@ -33,10 +33,10 @@ test("capture the fresh public Phase 2 competition master spine", async ({ page 
   await page.goto("/");
   await expect(page.locator(".instant-comparison")).toBeVisible();
   await page.getByTestId("comparison-silent").click();
-  await page.getByRole("button", { name: "REPLAY" }).click();
+  await page.getByRole("button", { name: "REPLAY", exact: true }).click();
   await hold(3_600);
   await page.getByTestId("comparison-mix").click();
-  await page.getByRole("button", { name: "REPLAY" }).click();
+  await page.getByRole("button", { name: "REPLAY", exact: true }).click();
   await hold(4_000);
 
   mark("problem");

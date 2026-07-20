@@ -13,7 +13,7 @@ Duration: 2:56
 00:01:39.200 - 00:01:46.300  FRAMEFOLEY delays each approved WAV to its cue, applies bounded gain, and renders through fixed FFmpeg argument arrays.
 00:01:47.000 - 00:01:51.000  [The approved mix plays at its exact cue]
 00:01:52.000 - 00:01:56.700  The before-and-after preview and mix map receive stable hashes and return to private B2.
-00:01:57.200 - 00:02:05.600  Now this is LIVE EVIDENCE REPLAY: two real provider outputs generated during an authorized Genblaze run with the ElevenLabs sound-effects model.
+00:01:57.200 - 00:02:05.600  Now this is LIVE EVIDENCE REPLAY: two real provider outputs generated during an owner-authorized paid-plan Genblaze run with the ElevenLabs sound-effects model.
 00:02:06.000 - 00:02:08.600  [Recorded LIVE candidate A plays]
 00:02:09.600 - 00:02:12.200  [Recorded LIVE candidate B plays]
 00:02:13.000 - 00:02:25.800  They were stored in Backblaze B2, downloaded again, re-hashed, and both canonical manifests verify true. Opening this replay makes zero new provider calls. I can still hear both and make a fresh human approval.

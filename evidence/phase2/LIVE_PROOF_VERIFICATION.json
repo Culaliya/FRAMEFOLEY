@@ -4,25 +4,25 @@
   "candidateCount": 2,
   "candidates": [
     {
-      "assetSha256": "7c8e4f40ae3b1dc4e56531b211185d3c2ebd80646078d275483b88f91a9007ae",
+      "assetSha256": "7b787fc0d852ca696c22b42fcf2a084b75c142896433348137351e73453eab07",
       "b2DownloadedAssetHashMatched": true,
-      "candidateId": "cand_d318d507ff32",
-      "manifestHash": "cab2a9534339400c470f2a052f9453a231d06f67ad3a15bf25bb990c3f614415",
+      "candidateId": "cand_450059ff6f1f",
+      "manifestHash": "749c317401544e20e5ef56aed58f14dae86a4a98bab6c00f95fb99234a7f70b5",
       "manifestVerifyReturned": true
     },
     {
-      "assetSha256": "738f231a719ae5183b4908b259128faff2abc628949d3ba4e2b98d37c91a6be9",
+      "assetSha256": "f727c42f70a7556aee515bdf996b818939c9e66c9bd0bf9feb9006fa319a6337",
       "b2DownloadedAssetHashMatched": true,
-      "candidateId": "cand_cdffd8b2498e",
-      "manifestHash": "c9d957fa4d72f078eda854d633ee4af9721ad0d6a599930a8621595eeaeb2c9e",
+      "candidateId": "cand_252f272a013b",
+      "manifestHash": "7bd3c7958e9bd624d0fc5ab8ea01f4d2cd8f87354b748a9c89cde3f80bcd6a50",
       "manifestVerifyReturned": true
     }
   ],
-  "costDisclosure": "The provider reported USD 0.00 for the recorded gate; this is not evidence that an ElevenLabs account spend or usage cap is active.",
+  "costDisclosure": "The connector recorded provider cost USD 0.00000000; this is not evidence that an ElevenLabs account spend or usage cap is active.",
   "evidenceLabel": "LIVE EVIDENCE REPLAY",
   "manifestVerifyTrueCount": 2,
-  "proofChecksumsSha256": "9d253f14a004c1861e182fa041181c01297f8bcfdf13960640fcb699ec32133c",
-  "proofVersion": "live-v1",
+  "proofChecksumsSha256": "e11a0949869406870d493a78cf15eea24389cffca5c0d3f7834342dceb9adada",
+  "proofVersion": "live-v2",
   "providerCallsDuringPublication": 0,
   "providerCallsDuringReplayOpen": 0,
   "publicationStatus": "created",

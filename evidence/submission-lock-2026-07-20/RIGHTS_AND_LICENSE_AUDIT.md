@@ -79,19 +79,25 @@ Official references reviewed:
 
 ## Fail-closed verdict
 
-**PROVIDER RIGHTS FOR LIVE V2: REMEDIATED — FINAL MEDIA REBUILD REQUIRED.**
+**PROVIDER RIGHTS FOR LIVE V2: REMEDIATED — FINAL MEDIA REBUILD AND QA PASSED.**
 
 The historical v1 bytes remain excluded. The fresh v2 bytes were generated only
 after the owner completed the paid-plan/terms action and disabled SFX Explore
 sharing. They are covered by fresh canonical manifests, B2 object hashes, and an
 immutable v2 checksum inventory.
 
-Remaining completion gate:
+Completed media gates:
 
-1. Deploy source that selects proof v2.
-2. Re-run the public replay and capture the final master from v2.
-3. Run the full gates and no-secret/media checks.
-4. Upload the rebuilt master publicly and verify signed-out playback.
+1. Source selecting proof v2 was deployed to both public Render services.
+2. The public replay was exercised and a new 1920x1080 master was captured from
+   v2.
+3. The 2:56 master contains H.264 video, AAC audio, an embedded English subtitle
+   track, and a sidecar WebVTT file.
+4. Six key frames and the contact sheet were visually reviewed; no account
+   console, credential, signed URL, or private identifier was exposed.
+
+Remaining publication gate: upload this rebuilt master publicly and verify
+signed-out playback, 1080p processing, captions, and embeddability.
 
 These steps are submission-rights remediation only. They do not authorize any
 Phase 3 candidate or product feature.

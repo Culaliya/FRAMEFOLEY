@@ -7,39 +7,39 @@
     },
     {
       "name": "problem",
-      "seconds": 8.948
+      "seconds": 9.402
     },
     {
       "name": "cues",
-      "seconds": 17.967
+      "seconds": 18.416
     },
     {
       "name": "cached_pipeline",
-      "seconds": 39.137
+      "seconds": 41.984
     },
     {
       "name": "audition",
-      "seconds": 105.361
+      "seconds": 124.359
     },
     {
       "name": "mix",
-      "seconds": 129.705
+      "seconds": 153.286
     },
     {
       "name": "live_proof",
-      "seconds": 143.644
+      "seconds": 167.934
     },
     {
       "name": "export_provenance",
-      "seconds": 176.41
+      "seconds": 199.202
     },
     {
       "name": "close",
-      "seconds": 201.31
+      "seconds": 228.058
     },
     {
       "name": "end",
-      "seconds": 207.328
+      "seconds": 234.148
     }
   ]
 }
