@@ -203,8 +203,8 @@ The public competition surfaces are:
 - **Live app:** <https://framefoley-culaliya.onrender.com>
 - **API readiness:** <https://framefoley-api-culaliya.onrender.com/readyz>
 - **Public source:** <https://github.com/Culaliya/FRAMEFOLEY>
-- **Final video:** owner-verified public YouTube/Vimeo URL pending
-- **Deployed source commit:** recorded after the final public verification
+- **Final video:** <https://youtu.be/8HMfkTeVxXM>
+- **Deployed runtime commit:** `2d9148851b6f288b0c4f2cef6dd5739e156fd73f`
 
 The public three-cue workflow uses explicitly labeled **CACHED DEMO**
 candidates, persists complete projects to private Backblaze B2, and keeps live

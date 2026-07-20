@@ -96,8 +96,11 @@ Completed media gates:
 4. Six key frames and the contact sheet were visually reviewed; no account
    console, credential, signed URL, or private identifier was exposed.
 
-Remaining publication gate: upload this rebuilt master publicly and verify
-signed-out playback, 1080p processing, captions, and embeddability.
+Publication gate completed: the rebuilt master is public at
+<https://youtu.be/8HMfkTeVxXM>. Anonymous verification returned player status
+`OK`, 1080p video, audio, a manual English caption track, and
+`playableInEmbed=true`. YouTube's copyright and Community Guidelines checks
+reported no issues. The upload discloses AI use and disables Shorts remixing.
 
 These steps are submission-rights remediation only. They do not authorize any
 Phase 3 candidate or product feature.

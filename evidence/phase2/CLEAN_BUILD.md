@@ -2,7 +2,7 @@
 
 Evidence label: **OWNER-VERIFIED**
 Status: **PASS**
-Source commit: `8f5a8efc0f4b3f60395f97bcc415be3d109f9966`
+Source commit: `f6d3ba3dc8e1dcd17a4c70d556c7e00f9f0aff25`
 
 A temporary no-hardlinks clone ran `make install`. Python used
 `requirements.lock --require-hashes`; pnpm used `--frozen-lockfile`.

@@ -279,7 +279,7 @@ def _checksums() -> None:
     output = EVIDENCE / "checksums.sha256"
     records: list[str] = []
     for path in sorted(EVIDENCE.rglob("*")):
-        if not path.is_file() or path == output:
+        if not path.is_file() or path == output or path.name == ".DS_Store":
             continue
         relative = path.relative_to(EVIDENCE).as_posix()
         records.append(f"{hashlib.sha256(path.read_bytes()).hexdigest()}  {relative}")
@@ -293,6 +293,7 @@ def assemble() -> int:
     _ensure_placeholders()
     commit = _commit()
     public = _load_json(EVIDENCE / "PUBLIC_VERIFICATION_SANITIZED.json")
+    youtube = _load_json(EVIDENCE / "YOUTUBE_PUBLIC_VERIFICATION.json")
     proof = _load_json(EVIDENCE / "LIVE_PROOF_VERIFICATION.json")
     proof_index = _load_json(EVIDENCE / "LIVE_PROOF_INDEX_SANITIZED.json")
     gates = _load_json(EVIDENCE / "GATE_RESULTS_SANITIZED.json")
@@ -324,6 +325,8 @@ def assemble() -> int:
         proof_index.get("rightsEvidenceLabel", "UNVERIFIED") if proof_index else "UNVERIFIED"
     )
     public_status = public.get("evidenceLabel", "UNVERIFIED") if public else "UNVERIFIED"
+    youtube_status = youtube.get("evidenceLabel", "UNVERIFIED") if youtube else "UNVERIFIED"
+    youtube_url = youtube.get("publicUrl", "UNVERIFIED") if youtube else "UNVERIFIED"
     gate_status = "PASS" if gates and gates.get("allPassed") is True else "UNVERIFIED"
     clean_status = clean.get("status", "UNVERIFIED") if clean else "UNVERIFIED"
     _write(
@@ -342,6 +345,7 @@ def assemble() -> int:
                 f"- Paid-plan rights basis: **{rights_status}**",
                 f"- Public verification: **{public_status}**",
                 f"- Competition video: **{video['status']}**",
+                f"- Public YouTube verification: **{youtube_status}**",
                 f"- Source commit: `{commit}`",
                 "",
                 "The public CACHED DEMO makes no provider call. LIVE EVIDENCE REPLAY",
@@ -361,13 +365,15 @@ def assemble() -> int:
                 f"- App: <{WEB_URL}>",
                 f"- API: <{API_URL}>",
                 f"- Repository: <{REPOSITORY_URL}>",
+                f"- Video: <{youtube_url}>",
                 f"- Public verification: **{public_status}**",
+                f"- Public video verification: **{youtube_status}**",
                 f"- Deployed commit reported by API: `{deployed_commit}`",
                 "",
                 "The verification record contains no project token, authorization header,",
                 "cookie, signed query string, B2 identifier, provider credential, or account",
-                "identity. The final video host remains an owner-only check until logged-out",
-                "playback has been confirmed.",
+                "identity. Public video status is authoritative only when the separate",
+                "logged-out YouTube verification record is `OWNER-VERIFIED`.",
             ]
         ),
     )

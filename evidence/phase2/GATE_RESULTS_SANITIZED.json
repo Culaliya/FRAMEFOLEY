@@ -1,39 +1,39 @@
 {
   "allPassed": true,
   "evidenceLabel": "OWNER-VERIFIED",
-  "recordedAt": "2026-07-19T12:58:38.211566+00:00",
+  "recordedAt": "2026-07-20T09:51:17.968222+00:00",
   "results": [
     {
       "command": "make check",
-      "durationSeconds": 37.538,
+      "durationSeconds": 20.638,
       "exitCode": 0,
       "safeOutput": [
         "All checks passed!",
         "Success: no issues found in 37 source files",
-        "56 passed in 8.29s",
+        "59 passed in 7.32s",
         " Test Files  6 passed (6)",
         "      Tests  14 passed (14)",
-        "\u2713 Compiled successfully in 6.2s",
+        "\u2713 Compiled successfully in 1259ms",
         "Secret scan: PASS (source + evidence; values never printed)"
       ],
       "status": "PASS"
     },
     {
       "command": "make browser-test",
-      "durationSeconds": 27.001,
+      "durationSeconds": 15.714,
       "exitCode": 0,
       "safeOutput": [
         "  32 skipped",
-        "  7 passed (24.2s)"
+        "  7 passed (14.9s)"
       ],
       "status": "PASS"
     },
     {
       "command": "make phase2-proof-test",
-      "durationSeconds": 6.488,
+      "durationSeconds": 5.996,
       "exitCode": 0,
       "safeOutput": [
-        "15 passed in 3.79s",
+        "18 passed in 4.08s",
         " Test Files  2 passed (2)",
         "      Tests  5 passed (5)"
       ],
@@ -41,7 +41,7 @@
     },
     {
       "command": "make secret-scan",
-      "durationSeconds": 1.761,
+      "durationSeconds": 1.061,
       "exitCode": 0,
       "safeOutput": [
         "Secret scan: PASS (source + evidence; values never printed)"
@@ -50,5 +50,5 @@
     }
   ],
   "schemaVersion": 1,
-  "sourceCommit": "8f5a8efc0f4b3f60395f97bcc415be3d109f9966"
+  "sourceCommit": "f6d3ba3dc8e1dcd17a4c70d556c7e00f9f0aff25"
 }

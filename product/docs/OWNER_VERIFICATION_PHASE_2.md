@@ -9,16 +9,16 @@ console setting.
 
 | Requirement | Current evidence needed | Status |
 | --- | --- | --- |
-| Public app opens without login | Signed-out desktop and mobile load | UNVERIFIED |
-| Public repository opens for judges | Signed-out repository load | UNVERIFIED |
-| Final video opens without login | Signed-out YouTube/Vimeo playback | UNVERIFIED |
-| B2 bucket is private | Current bucket access setting, with account identity cropped | UNVERIFIED |
-| B2 key is bucket-scoped and least-privilege | Current application-key scope/capabilities, with key values hidden | UNVERIFIED |
-| Source/build/media contain no credential | Final `make secret-scan` plus media review | UNVERIFIED |
-| LIVE proof bundle is available and verifies | Publication and public verification JSON | UNVERIFIED |
+| Public app opens without login | Signed-out desktop and mobile load | OWNER-VERIFIED |
+| Public repository opens for judges | Signed-out repository load | OWNER-VERIFIED |
+| Final video opens without login | Anonymous YouTube watch/embed/player checks | OWNER-VERIFIED |
+| B2 bucket is private | Current bucket access setting, with account identity cropped | OWNER-VERIFIED |
+| B2 key is bucket-scoped and least-privilege | Current application-key scope/capabilities, with key values hidden | OWNER-VERIFIED |
+| Source/build/media contain no credential | Final `make secret-scan` plus media review | OWNER-VERIFIED |
+| LIVE proof bundle is available and verifies | Publication and public verification JSON | OWNER-VERIFIED |
 | Dependency and asset licenses are accepted | Owner review of lockfiles and `docs/ASSET_PROVENANCE.md` | UNVERIFIED |
-| Deployed commit is recorded | Public `/healthz` commit or Render deploy evidence | UNVERIFIED |
-| Desktop, phone, and tablet complete | Public Playwright result and screenshots | UNVERIFIED |
+| Deployed commit is recorded | Public `/healthz` commit or Render deploy evidence | OWNER-VERIFIED |
+| Desktop, phone, and tablet complete | Public Playwright result and screenshots | OWNER-VERIFIED |
 | App remains available during judging | Owner availability decision and judging-window check | UNVERIFIED |
 
 Do not convert an `UNVERIFIED` row to `PASS` because it is likely true. Record
@@ -75,8 +75,8 @@ https://framefoley-culaliya.onrender.com
 https://github.com/Culaliya/FRAMEFOLEY
 ```
 
-The owner must replace the final video placeholder only after a YouTube/Vimeo
-upload plays from a private window without login.
+The final video is public at <https://youtu.be/8HMfkTeVxXM>. Anonymous watch,
+embed, oEmbed, player, 1080p, audio, and manual English-caption checks passed.
 
 ## Prudent, non-blocking controls
 
@@ -99,8 +99,8 @@ evidence.
 ## Final owner seal
 
 - [ ] Review every blocker above and update `OWNER_CHECKS.md` truthfully.
-- [ ] Upload the 2:45–2:58 master and verify logged-out playback.
-- [ ] Paste the final public video URL into the submission and evidence docs.
+- [x] Upload the 2:45–2:58 master and verify anonymous playback.
+- [x] Paste the final public video URL into the submission and evidence docs.
 - [ ] Confirm the app should stay deployed for the full judging window.
 - [ ] Run `make phase2-evidence`, then `make secret-scan` one final time.
 

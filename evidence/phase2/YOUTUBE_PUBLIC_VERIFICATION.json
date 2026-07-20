@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "evidenceLabel": "OWNER-VERIFIED",
+  "verifiedAt": "2026-07-20T10:08:48Z",
+  "videoId": "8HMfkTeVxXM",
+  "publicUrl": "https://youtu.be/8HMfkTeVxXM",
+  "title": "FRAMEFOLEY — Gameplay Foley with Genblaze, Backblaze B2 & ElevenLabs",
+  "channel": "Lele Wu",
+  "anonymousVerification": {
+    "watchHttpStatus": 200,
+    "oEmbedStatus": "PASS",
+    "playerStatus": "OK",
+    "embedHttpStatus": 200,
+    "playableInEmbed": true
+  },
+  "media": {
+    "durationSeconds": 176.0,
+    "highestQualityLabel": "1080p",
+    "width": 1920,
+    "height": 1080,
+    "audioQuality": "AUDIO_QUALITY_MEDIUM",
+    "masterSha256": "367cbb878ad30052d31a7ce3c1767553dd9b87a57d99e9db626d057e15e3ed30"
+  },
+  "captions": {
+    "manualEnglishTrackPresent": true,
+    "languageCode": "en",
+    "trackName": "English",
+    "sidecarWebVttSha256": "9073a3e2ce167c7eb0f1a0f198b78272d37708c1882ea31ee35da932854360bd"
+  },
+  "youtubeChecks": {
+    "copyright": "NO_ISSUES_FOUND",
+    "communityGuidelines": "NO_ISSUES_FOUND"
+  },
+  "uploadSettings": {
+    "visibility": "PUBLIC",
+    "audience": "NOT_MADE_FOR_KIDS",
+    "videoLanguage": "en",
+    "aiUseDisclosed": true,
+    "license": "STANDARD_YOUTUBE_LICENSE",
+    "embeddingAllowed": true,
+    "shortsRemixAllowed": false,
+    "category": "SCIENCE_AND_TECHNOLOGY"
+  },
+  "privacy": {
+    "cookiesOrAccountDataRecorded": false,
+    "signedQueryStringsRecorded": false
+  }
+}

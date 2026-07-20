@@ -4,6 +4,9 @@ Use only for the proof-v2 master rebuilt after the dated owner-verified Starter
 and Sound Effects Explore-sharing opt-out record. Never upload the older v1
 master as the cash-prize submission video.
 
+Published and anonymously verified on 2026-07-20:
+<https://youtu.be/8HMfkTeVxXM>
+
 ## Title
 
 ```text
@@ -31,13 +34,12 @@ authority. The public app cannot trigger anonymous provider spend.
 #GameDev #GameAudio #AIaudio #Genblaze #BackblazeB2 #ElevenLabs
 ```
 
-## Intended upload settings
+## Completed upload settings
 
-- Visibility: Public (required by the hackathon rules).
-- Audience: owner must confirm the YouTube legal audience designation; the
-  content is a software-development demo and is not designed for children.
-- Captions: upload
-  `evidence/phase2/video/framefoley-phase2-demo-captions.vtt` after the final
-  rights-cleared master is selected.
-- Verify from a fully signed-out client: video, English audio, 1080p processing,
-  captions, and embeddability.
+- Visibility: Public.
+- Audience: not made for kids; the content is a software-development demo.
+- AI use: disclosed.
+- Captions: manual English WebVTT published.
+- Standard YouTube license; embedding enabled; Shorts remix disabled.
+- Anonymous verification: watch and embed HTTP `200`, player `OK`, 1080p,
+  audio, manual English captions, and `playableInEmbed=true`.

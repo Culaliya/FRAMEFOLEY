@@ -1,9 +1,9 @@
 # Devpost submission copy
 
-The English sections below are paste-ready. Replace only the explicit final
-video URL after the owner verifies signed-out YouTube/Vimeo playback. This copy
-does not claim a second provider, automatic scene understanding, an active
-external spend cap, or a rights warranty.
+The English sections below are paste-ready. The final public video has been
+verified without account cookies. This copy does not claim a second provider,
+automatic scene understanding, an active external spend cap, or a rights
+warranty.
 
 ## Project name
 
@@ -170,10 +170,10 @@ Vitest, Playwright, and Docker.
 ```text
 LIVE APP: https://framefoley-culaliya.onrender.com
 SOURCE REPOSITORY: https://github.com/Culaliya/FRAMEFOLEY
-FINAL VIDEO: [OWNER-VERIFIED YOUTUBE OR VIMEO URL]
+FINAL VIDEO: https://youtu.be/8HMfkTeVxXM
 ```
 
-Deployed source commit: `[FINAL DEPLOYED COMMIT FROM PHASE 2 EVIDENCE]`.
+Deployed runtime commit: `2d9148851b6f288b0c4f2cef6dd5739e156fd73f`.
 
 The Render Free deployment may cold-start after inactivity. FRAMEFOLEY retries
 readiness for up to ninety seconds, reports factual stages, and falls back to
